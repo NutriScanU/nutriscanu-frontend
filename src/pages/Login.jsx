@@ -18,7 +18,7 @@ function Login() {
       alert("Login exitoso");
       navigate("/perfil");
     } catch (error) {
-      console.error(error);
+      console.error("❌ Error al iniciar sesión:", error);
       setMensaje("Correo o contraseña inválidos");
     }
   };
@@ -33,6 +33,7 @@ function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{ width: "100%", marginBottom: 10, padding: 8 }}
+          required
         />
         <input
           type="password"
@@ -40,11 +41,26 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{ width: "100%", marginBottom: 10, padding: 8 }}
+          required
         />
         {mensaje && <p style={{ color: "red" }}>{mensaje}</p>}
         <button type="submit" style={{ width: "100%", padding: 10 }}>
           Ingresar
         </button>
+
+        <p style={{ marginTop: "1rem", textAlign: "center" }}>
+          <span
+            style={{
+              color: "#007bff",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/forgot-password")}
+          >
+            ¿Olvidaste tu contraseña?
+          </span>
+        </p>
+
       </form>
     </div>
   );
