@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../services/authService";
@@ -45,6 +44,20 @@ function Login() {
         <button type="submit" style={{ width: "100%", padding: 10 }}>
           Ingresar
         </button>
+
+        {/* Enlace de recuperación */}
+        <p style={{ marginTop: "1rem", textAlign: "center" }}>
+          <span
+            style={{
+              color: "#007bff",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/forgot-password")}
+          >
+            ¿Olvidaste tu contraseña?
+          </span>
+        </p>
       </form>
     </div>
   );
