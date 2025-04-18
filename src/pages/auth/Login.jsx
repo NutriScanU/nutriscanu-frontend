@@ -1,44 +1,69 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import "./Login.css";
+import "../../styles/authTheme.css";
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    general: "",
+  });
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newErrors = { email: "", password: "", general: "" };
+    let isValid = true;
 
-    if (!email || !password) {
-      alert("Completa todos los campos");
+    // Validación individual
+    if (!email.trim()) {
+      newErrors.email = "Campo requerido";
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Por favor, ingresa un email válido.";
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "Campo requerido";
+      isValid = false;
+    } else if (password.length < 6) {
+      newErrors.password = "Tu contraseña debe tener al menos 6 caracteres.";
+      isValid = false;
+    }
+
+    if (!isValid) {
+      setErrors(newErrors);
       return;
     }
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        alert("Correo o contraseña incorrectos");
+        setErrors((prev) => ({
+          ...prev,
+          general: "Usuario y/o contraseña incorrectos.",
+        }));
         return;
       }
 
       const data = await response.json();
       const decoded = jwtDecode(data.token);
-
-      console.log("✅ Token decodificado:", decoded);
-
       localStorage.setItem("token", data.token);
 
-      // ✅ Si las credenciales son correctas y el usuario tiene el rol de "student",
-      // redirige al perfil correspondiente de estudiante
       if (decoded.role === "estudiante") {
         navigate("/student/home");
       } else {
@@ -51,90 +76,72 @@ function Login() {
   };
 
   return (
-    <>
-      <div className="login-background">
-        <img
-          src="https://storage.googleapis.com/a1aa/image/6d5e16bf-9f40-4ef1-f541-6dc7a3311dfe.jpg"
-          alt="Fondo"
-          className="login-background-image"
-        />
-        <div className="login-background-overlay" />
-      </div>
-
-      <div className="login-container">
-        <div className="login-left">
-          <h2>NutriscScanU</h2>
-          <p>
-            Puedes...<br />
-            Detectar signos de anemia o diabetes en segundos.<br />
-            Recibe recomendaciones de alimentos ideales para tu salud.
-          </p>
+    <div className="auth-wrapper">
+      <div className="auth-background" />
+      <div className="auth-overlay" />
+      <div className="auth-card">
+        <div className="auth-logo" onClick={() => navigate("/")}>
+          NutriScanU
         </div>
 
-        <div className="login-right glass-banner">
-          <h1>Bienvenido de vuelta</h1>
-          <p>Qué bueno verte otra vez :)</p>
+        <h1>Bienvenido de vuelta</h1>
+        <p>Qué bueno verte otra vez :)</p>
 
-          <form className="login-form" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email">Correo</label>
-              <input
-                id="email"
-                type="email"
-                placeholder="Ingresa tu correo"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+        <form onSubmit={handleSubmit}>
+          {/* Correo */}
+          <label htmlFor="email">Correo</label>
+          <input
+            id="email"
+            type="text"
+            placeholder="Ingresa tu correo"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (errors.email || errors.general) {
+                setErrors((prev) => ({ ...prev, email: "", general: "" }));
+              }
+            }}
+            className={errors.email ? "input-error" : ""}
+          />
+          {errors.email && <div className="error-message">{errors.email}</div>}
 
-            <div>
-              <label htmlFor="password">Contraseña</label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+          {/* Contraseña */}
+          <label htmlFor="password">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (errors.password || errors.general) {
+                setErrors((prev) => ({ ...prev, password: "", general: "" }));
+              }
+            }}
+            className={errors.password ? "input-error" : ""}
+          />
+          {errors.password && (
+            <div className="error-message">{errors.password}</div>
+          )}
 
-            <div
-                className="forgot-password"
-                onClick={() => navigate("/forgot-password")}
-                style={{ cursor: "pointer" }}
-            >
-                ¿Olvidaste la contraseña?
-            </div>
-
-
-            <button type="submit">Inicia sesión</button>
-          </form>
-
-          <div className="login-footer">
-            <span>¿Es la primera vez que usas NutriscScanU?</span>
-            <span
-              className="register-link"
-              onClick={() => navigate("/register")}
-            >
-              Regístrate
-            </span>
-
+          <div className="forgot-link" onClick={() => navigate("/forgot-password")}>
+            ¿Olvidaste la contraseña?
           </div>
 
-          <div className="login-divider">
-            <hr />
-            <span>o</span>
-            <hr />
-          </div>
+          <button type="submit">Inicia sesión</button>
 
-          <button className="admin-login-button">
-            Inicia sesión con credencial de administrador
-          </button>
+          {/* 🔴 Error general SOLO si cumple validaciones pero no logra loguear */}
+          {errors.general && (
+            <div className="error-message general-error">{errors.general}</div>
+          )}
+        </form>
+
+        <div className="auth-footer">
+          ¿Es la primera vez que usas NutriScanU?{" "}
+          <span onClick={() => navigate("/register")}>Regístrate</span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

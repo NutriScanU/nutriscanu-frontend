@@ -1,5 +1,7 @@
 // src/App.jsx
-import React from "react";
+import "./styles/variables.css";
+import "./styles/fonts.css";
+
 import AppRouter from "./routes/AppRouter";
 
 function App() {
