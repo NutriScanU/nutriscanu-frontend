@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUsuario } from "../services/authService";
+import { loginUsuario } from "../../services/authService";
 
 function Login() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function Login() {
       const data = await loginUsuario({ email, password });
       localStorage.setItem("token", data.token);
       alert("Login exitoso");
-      navigate("/perfil");
+      navigate("/student/home");
     } catch (error) {
       console.error(error);
       setMensaje("Correo o contraseña inválidos");

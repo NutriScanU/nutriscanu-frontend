@@ -1,0 +1,41 @@
+.menu-container {
+    display: flex;
+    height: 100vh;
+    background-color: #090124;
+    color: white;
+  }
+  
+  .menu {
+    width: 250px;
+    padding: 2rem;
+  }
+  
+  .menu h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu li {
+    margin: 10px 0;
+  }
+  
+  .menu a, .menu button {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .menu button:hover,
+  .menu a:hover {
+    text-decoration: underline;
+    color: red;
+  }
+  
