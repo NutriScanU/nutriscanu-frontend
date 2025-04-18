@@ -10,6 +10,8 @@ import Profile from "../pages/student/Profile";
 import AnalysisStatus from "../pages/student/AnalysisStatus";
 import Recommendations from "../pages/student/Recommendations";
 
+import PrivateRoute from "./PrivateRoute";
+
 function AppRouter() {
   return (
     <BrowserRouter>
@@ -19,8 +21,15 @@ function AppRouter() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-        {/* Estudiante */}
-        <Route path="/student" element={<StudentLayout />}>
+        {/* Rutas protegidas para estudiantes */}
+        <Route
+          path="/student"
+          element={
+            <PrivateRoute allowedRoles={["estudiante"]}>
+              <StudentLayout />
+            </PrivateRoute>
+          }
+        >
           <Route path="home" element={<StudentHome />} />
           <Route path="profile" element={<Profile />} />
           <Route path="analysis-status" element={<AnalysisStatus />} />
