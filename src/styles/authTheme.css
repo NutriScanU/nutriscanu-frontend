@@ -1,14 +1,29 @@
-/* ===================== */
-/* 🌐 ESTRUCTURA GENERAL */
-/* ===================== */
-
-.auth-wrapper {
+/* ========================== */
+/* 🎨 Variables Globales      */
+/* ========================== */
+:root {
+    --color-success: #72C49D;
+    --color-error: #FF5722;
+    --color-warning: #fbbf24;
+    --color-warning-hover: #facc15;
+    --color-gray: #666666;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --font-main: 'Inter', sans-serif;
+    --border-radius: 12px;
+  }
+  
+  /* ========================== */
+  /* 🧱 Estructura General       */
+  /* ========================== */
+  .auth-wrapper {
     position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    font-family: var(--font-main);
   }
   
   .auth-background {
@@ -27,44 +42,64 @@
     z-index: -1;
   }
   
-  /* =========================== */
-  /* 🧊 TARJETA DE FORMULARIOS   */
-  /* =========================== */
-  
+  /* ========================== */
+  /* 🪟 Tarjeta Principal        */
+  /* ========================== */
   .auth-card {
     width: 100%;
     max-width: 420px;
-    background: rgba(255, 255, 255, 0.08); /* Transparente estilo glassmorphism */
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(14px);
-    border-radius: 1rem;
+    border-radius: var(--border-radius);
     padding: 2.5rem 2rem;
     color: var(--color-white);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     text-align: center;
   }
   
-  .brand-title {
+  /* ========================== */
+  /* 🧢 Títulos y textos         */
+  /* ========================== */
+  .auth-logo {
     font-size: 1.6rem;
     font-weight: 800;
     margin-bottom: 1rem;
     color: var(--color-white);
     cursor: pointer;
+    text-align: center;
   }
   
-  /* ===================== */
-  /* 📝 FORMULARIO         */
-  /* ===================== */
+  .auth-logo:hover {
+    color: var(--color-warning);
+  }
   
-  .auth-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  .auth-card h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  
+  .auth-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    color: #e5e5e5;
   }
   
   .auth-card label {
     text-align: left;
     font-size: 0.85rem;
     font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  /* ========================== */
+  /* ✍️ Formularios              */
+  /* ========================== */
+  .auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   
   .auth-card input {
@@ -75,15 +110,77 @@
     outline: none;
     background: var(--color-white);
     color: var(--color-black);
+    width: 100%;
+    box-sizing: border-box;
   }
   
-  /* ===================== */
-  /* 🔘 BOTONES            */
-  /* ===================== */
+  .input-error {
+    border: 1px solid var(--color-error);
+  }
   
+  .input-with-icon {
+    position: relative;
+  }
+  
+  .input-with-icon input {
+    width: 100%;
+    padding-right: 2.2rem;
+  }
+  
+  /* Icono ✔ */
+  .checkmark {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-success);
+    font-weight: bold;
+  }
+  
+  /* Carga ⏳ */
+  .loader {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-warning);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: translateY(-50%) rotate(360deg);
+    }
+  }
+  
+  /* ========================== */
+  /* ❌ Errores y Validación     */
+  /* ========================== */
+  .error-message {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    margin-top: 4px;
+    text-align: left;
+  }
+  
+  .general-error {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  
+  /* ========================== */
+  /* 🔘 Botones                  */
+  /* ========================== */
   .auth-card button {
     padding: 12px;
-    background: var(--color-warning); /* Amarillo principal */
+    background: var(--color-warning);
     border: none;
     color: var(--color-black);
     border-radius: 8px;
@@ -91,16 +188,16 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s ease;
+    box-sizing: border-box;
   }
   
   .auth-card button:hover {
-    background: var(--color-warning-hover); /* Hover amarillo claro */
+    background: var(--color-warning-hover);
   }
   
-  /* ===================== */
-  /* 🔗 ENLACES Y TEXTOS   */
-  /* ===================== */
-  
+  /* ========================== */
+  /* 🔗 Enlaces secundarios      */
+  /* ========================== */
   .forgot-link {
     font-size: 0.85rem;
     color: var(--color-warning);
@@ -130,113 +227,25 @@
     text-decoration: underline;
   }
   
-  .auth-logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-white);
-    text-align: center;
-    margin-bottom: 1rem;
+  .btn-back-transparent {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: rgba(255, 255, 255, 0.05); /* Efecto glass */
+    backdrop-filter: blur(8px);
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: all 0.2s ease;
+    z-index: 2;
   }
   
-  .auth-logo:hover {
-    transform: scale(1.05);
-    color: var(--color-warning);
+  .btn-back-transparent:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
-  
-  /* ===================== */
-  /* ❌ ERRORES VISUALES   */
-  /* ===================== */
-  
-  .input-error {
-    border: 1px solid #FF5722;
-  }
-  
-  .error-message {
-    color: #FF5722;
-    font-size: 0.85rem;
-    margin-top: 4px;
-    margin-bottom: 8px;
-  }
-  
-  .error-message.general-error {
-    text-align: center;
-    font-size: 0.9rem;
-    margin-top: 0.75rem;
-    font-weight: 500;
-  }
-  
-
-
-  .input-with-icon {
-    position: relative;
-  }
-  
-  .input-with-icon input {
-    width: 100%;
-    padding-right: 2.5rem;
-  }
-  
-  .input-with-icon .loader {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    border: 2px solid #fbbf24;
-    border-top: 2px solid transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  
-  .input-with-icon .checkmark {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #72C49D;
-    font-weight: bold;
-  }
-  
-  .input-with-icon .crossmark {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #FF5722;
-    font-weight: bold;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: translateY(-50%) rotate(360deg);
-    }
-  }
-
-  .input-error {
-    border: 2px solid #FF5722 !important;
-  }
-  
-  
-  .error-message {
-    color: #FF5722 !important;
-    font-size: 0.85rem;
-    margin-top: 4px;
-    text-align: left;
-  }
-  
-  .error-message.general-error {
-    text-align: center;
-    font-size: 0.9rem;
-    margin-top: 12px;
-    font-weight: 500;
-  }
-  
-
-
-
-  
   
   
