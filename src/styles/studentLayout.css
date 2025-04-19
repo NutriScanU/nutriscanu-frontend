@@ -1,0 +1,7 @@
+.student-content-full {
+    padding: 2rem;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #1e3a8a, #3b82f6);
+    color: white;
+  }
+  
