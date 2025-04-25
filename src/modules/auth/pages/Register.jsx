@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUsuario } from "../../services/authService";
+import { registerUsuario } from "../services/authService";
 import axios from "axios";
-import "../../styles/authTheme.css";
+import "../../../styles/authTheme.css";
+
 
 function Register() {
   const navigate = useNavigate();

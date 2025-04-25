@@ -1,16 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
-import ForgotPassword from "../pages/auth/ForgotPassword";
-import ResetPassword from "../pages/auth/ResetPassword";
+
+import Login from "../modules/auth/pages/Login";
+import Register from "../modules/auth/pages/Register";
+import ForgotPassword from "../modules/auth/pages/ForgotPassword";
+import ResetPassword from "../modules/auth/pages/ResetPassword";
+
 import StudentLayout from "../layouts/StudentLayout";
 
-import StudentHome from "../pages/student/StudentHome";
-import Profile from "../pages/student/Profile";
-import AnalysisStatus from "../pages/student/AnalysisStatus";
-import Recommendations from "../pages/student/Recommendations";
+import StudentHome from "../modules/student/pages/StudentHome";
+import Profile from "../modules/student/pages/Profile";
+import AnalysisStatus from "../modules/student/pages/AnalysisStatus";
+import Recommendations from "../modules/student/pages/Recommendations";
 
 import PrivateRoute from "./PrivateRoute";
+
 
 function AppRouter() {
   return (

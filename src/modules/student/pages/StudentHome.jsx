@@ -1,6 +1,6 @@
 import React from "react";
-import StudentHeader from "../../components/student/Header/StudentHeader";
-import "../../styles/studentPanel.css";
+import StudentHeader from "../components/StudentHeader";
+import "../../../styles/studentPanel.css";
 
 function StudentHome() {
   return (
