@@ -1,10 +1,12 @@
-// src/pages/student/StudentHome.jsx
 import React from "react";
+import StudentHeader from "../../components/student/Header/StudentHeader";
 import "../../styles/studentPanel.css";
 
 function StudentHome() {
   return (
     <div className="student-home">
+      <StudentHeader />
+
       <h1 className="student-home-title">Bienvenido a tu panel, estudiante 👋</h1>
       <p className="student-home-sub">Aquí puedes revisar tu análisis y recomendaciones personalizadas.</p>
 
