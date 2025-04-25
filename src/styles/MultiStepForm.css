@@ -1,0 +1,133 @@
+.multi-step-form {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 2rem 3rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.multi-step-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.multi-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.multi-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.multi-step-item.active .multi-step-circle {
+  background-color: #0ea5e9;
+  color: #fff;
+}
+
+.multi-step-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+  text-align: center;
+}
+
+.multi-step-item.active .multi-step-label {
+  color: #0ea5e9;
+}
+
+.multi-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.multi-step-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.multi-step-button {
+  background-color: #0ea5e9;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+  transition: all 0.3s ease;
+}
+
+.multi-step-button:hover {
+  background-color: #0284c7;
+}
+
+.multi-step-confirmation {
+  text-align: center;
+}
+
+.multi-step-confirmation h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #10b981;
+}
+
+.multi-step-confirmation p {
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+.confirm-box {
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
+  padding: 1.2rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.confirm-box p {
+  font-size: 1.1rem;
+  color: #92400e;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.multi-step-button.cancel {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

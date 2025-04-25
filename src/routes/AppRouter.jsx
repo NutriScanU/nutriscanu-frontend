@@ -11,6 +11,8 @@ import StudentHome from "../modules/student/pages/StudentHome";
 import Profile from "../modules/student/pages/Profile";
 import AnalysisStatus from "../modules/student/pages/AnalysisStatus";
 import Recommendations from "../modules/student/pages/Recommendations";
+import MultiStepForm from "../modules/student/components/MultiStepForm";
+
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -37,6 +39,8 @@ function AppRouter() {
           <Route path="profile" element={<Profile />} />
           <Route path="analysis-status" element={<AnalysisStatus />} />
           <Route path="recommendations" element={<Recommendations />} />
+          <Route path="complete-analysis" element={<MultiStepForm />} />
+
         </Route>
 
         <Route path="*" element={<h2>Ruta no encontrada</h2>} />

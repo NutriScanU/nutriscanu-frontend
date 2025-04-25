@@ -1,0 +1,43 @@
+.reco-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+}
+
+.reco-title {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.reco-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.reco-select {
+  margin-top: 0.4rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.reco-select:focus {
+  border-color: #3b82f6;
+  background-color: #fff;
+}
+
+.reco-select:hover {
+  background-color: #f3f4f6;
+}
