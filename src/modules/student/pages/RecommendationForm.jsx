@@ -28,27 +28,36 @@ const RecommendationForm = ({ onSubmit, initialData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // ✅ Enviamos objeto completo, no array
+    onSubmit(formData); // ✅ Enviamos objeto completo
   };
 
   const preguntas = [
-    { label: "¿Cuántas comidas realizas al día?", name: "comidas_dia" },
-    { label: "¿Cuántas veces a la semana consumes frutas y verduras?", name: "frutas_verduras" },
-    { label: "¿Tienes alguna alergia o intolerancia alimentaria?", name: "alergias" },
-    { label: "¿Consumes bebidas azucaradas frecuentemente?", name: "bebidas_azucaradas" },
-    { label: "¿Qué tan activo eres físicamente durante la semana?", name: "actividad" },
-    { label: "¿Cuál es tu objetivo principal con tu alimentación?", name: "objetivo" },
-    { label: "¿Consumes alimentos ultraprocesados (fast food, snacks, embutidos)?", name: "ultraprocesados" },
-    { label: "¿Cómo calificarías tu nivel de estrés diario?", name: "estres" },
-    { label: "¿Sueles sentirte con poca energía o fatiga durante el día?", name: "fatiga" },
-    { label: "¿Con qué frecuencia comes fuera de casa por motivos de estudio o trabajo?", name: "comer_fuera" },
+    { label: "¿Cuántas comidas realizas al día?", name: "comidas_dia", options: ["2", "3", "4", "5"] },
+    { label: "¿Cuántas veces a la semana consumes frutas y verduras?", name: "frutas_verduras", options: ["0-1", "2-3", "4-5", "6-7"] },
+    { label: "¿Tienes alguna alergia o intolerancia alimentaria?", name: "alergias", options: [
+        "Soy vegetariano/a",
+        "Soy vegano/a",
+        "Intolerancia a la lactosa",
+        "Alergia al pescado o mariscos",
+        "Alergia a frutos secos",
+        "Alergia al gluten",
+        "Ninguna"
+      ]
+    },
+    { label: "¿Consumes bebidas azucaradas frecuentemente?", name: "bebidas_azucaradas", options: ["Nunca", "1-2 veces por semana", "3-5 veces", "Diariamente"] },
+    { label: "¿Qué tan activo eres físicamente durante la semana?", name: "actividad", options: ["Sedentario", "Moderado", "Activo"] },
+    { label: "¿Cuál es tu objetivo principal con tu alimentación?", name: "objetivo", options: ["Mantener peso", "Bajar", "Subir", "Mejorar salud"] },
+    { label: "¿Consumes alimentos ultraprocesados (fast food, snacks, embutidos)?", name: "ultraprocesados", options: ["Nunca", "1-2 veces por semana", "3+ veces"] },
+    { label: "¿Cómo calificarías tu nivel de estrés diario?", name: "estres", options: ["Bajo", "Moderado", "Alto", "Muy alto"] },
+    { label: "¿Sueles sentirte con poca energía o fatiga durante el día?", name: "fatiga", options: ["Sí", "No", "A veces"] },
+    { label: "¿Con qué frecuencia comes fuera de casa por motivos de estudio o trabajo?", name: "comer_fuera", options: ["Casi nunca", "1-2 veces por semana", "3-5 veces por semana", "Todos los días"] },
   ];
 
   return (
     <form className="reco-form" onSubmit={handleSubmit}>
       <h3 className="reco-title">Formulario de Recomendación Nutricional</h3>
 
-      {preguntas.map(({ label, name }) => (
+      {preguntas.map(({ label, name, options }) => (
         <label key={name} className="reco-label">
           {label}
           <select
@@ -59,11 +68,9 @@ const RecommendationForm = ({ onSubmit, initialData }) => {
             required
           >
             <option value="">-- Selecciona --</option>
-            <option value="Nunca">Nunca</option>
-            <option value="Rara vez">Rara vez</option>
-            <option value="A veces">A veces</option>
-            <option value="Frecuentemente">Frecuentemente</option>
-            <option value="Siempre">Siempre</option>
+            {options.map((option, idx) => (
+              <option key={idx} value={option}>{option}</option>
+            ))}
           </select>
         </label>
       ))}

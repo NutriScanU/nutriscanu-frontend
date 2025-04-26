@@ -1,15 +1,15 @@
-/* 📄 Contenedor principal */
+/* 🌐 CONTENEDOR PRINCIPAL */
 .blood-form {
   background-color: white;
   padding: 2.5rem;
   border-radius: 16px;
   max-width: 800px;
-  margin: 2rem auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin: 6rem auto 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* 🧾 Título */
+/* 🧾 TÍTULO */
 .blood-title {
   text-align: center;
   font-size: 1.8rem;
@@ -18,55 +18,64 @@
   margin-bottom: 2rem;
 }
 
-/* 🧩 Etiquetas e inputs */
+/* 🧩 ETIQUETAS E INPUTS */
 .blood-label {
   font-weight: 600;
   color: #1f2937;
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
 
-.blood-input {
+.blood-input,
+.blood-label select {
   margin-top: 0.4rem;
   padding: 12px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
   font-size: 1rem;
   background-color: #f9fafb;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.blood-input:focus {
+/* 💬 Estilo normal cuando hacen focus */
+.blood-input:focus,
+.blood-label select:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
-/* ⬇️ Bloque de inputs individuales */
-.blood-form-group {
-  margin-bottom: 1.5rem;
+/* 🛑 Inputs con error desde JS */
+.error-input {
+  border: 2px solid #f87171 !important;
+  background-color: #fef2f2 !important;
 }
 
-/* 🧮 Grid para campos clínicos */
+/* Texto de error */
+.blood-error-text {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Texto de hint orientativo */
+.blood-hint-text {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* 🧮 GRID PARA CAMPOS CLÍNICOS */
 .blood-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  margin-top: 1rem;
 }
 
-/* 🚫 Quitar flechas de number */
-.blood-input[type="number"]::-webkit-outer-spin-button,
-.blood-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.blood-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-/* 📌 Campo género: en vertical */
+/* 🔘 GÉNERO */
 .blood-form-row-vertical {
   display: flex;
   flex-direction: column;
@@ -80,7 +89,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* 🔘 Estilo para radios verticales */
 .blood-radio-column {
   display: flex;
   flex-direction: column;
@@ -94,13 +102,11 @@
   position: relative;
 }
 
-/* Esconder input real */
 .blood-radio-option input {
   opacity: 0;
   position: absolute;
 }
 
-/* Círculo visible personalizado */
 .blood-radio-filled {
   height: 18px;
   width: 18px;
@@ -109,10 +115,8 @@
   margin-right: 0.5rem;
   background-color: transparent;
   transition: all 0.3s ease;
-  position: relative;
 }
 
-/* Al seleccionar, círculo se rellena */
 .blood-radio-option input:checked + .blood-radio-filled {
   background-color: #3b82f6;
   border-color: #3b82f6;
@@ -123,9 +127,42 @@
   font-size: 0.95rem;
 }
 
-/* 📱 Responsive */
+/* 🚀 BOTÓN DE ENVÍO */
+.blood-submit-button {
+  margin-top: 2.5rem;
+  background-color: #1e40af;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blood-submit-button:hover {
+  background-color: #1e3a8a;
+}
+
+/* 📱 RESPONSIVE */
 @media (max-width: 640px) {
   .blood-form-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* 🔧 Eliminar flechas en inputs number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }

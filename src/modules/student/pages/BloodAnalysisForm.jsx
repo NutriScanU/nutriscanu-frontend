@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./BloodAnalysisForm.css"; // CSS exclusivo
+import "./BloodAnalysisForm.css";
 
 const BloodAnalysisForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
     age: "",
-    gender: "", // ❌ Ninguno seleccionado por defecto
-    smoking_history: "Never",
+    gender: "",
+    smoking_history: "",
     bmi: "",
     hbA1c: "",
     blood_glucose_level: "",
@@ -16,25 +16,143 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
     red_blood_cells: ""
   });
 
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     if (initialData) setFormData(initialData);
   }, [initialData]);
 
+  const ranges = {
+    age: { min: 16, max: 35 },
+    bmi: { min: 18.5, max: 40 },
+    hbA1c: { min: 4, max: 6.5 },
+    blood_glucose_level: { min: 70, max: 125 },
+    insulin: { min: 2, max: 25 },
+    triglycerides: { min: 50, max: 150 },
+    hemoglobin: {
+      Male: { min: 13, max: 17.5 },
+      Female: { min: 12, max: 15.5 }
+    },
+    hematocrit: {
+      Male: { min: 38, max: 50 },
+      Female: { min: 36, max: 44 }
+    },
+    red_blood_cells: {
+      Male: { min: 4.7, max: 6.1 },
+      Female: { min: 4.2, max: 5.4 }
+    }
+  };
+
+  const fieldLabels = {
+    bmi: "Índice de Masa Corporal (IMC)",
+    hbA1c: "Hemoglobina glicosilada (HbA1c %)",
+    blood_glucose_level: "Glucosa en sangre (mg/dL)",
+    hemoglobin: "Hemoglobina (g/dL)",
+    insulin: "Insulina (µU/mL)",
+    triglycerides: "Triglicéridos (mg/dL)",
+    hematocrit: "Hematocrito (%)",
+    red_blood_cells: "Glóbulos rojos (millones/μL)"
+  };
+
+  const getHint = (field) => {
+    const range = ranges[field];
+    if (!range) return "";
+
+    if (typeof range === "object" && range.Male) {
+      if (!formData.gender) return "";
+      const { min, max } = range[formData.gender];
+      return `Valor permitido: entre ${min} y ${max}`;
+    }
+
+    return `Valor permitido: entre ${range.min} y ${range.max}`;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    if (name === "gender") {
+      const updated = { ...formData, [name]: value };
+      setFormData(updated);
+      if (submitted) validateAllFields(updated);
+    } else {
+      const updated = { ...formData, [name]: value };
+      setFormData(updated);
+      validateField(name, value, formData.gender);
+    }
+  };
+
+  const validateField = (name, value, gender) => {
+    const range = ranges[name];
+    if (!range) return;
+
+    let min = range.min;
+    let max = range.max;
+
+    if (typeof range === "object" && range.Male && gender) {
+      min = range[gender]?.min;
+      max = range[gender]?.max;
+    }
+
+    const num = parseFloat(value);
+
+    if (!value) {
+      setErrors((prev) => ({ ...prev, [name]: "Falta llenar este campo" }));
+    } else if (isNaN(num)) {
+      setErrors((prev) => ({ ...prev, [name]: "Debe ser un número válido" }));
+    } else if (num < min || num > max) {
+      setErrors((prev) => ({ ...prev, [name]: `Debe estar entre ${min} y ${max}` }));
+    } else {
+      setErrors((prev) => {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      });
+    }
+  };
+
+  const validateAllFields = (data) => {
+    const newErrors = {};
+
+    Object.entries(data).forEach(([key, value]) => {
+      const range = ranges[key];
+      if (!range) return;
+
+      let min = range.min;
+      let max = range.max;
+
+      if (typeof range === "object" && range.Male && data.gender) {
+        min = range[data.gender]?.min;
+        max = range[data.gender]?.max;
+      }
+
+      const num = parseFloat(value);
+
+      if (!value) {
+        newErrors[key] = "Falta llenar este campo";
+      } else if (isNaN(num)) {
+        newErrors[key] = "Debe ser un número válido";
+      } else if (num < min || num > max) {
+        newErrors[key] = `Debe estar entre ${min} y ${max}`;
+      }
+    });
+
+    setErrors(newErrors);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    setSubmitted(true);
+    validateAllFields(formData);
+    if (Object.keys(errors).length === 0) {
+      onSubmit(formData);
+    }
   };
 
   return (
     <form className="blood-form" onSubmit={handleSubmit}>
       <h3 className="blood-title">Formulario de Análisis de Sangre</h3>
 
-      {/* Edad */}
       <div className="blood-form-group">
         <label className="blood-label">
           Edad:
@@ -43,42 +161,39 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             name="age"
             value={formData.age}
             onChange={handleChange}
-            required
-            className="blood-input"
+            onWheel={(e) => e.target.blur()}
+            className={`blood-input ${errors.age ? "error-input" : ""}`}
           />
+          {errors.age ? (
+            <span className="blood-error-text">⚠️ {errors.age}</span>
+          ) : (
+            getHint("age") && <span className="blood-hint-text">{getHint("age")}</span>
+          )}
         </label>
       </div>
 
-      {/* GÉNERO vertical con radio relleno */}
       <div className="blood-form-row-vertical">
         <label className="blood-inline-label">Género:</label>
         <div className="blood-radio-column">
-          <label className="blood-radio-option">
-            <input
-              type="radio"
-              name="gender"
-              value="Male"
-              checked={formData.gender === "Male"}
-              onChange={handleChange}
-            />
-            <span className="blood-radio-filled"></span>
-            <span className="blood-radio-label">Masculino</span>
-          </label>
-          <label className="blood-radio-option">
-            <input
-              type="radio"
-              name="gender"
-              value="Female"
-              checked={formData.gender === "Female"}
-              onChange={handleChange}
-            />
-            <span className="blood-radio-filled"></span>
-            <span className="blood-radio-label">Femenino</span>
-          </label>
+          {["Male", "Female"].map((option) => (
+            <label key={option} className="blood-radio-option">
+              <input
+                type="radio"
+                name="gender"
+                value={option}
+                checked={formData.gender === option}
+                onChange={handleChange}
+              />
+              <span className="blood-radio-filled"></span>
+              <span className="blood-radio-label">
+                {option === "Male" ? "Masculino" : "Femenino"}
+              </span>
+            </label>
+          ))}
         </div>
+        {errors.gender && <span className="blood-error-text">⚠️ {errors.gender}</span>}
       </div>
 
-      {/* Historial de tabaquismo */}
       <div className="blood-form-group">
         <label className="blood-label">
           Historial de tabaquismo:
@@ -86,42 +201,40 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             name="smoking_history"
             value={formData.smoking_history}
             onChange={handleChange}
-            required
-            className="blood-input"
+            className={`blood-input ${errors.smoking_history ? "error-input" : ""}`}
           >
+            <option value="" disabled hidden>-- Selecciona --</option>
             <option value="Never">Nunca</option>
-            <option value="Current">Actual</option>
-            <option value="Former">Anterior</option>
+            <option value="Current">Actualmente</option>
+            <option value="Former">Anteriormente</option>
             <option value="Ever">Alguna vez</option>
             <option value="Not Current">No actualmente</option>
-            <option value="No Info">Sin información</option>
+            <option value="No Info">Prefiero no decirlo</option>
           </select>
+          {errors.smoking_history && (
+            <span className="blood-error-text">⚠️ {errors.smoking_history}</span>
+          )}
         </label>
       </div>
 
-      {/* Campos clínicos */}
       <div className="blood-form-grid">
-        {[
-          { label: "IMC:", name: "bmi" },
-          { label: "HbA1c (%):", name: "hbA1c" },
-          { label: "Glucosa en sangre (mg/dL):", name: "blood_glucose_level" },
-          { label: "Hemoglobina (g/dL):", name: "hemoglobin" },
-          { label: "Insulina:", name: "insulin" },
-          { label: "Triglicéridos:", name: "triglycerides" },
-          { label: "Hematocrito (%):", name: "hematocrit" },
-          { label: "Glóbulos rojos (millones/μL):", name: "red_blood_cells" },
-        ].map((field, index) => (
-          <label key={index} className="blood-label">
-            {field.label}
+        {Object.keys(fieldLabels).map((field) => (
+          <label key={field} className="blood-label">
+            {fieldLabels[field]}:
             <input
               type="number"
+              name={field}
               step="0.1"
-              name={field.name}
-              value={formData[field.name]}
+              value={formData[field]}
               onChange={handleChange}
-              required
-              className="blood-input"
+              onWheel={(e) => e.target.blur()}
+              className={`blood-input ${errors[field] ? "error-input" : ""}`}
             />
+            {errors[field] ? (
+              <span className="blood-error-text">⚠️ {errors[field]}</span>
+            ) : (
+              getHint(field) && <span className="blood-hint-text">{getHint(field)}</span>
+            )}
           </label>
         ))}
       </div>
