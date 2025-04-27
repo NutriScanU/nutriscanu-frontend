@@ -1,0 +1,111 @@
+.nutri-footer-wrapper {
+  background-color: #ffffff;
+  padding: 4rem 2rem;
+  color: #374151;
+}
+
+.nutri-footer {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Sección de links */
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-links div {
+  min-width: 150px;
+}
+
+.footer-links h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links ul li a {
+  color: #374151;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.footer-links ul li a:hover {
+  color: #7e7e7fcf;
+}
+
+/* Divider */
+.footer-divider {
+  border: 0;
+  height: 1px;
+  background-color: #E5E7EB;
+  margin: 2rem 0;
+}
+
+/* Branding y sociales */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-branding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-logo-primary);
+  text-decoration: none;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-socials a img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0);
+}
+
+/* 🔥 MEDIA QUERY PARA MÓVILES */
+@media (max-width: 768px) {
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-socials {
+    justify-content: center;
+  }
+}
