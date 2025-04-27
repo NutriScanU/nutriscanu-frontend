@@ -18,7 +18,7 @@ function StudentHome() {
         </div>
 
         {/* 🔎 Visualizar plan de hábitos previamente generado */}
-        <div className="student-card" onClick={() => window.location.href='/student/recommendations'}>
+        <div className="student-card" onClick={() => window.location.href='/student/PlanNutrition'}>
           <h2>🥗 Ver plan de alimentación</h2>
           <p>Consulta tus recomendaciones alimenticias según tu condición actual.</p>
         </div>

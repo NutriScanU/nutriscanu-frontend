@@ -1,0 +1,46 @@
+.plan-nutrition-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .view-plan-button {
+    background-color: #fbbf24;
+    color: #1f2937;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .plan-nutrition-table-container {
+    margin-top: 2rem;
+    overflow-x: auto;
+  }
+  
+  .plan-nutrition-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #f9fafb;
+  }
+  
+  .plan-nutrition-table th,
+  .plan-nutrition-table td {
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    font-size: 1rem;
+    color: #374151;
+  }
+  
+  .plan-nutrition-table th {
+    background-color: #1e3a8a;
+    color: white;
+  }
+  
+  .plan-nutrition-table tr:nth-child(even) {
+    background-color: #f3f4f6;
+  }
+  

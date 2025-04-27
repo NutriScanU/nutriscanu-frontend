@@ -7,20 +7,21 @@ import './App.css';
 function App() {
   const location = useLocation();
 
-  // Definimos rutas de autenticación
-  const authRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
-  const isAuthRoute = authRoutes.some(route => location.pathname.startsWith(route));
+  // Definimos rutas donde no debe aparecer navbar/footer
+  const hideNavbarRoutes = ['/login', '/register', '/forgot-password', '/reset-password', '/student'];
+
+  // Si la ruta empieza por alguno de esos paths
+  const shouldHideNavbar = hideNavbarRoutes.some(route => location.pathname.startsWith(route));
 
   return (
     <div className="app-container">
-      {!isAuthRoute && <NutriNavbar />}
+      {!shouldHideNavbar && <NutriNavbar />}
 
-      {/* 🔥 Cambiamos la clase del <main> según la ruta */}
-      <main className={isAuthRoute ? "auth-content" : "app-content"}>
+      <main className={shouldHideNavbar ? "auth-content" : "app-content"}>
         <AppRouter />
       </main>
 
-      {!isAuthRoute && <NutriFooter />}
+      {!shouldHideNavbar && <NutriFooter />}
     </div>
   );
 }

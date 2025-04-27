@@ -46,15 +46,13 @@ const NutriNavbar = () => {
           </div>
 
           <ul className="nutri-nav-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="#">Features</Link></li>
-            <li><Link to="#">Community</Link></li>
-            <li><Link to="#">Blog</Link></li>
-            <li><Link to="#">Pricing</Link></li>
+            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="#">Cómo funciona?</Link></li>
+            <li><Link to="#">Comunidad</Link></li>
           </ul>
 
           <Link to="/login" className="nutri-register-now">
-            Register Now →
+            Ingresar →
           </Link>
         </nav>
 
@@ -65,11 +63,9 @@ const NutriNavbar = () => {
 
           <div className="nutri-mobile-content">
             <ul className="nutri-mobile-list">
-              <li onClick={closeMenu}><Link to="/">Home <span className="arrow">➔</span></Link></li>
-              <li onClick={closeMenu}><Link to="#">Features <span className="arrow">➔</span></Link></li>
-              <li onClick={closeMenu}><Link to="#">Community <span className="arrow">➔</span></Link></li>
-              <li onClick={closeMenu}><Link to="#">Blog <span className="arrow">➔</span></Link></li>
-              <li onClick={closeMenu}><Link to="#">Pricing <span className="arrow">➔</span></Link></li>
+              <li onClick={closeMenu}><Link to="/">Inicio <span className="arrow">➔</span></Link></li>
+              <li onClick={closeMenu}><Link to="#">Cómo funciona? <span className="arrow">➔</span></Link></li>
+              <li onClick={closeMenu}><Link to="#">Comunidad <span className="arrow">➔</span></Link></li>
             </ul>
 
             <div className="nutri-mobile-actions">
