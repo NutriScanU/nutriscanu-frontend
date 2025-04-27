@@ -1,4 +1,7 @@
+// src/modules/student/pages/Recommendations.jsx
+
 import React, { useState } from "react";
+import { API_URL, BACKEND_FLASK_URL } from "../../../config";  // ✅ Usar API_URL y BACKEND_FLASK_URL
 import RecommendationForm from "./RecommendationForm";
 
 const Recommendations = () => {
@@ -14,7 +17,7 @@ const Recommendations = () => {
 
       // Paso 1: Pedir recomendaciones al backend Flask
       const input = [condicion, ...respuestasHabitos];
-      const response = await fetch("http://localhost:8000/recommend", {
+      const response = await fetch(`${BACKEND_FLASK_URL}/recommend`, {  // ✅ Usar BACKEND_FLASK_URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +39,7 @@ const Recommendations = () => {
       setMensaje("✅ Recomendación generada correctamente.");
 
       // Paso 2: Enviar recomendaciones al backend FastAPI para guardar en BD
-      const saveResponse = await fetch("http://localhost:5000/api/students/analyze-recommendation", {
+      const saveResponse = await fetch(`${API_URL}/api/students/analyze-recommendation`, {  // ✅ Usar API_URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",
