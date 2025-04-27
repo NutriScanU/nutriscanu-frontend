@@ -17,32 +17,10 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (initialData) setFormData(initialData);
   }, [initialData]);
-
-  const ranges = {
-    age: { min: 16, max: 35 },
-    bmi: { min: 18.5, max: 40 },
-    hbA1c: { min: 4, max: 6.5 },
-    blood_glucose_level: { min: 70, max: 125 },
-    insulin: { min: 2, max: 25 },
-    triglycerides: { min: 50, max: 150 },
-    hemoglobin: {
-      Male: { min: 13, max: 17.5 },
-      Female: { min: 12, max: 15.5 }
-    },
-    hematocrit: {
-      Male: { min: 38, max: 50 },
-      Female: { min: 36, max: 44 }
-    },
-    red_blood_cells: {
-      Male: { min: 4.7, max: 6.1 },
-      Female: { min: 4.2, max: 5.4 }
-    }
-  };
 
   const fieldLabels = {
     bmi: "Índice de Masa Corporal (IMC)",
@@ -55,96 +33,58 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
     red_blood_cells: "Glóbulos rojos (millones/μL)"
   };
 
-  const getHint = (field) => {
-    const range = ranges[field];
-    if (!range) return "";
-
-    if (typeof range === "object" && range.Male) {
-      if (!formData.gender) return "";
-      const { min, max } = range[formData.gender];
-      return `Valor permitido: entre ${min} y ${max}`;
-    }
-
-    return `Valor permitido: entre ${range.min} y ${range.max}`;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "gender") {
-      const updated = { ...formData, [name]: value };
-      setFormData(updated);
-      if (submitted) validateAllFields(updated);
-    } else {
-      const updated = { ...formData, [name]: value };
-      setFormData(updated);
-      validateField(name, value, formData.gender);
-    }
-  };
-
-  const validateField = (name, value, gender) => {
-    const range = ranges[name];
-    if (!range) return;
-
-    let min = range.min;
-    let max = range.max;
-
-    if (typeof range === "object" && range.Male && gender) {
-      min = range[gender]?.min;
-      max = range[gender]?.max;
+  const validateField = (name, value) => {
+    if (value.trim() === "") {
+      setErrors((prev) => ({ ...prev, [name]: "⚠️ Este campo es obligatorio" }));
+      return;
     }
 
     const num = parseFloat(value);
 
-    if (!value) {
-      setErrors((prev) => ({ ...prev, [name]: "Falta llenar este campo" }));
-    } else if (isNaN(num)) {
-      setErrors((prev) => ({ ...prev, [name]: "Debe ser un número válido" }));
-    } else if (num < min || num > max) {
-      setErrors((prev) => ({ ...prev, [name]: `Debe estar entre ${min} y ${max}` }));
-    } else {
-      setErrors((prev) => {
-        const copy = { ...prev };
-        delete copy[name];
-        return copy;
-      });
+    if (name === "age") {
+      if (isNaN(num) || num < 16 || num > 35) {
+        setErrors((prev) => ({ ...prev, [name]: "⚠️ La edad debe estar entre 16 y 35 años" }));
+        return;
+      }
     }
+
+    setErrors((prev) => {
+      const copy = { ...prev };
+      delete copy[name];
+      return copy;
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
+
+    validateField(name, value);
   };
 
   const validateAllFields = (data) => {
     const newErrors = {};
 
     Object.entries(data).forEach(([key, value]) => {
-      const range = ranges[key];
-      if (!range) return;
-
-      let min = range.min;
-      let max = range.max;
-
-      if (typeof range === "object" && range.Male && data.gender) {
-        min = range[data.gender]?.min;
-        max = range[data.gender]?.max;
-      }
-
-      const num = parseFloat(value);
-
-      if (!value) {
-        newErrors[key] = "Falta llenar este campo";
-      } else if (isNaN(num)) {
-        newErrors[key] = "Debe ser un número válido";
-      } else if (num < min || num > max) {
-        newErrors[key] = `Debe estar entre ${min} y ${max}`;
+      if (value.trim() === "") {
+        newErrors[key] = "⚠️ Este campo es obligatorio";
+      } else if (key === "age") {
+        const num = parseFloat(value);
+        if (isNaN(num) || num < 16 || num > 35) {
+          newErrors[key] = "⚠️ La edad debe estar entre 16 y 35 años";
+        }
       }
     });
 
     setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    validateAllFields(formData);
-    if (Object.keys(errors).length === 0) {
+    const isValid = validateAllFields(formData);
+    if (isValid) {
       onSubmit(formData);
     }
   };
@@ -153,6 +93,7 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
     <form className="blood-form" onSubmit={handleSubmit}>
       <h3 className="blood-title">Formulario de Análisis de Sangre</h3>
 
+      {/* Edad */}
       <div className="blood-form-group">
         <label className="blood-label">
           Edad:
@@ -165,13 +106,14 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             className={`blood-input ${errors.age ? "error-input" : ""}`}
           />
           {errors.age ? (
-            <span className="blood-error-text">⚠️ {errors.age}</span>
+            <span className="blood-error-text">{errors.age}</span>
           ) : (
-            getHint("age") && <span className="blood-hint-text">{getHint("age")}</span>
+            <span className="blood-hint-text">Edad permitida: entre 16 y 35 años</span>
           )}
         </label>
       </div>
 
+      {/* Género */}
       <div className="blood-form-row-vertical">
         <label className="blood-inline-label">Género:</label>
         <div className="blood-radio-column">
@@ -191,9 +133,10 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             </label>
           ))}
         </div>
-        {errors.gender && <span className="blood-error-text">⚠️ {errors.gender}</span>}
+        {errors.gender && <span className="blood-error-text">{errors.gender}</span>}
       </div>
 
+      {/* Historial de tabaquismo */}
       <div className="blood-form-group">
         <label className="blood-label">
           Historial de tabaquismo:
@@ -212,11 +155,12 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             <option value="No Info">Prefiero no decirlo</option>
           </select>
           {errors.smoking_history && (
-            <span className="blood-error-text">⚠️ {errors.smoking_history}</span>
+            <span className="blood-error-text">{errors.smoking_history}</span>
           )}
         </label>
       </div>
 
+      {/* Campos clínicos */}
       <div className="blood-form-grid">
         {Object.keys(fieldLabels).map((field) => (
           <label key={field} className="blood-label">
@@ -230,14 +174,12 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
               onWheel={(e) => e.target.blur()}
               className={`blood-input ${errors[field] ? "error-input" : ""}`}
             />
-            {errors[field] ? (
-              <span className="blood-error-text">⚠️ {errors[field]}</span>
-            ) : (
-              getHint(field) && <span className="blood-hint-text">{getHint(field)}</span>
-            )}
+            {errors[field] && <span className="blood-error-text">{errors[field]}</span>}
           </label>
         ))}
       </div>
+
+
     </form>
   );
 };
