@@ -4,6 +4,7 @@ import { registerUsuario } from "../services/authService";
 import axios from "axios";
 import "../../../styles/authTheme.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Register() {
   const navigate = useNavigate();
@@ -17,9 +18,10 @@ function Register() {
   const [middleName, setMiddleName] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
 
-  const [errors, setErrors] = useState({ email: "", password: "", general: "" });
+  const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateDNI = (dni) => /^\d{8}$/.test(dni);
 
   const handleNextStep = async () => {
     const newErrors = { email: "", password: "", general: "" };
@@ -33,15 +35,13 @@ function Register() {
       isValid = false;
     } else {
       try {
-        const response = await axios.post("http://localhost:5000/api/auth/check-email", { email });
+        const response = await axios.post(`${API_URL}/api/auth/check-email`, { email });
         if (response.data.exists === true) {
           newErrors.email = "El email ingresado ya se encuentra en uso";
           isValid = false;
         }
       } catch (err) {
-        if (err.response?.status === 404 && err.response?.data?.exists === false) {
-          // Permitir continuar
-        } else {
+        if (err.response?.status !== 404) {
           newErrors.general = "No se pudo verificar el correo.";
           isValid = false;
         }
@@ -66,6 +66,24 @@ function Register() {
   };
 
   const handleSubmit = async () => {
+    const newErrors = { dni: "", general: "" };
+    let isValid = true;
+
+    if (!firstName.trim() || !lastName.trim() || !middleName.trim()) {
+      newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    }
+
+    if (!validateDNI(documentNumber)) {
+      newErrors.dni = "El DNI debe tener 8 dígitos numéricos.";
+      isValid = false;
+    }
+
+    if (!isValid) {
+      setErrors((prev) => ({ ...prev, ...newErrors }));
+      return;
+    }
+
     const userData = {
       email,
       password,
@@ -90,12 +108,11 @@ function Register() {
       <div className="auth-background" />
       <div className="auth-overlay" />
       <div className="auth-card">
-
         {success ? (
           <div className="register-success">
             <h2>✅ Usuario registrado correctamente</h2>
             <p>Tu cuenta ha sido creada con éxito.</p>
-            <button onClick={() => navigate("/login")}>siguiente</button>
+            <button onClick={() => navigate("/login")}>Ir a login</button>
           </div>
         ) : (
           <>
@@ -176,7 +193,9 @@ function Register() {
                   placeholder="DNI"
                   value={documentNumber}
                   onChange={(e) => setDocumentNumber(e.target.value)}
+                  className={errors.dni ? "input-error" : ""}
                 />
+                {errors.dni && <div className="error-message">{errors.dni}</div>}
 
                 {errors.general && <div className="error-message general-error">{errors.general}</div>}
 

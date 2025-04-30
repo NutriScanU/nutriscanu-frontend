@@ -1,5 +1,13 @@
-// src/services/authService.js
-const API_BASE = "http://localhost:5000";
+const API_BASE = process.env.REACT_APP_API_URL;
+
+// Manejo de errores general para reusar
+const handleResponse = async (response) => {
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Error en la petición");
+  }
+  return data;
+};
 
 export async function loginUsuario(data) {
   const response = await fetch(`${API_BASE}/api/auth/login`, {
@@ -10,14 +18,11 @@ export async function loginUsuario(data) {
     body: JSON.stringify(data),
   });
 
-  const json = await response.json();
-  if (!response.ok) throw new Error(json.message || "Error en login");
-
-  return json;
+  return handleResponse(response);
 }
 
 export async function registerUsuario(data) {
-  const response = await fetch(`http://localhost:5000/api/auth/register`, {
+  const response = await fetch(`${API_BASE}/api/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -25,10 +30,17 @@ export async function registerUsuario(data) {
     body: JSON.stringify(data),
   });
 
-  const json = await response.json();
-  if (!response.ok) {
-    throw new Error(json.message || "Error al registrar");
-  }
+  return handleResponse(response);
+}
 
-  return json;
+export async function checkEmail(email) {
+  const response = await fetch(`${API_BASE}/api/auth/check-email`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return handleResponse(response);
 }

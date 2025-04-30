@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "../../../styles/authTheme.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -71,7 +72,10 @@ function Login() {
 
       const data = await response.json();
       const decoded = jwtDecode(data.token);
+
+      // 🔥 Guardamos correctamente
       localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", decoded.userId); 
 
       if (decoded.role === "estudiante") {
         navigate("/student/home");
@@ -80,7 +84,7 @@ function Login() {
       }
     } catch (err) {
       console.error("❌ Error:", err);
-      alert("Login fallido. Verifica tus datos.");
+      alert("Login fallido. Verifica tus datos o conexión.");
     }
   };
 

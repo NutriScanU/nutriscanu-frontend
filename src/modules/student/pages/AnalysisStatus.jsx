@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BloodAnalysisForm from "./BloodAnalysisForm";
 
+const API_FLASK_URL = process.env.REACT_APP_BACKEND_FLASK_URL;
+const API_NODE_URL = process.env.REACT_APP_API_URL;
+
 const AnalysisStatus = () => {
   const [condition, setCondition] = useState(null);
   const [mensaje, setMensaje] = useState("");
@@ -10,7 +13,7 @@ const AnalysisStatus = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Debes iniciar sesión primero");
+      alert("Debes iniciar sesión primero.");
       navigate("/login");
     }
   }, [navigate]);
@@ -18,6 +21,11 @@ const AnalysisStatus = () => {
   const handlePredictionSubmit = async (formData) => {
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Tu sesión ha expirado. Vuelve a iniciar sesión.");
+        navigate("/login");
+        return;
+      }
 
       const numericData = {
         ...formData,
@@ -32,8 +40,8 @@ const AnalysisStatus = () => {
         red_blood_cells: Number(formData.red_blood_cells),
       };
 
-      // 1. Predicción
-      const response = await fetch("http://localhost:8000/predict", {
+      // 🔍 Paso 1: Predicción con Flask
+      const response = await fetch(`${API_FLASK_URL}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,15 +52,15 @@ const AnalysisStatus = () => {
 
       const result = await response.json();
       if (!response.ok) {
-        alert(result.error || "Error en la predicción");
+        alert(result.error || "Error en la predicción.");
         return;
       }
 
       setCondition(result.condition);
-      localStorage.setItem("condicion_predicha", result.condition); // ✅ Extra UX
+      localStorage.setItem("condicion_predicha", result.condition);
 
-      // 2. Guardar en base de datos
-      const registroResponse = await fetch("http://localhost:5000/api/students/register-clinic", {
+      // 🧾 Paso 2: Guardar análisis en base de datos
+      const registroResponse = await fetch(`${API_NODE_URL}/api/students/register-clinic`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,13 +78,13 @@ const AnalysisStatus = () => {
       if (registroResponse.ok) {
         setMensaje("✅ Análisis registrado correctamente.");
       } else {
-        setMensaje("❌ No se pudo guardar en la base de datos.");
-        console.error("🛑 Error al guardar en BD:", registroResult);
+        setMensaje(registroResult.error || "❌ No se pudo guardar en la base de datos.");
+        console.error("🛑 Error en guardado:", registroResult);
       }
 
     } catch (err) {
       console.error("❌ Error general:", err);
-      alert("Error de red o backend desconectado");
+      alert("Error de red o servidor no disponible.");
     }
   };
 
@@ -88,7 +96,6 @@ const AnalysisStatus = () => {
       ) : (
         <h3>🩺 Condición predicha por el modelo: <strong>{condition}</strong></h3>
       )}
-
       {mensaje && (
         <p style={{ marginTop: "1rem", color: mensaje.includes("✅") ? "green" : "red" }}>
           {mensaje}

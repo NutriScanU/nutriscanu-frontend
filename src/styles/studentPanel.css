@@ -9,10 +9,10 @@
     justify-content: center;
   
     padding: 2rem;
-    color: #000000;
+    color: #ffffff;
     text-align: center;
     min-height: 100vh;
-
+    background: linear-gradient(to bottom right, #1e3a8a, #3b82f6);
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
     overflow: hidden;
@@ -28,7 +28,7 @@
 
 .student-home-sub {
   font-size: 1.1rem;
-  color: #000000;
+  color: #dbeafe;
   margin-bottom: 2rem;
 }
 
@@ -59,10 +59,10 @@
 .student-card h2 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #000000;
+  color: #ffffff;
 }
 
 .student-card p {
   font-size: 0.95rem;
-  color: #000000;
+  color: #e0e7ff;
 }

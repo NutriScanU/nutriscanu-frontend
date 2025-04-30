@@ -16,7 +16,8 @@ import Profile from "../modules/student/pages/Profile";
 import AnalysisStatus from "../modules/student/pages/AnalysisStatus";
 import Recommendations from "../modules/student/pages/Recommendations";
 import MultiStepForm from "../modules/student/components/MultiStepForm";
-import PlanNutrition from "../modules/student/pages/PlanNutrition";
+import CalendarioNutricional from "../modules/student/pages/CalendarioNutricional"; // Importa tu nuevo componente
+
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -46,7 +47,8 @@ function AppRouter() {
         <Route path="home" element={<StudentHome />} />
         <Route path="profile" element={<Profile />} />
         <Route path="analysis-status" element={<AnalysisStatus />} />
-        <Route path="PlanNutrition" element={<PlanNutrition />} />
+        {/* <Route path="recommendations" element={<Recommendations />} /> */}
+        <Route path="nutrition-plan" element={<CalendarioNutricional />} />
         <Route path="complete-analysis" element={<MultiStepForm />} />
       </Route>
 

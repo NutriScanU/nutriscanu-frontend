@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/authTheme.css";
 
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function ForgotPassword() {
       if (validateEmail(email)) {
         setLoading(true);
         axios
-          .post("http://localhost:5000/api/auth/check-email", { email })
+          .post(`${API_URL}/api/auth/check-email`, { email })
           .then((res) => {
             setEmailExists(res.data.exists);
             setLoading(false);
@@ -41,40 +41,33 @@ function ForgotPassword() {
     e.preventDefault();
     setError("");
 
-    if (!email) return setError("Campo requerido.");
+    if (!email.trim()) return setError("Campo requerido.");
     if (!validateEmail(email)) return setError("Por favor, ingresa un email válido.");
     if (emailExists === false) return setError("El correo no está registrado.");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      const res = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
       setCorreoOculto(res.data.obfuscatedEmail);
       setEnviado(true);
     } catch (err) {
+      console.error("❌ Error al enviar el correo:", err);
       setError("Hubo un error al enviar el correo.");
     }
   };
 
   return (
-    
     <div className="auth-wrapper">
       <div className="auth-background" />
       <button
         className="btn-back-transparent"
         onClick={() => navigate("/login")}
         title="Volver al login"
-        >
-          ←
-        </button>
+      >
+        ←
+      </button>
       <div className="auth-overlay" />
       <div className="auth-card">
-
-        {/* 🔙 Botón solo ícono tipo glass */}
-
-
-
-        <div className="auth-logo" onClick={() => navigate("/")}>
-          NutriScanU
-        </div>
+        <div className="auth-logo" onClick={() => navigate("/")}>NutriScanU</div>
 
         {!enviado ? (
           <>
