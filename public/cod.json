@@ -1,0 +1,853 @@
+{
+    "H-N-MP-N": {
+      "lunes": {
+        "desayuno": "Pan con palta y huevo",
+        "almuerzo": "Pollo a la plancha con arroz y ensalada",
+        "cena": "Fruta con yogur"
+      },
+      "martes": {
+        "desayuno": "Batido de papaya con avena y pan con queso fresco",
+        "almuerzo": "Estofado de carne con arroz",
+        "cena": "Gelatina con galletas de soda"
+      },
+      "miércoles": {
+        "desayuno": "Pan con tortilla de verduras y mate de hierbas",
+        "almuerzo": "Arroz chaufa de pollo",
+        "cena": "Fruta picada"
+      },
+      "jueves": {
+        "desayuno": "Pan con jamonada de pavo y bebida de cebada",
+        "almuerzo": "Tallarines rojos con presa de pollo",
+        "cena": "Yogur con granola"
+      },
+      "viernes": {
+        "desayuno": "Pan con huevo revuelto y jugo de naranja",
+        "almuerzo": "Lentejas con arroz y huevo",
+        "cena": "Emoliente y pan con mantequilla"
+      },
+      "sábado": {
+        "desayuno": "Pan con queso fresco y bebida de kiwicha",
+        "almuerzo": "Seco de pollo con arroz",
+        "cena": "Fruta de estación"
+      },
+      "domingo": {
+        "desayuno": "Avena con plátano",
+        "almuerzo": "Ají de gallina con arroz",
+        "cena": "Infusión con pan y mermelada"
+      }
+    },
+    "H-N-MP-A": {
+    "lunes": {
+      "desayuno": "Pan con tortilla de huevo y espinaca",
+      "almuerzo": "Arroz con pollo y ensalada",
+      "cena": "Fruta con yogur"
+    },
+    "martes": {
+      "desayuno": "Avena con plátano y linaza",
+      "almuerzo": "Estofado de carne con arroz",
+      "cena": "Gelatina con galletas"
+    },
+    "miércoles": {
+      "desayuno": "Pan con queso fresco y mate de coca",
+      "almuerzo": "Tallarines verdes con huevo duro",
+      "cena": "Fruta picada"
+    },
+    "jueves": {
+      "desayuno": "Pan con palta y jugo de papaya",
+      "almuerzo": "Sopa de quinua con presa",
+      "cena": "Infusión con pan y mantequilla"
+    },
+    "viernes": {
+      "desayuno": "Batido de plátano con avena y pan con huevo sancochado",
+      "almuerzo": "Lentejas con arroz y plátano",
+      "cena": "Emoliente con pan"
+    },
+    "sábado": {
+      "desayuno": "Pan con atún y bebida de kiwicha",
+      "almuerzo": "Seco de carne con yuca",
+      "cena": "Fruta cocida"
+    },
+    "domingo": {
+      "desayuno": "Avena con frutas y semilla de chía",
+      "almuerzo": "Ají de gallina con arroz",
+      "cena": "Infusión con pan integral"
+    }
+  },
+  "H-N-MP-S": {
+    "lunes": {
+      "desayuno": "Pan con tortilla de verduras y bebida de cebada",
+      "almuerzo": "Sopa criolla con arroz",
+      "cena": "Fruta cocida"
+    },
+    "martes": {
+      "desayuno": "Pan con mantequilla de maní y jugo de mandarina",
+      "almuerzo": "Arroz con huevo y plátano",
+      "cena": "Gelatina con avena"
+    },
+    "miércoles": {
+      "desayuno": "Kiwicha con leche y pan con miel",
+      "almuerzo": "Pescado apanado con yuca sancochada",
+      "cena": "Infusión con tostadas"
+    },
+    "jueves": {
+      "desayuno": "Pan con jamón de pollo y bebida de maca",
+      "almuerzo": "Locro con arroz y huevo",
+      "cena": "Fruta picada"
+    },
+    "viernes": {
+      "desayuno": "Batido de mango con pan de anís",
+      "almuerzo": "Arroz tapado con ensalada",
+      "cena": "Infusión con pan de yema"
+    },
+    "sábado": {
+      "desayuno": "Pan con sangrecita y mate de coca",
+      "almuerzo": "Arroz chaufa casero de pollo",
+      "cena": "Compota natural"
+    },
+    "domingo": {
+      "desayuno": "Pan con queso fresco y emoliente",
+      "almuerzo": "Pollo saltado con papa y arroz",
+      "cena": "Infusión con galletas de soda"
+    }
+  },
+  "H-N-BP-N": {
+    "lunes": {
+      "desayuno": "Pan integral con palta",
+      "almuerzo": "Pollo a la plancha con arroz y ensalada cocida",
+      "cena": "Infusión con fruta picada"
+    },
+    "martes": {
+      "desayuno": "Batido de papaya con linaza y pan integral",
+      "almuerzo": "Tallarines con verduras salteadas y huevo duro",
+      "cena": "Yogur natural con avena"
+    },
+    "miércoles": {
+      "desayuno": "Pan con queso fresco bajo en sal y emoliente",
+      "almuerzo": "Sopa de verduras con trozos de pollo",
+      "cena": "Gelatina sin azúcar"
+    },
+    "jueves": {
+      "desayuno": "Pan con atún y mate de hierbas",
+      "almuerzo": "Pescado al vapor con camote y ensalada",
+      "cena": "Fruta cocida"
+    },
+    "viernes": {
+      "desayuno": "Avena con trozos de manzana",
+      "almuerzo": "Lentejas con arroz y ensalada fresca",
+      "cena": "Infusión con pan de salvado"
+    },
+    "sábado": {
+      "desayuno": "Batido de fresa con agua y pan con tomate",
+      "almuerzo": "Ensalada grande con pollo deshilachado y arroz",
+      "cena": "Compota natural"
+    },
+    "domingo": {
+      "desayuno": "Pan con jamón de pavo y té verde",
+      "almuerzo": "Ají de gallina light con papa sancochada",
+      "cena": "Infusión con tostadas integrales"
+    }
+  },
+  "H-N-BP-A": {
+    "lunes": {
+      "desayuno": "Avena cocida con plátano y nueces",
+      "almuerzo": "Pollo a la plancha con ensalada de zanahoria y arroz ",
+      "cena": "Fruta picada con yogur"
+    },
+    "martes": {
+      "desayuno": "Pan integral con palta y té verde",
+      "almuerzo": "Lentejas con arroz y ensalada fresca",
+      "cena": "Gelatina light con agua de cebada"
+    },
+    "miércoles": {
+      "desayuno": "Batido de mango con avena y pan integral",
+      "almuerzo": "Pescado a la parrilla con camote sancochado",
+      "cena": "Infusión con pan integral y mermelada sin azúcar"
+    },
+    "jueves": {
+      "desayuno": "Pan con huevo duro y jugo de naranja natural",
+      "almuerzo": "Tallarines integrales con pollo y ensalada",
+      "cena": "Yogur natural con avena y chía"
+    },
+    "viernes": {
+      "desayuno": "Avena con semillas de chía y frutilla",
+      "almuerzo": "Sopa de verduras con arroz y pollo",
+      "cena": "Compota de manzana con té de manzanilla"
+    },
+    "sábado": {
+      "desayuno": "Pan con aguacate y té de hierbas",
+      "almuerzo": "arroz con pavo y verduras al vapor",
+      "cena": "Ensalada de pepino y tomate con limón"
+    },
+    "domingo": {
+      "desayuno": "Pan con queso fresco y jugo de piña",
+      "almuerzo": "Ají de gallina light con papa",
+      "cena": "Fruta picada con infusión de hierba luisa"
+    }
+  },
+  "H-N-BP-S": {
+    "lunes": {
+      "desayuno": "Avena cocida con linaza, plátano y almendras",
+      "almuerzo": "Pollo a la plancha con camote sancochado y ensalada fresca",
+      "cena": "Fruta picada con yogur natural"
+    },
+    "martes": {
+      "desayuno": "Pan integral con aguacate y huevo revuelto",
+      "almuerzo": "Lentejas con arroz y ensalada de zanahoria",
+      "cena": "Gelatina light con agua de cebada"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena y leche de almendra",
+      "almuerzo": "Pescado a la parrilla con arroz y ensalada de pepino",
+      "cena": "Infusión con manzana y canela"
+    },
+    "jueves": {
+      "desayuno": "Pan con queso fresco y bebida de quinua",
+      "almuerzo": "Sopa de verduras con quinua y pollo",
+      "cena": "Yogur natural con frutos rojos"
+    },
+    "viernes": {
+      "desayuno": "Avena con semillas de chía y fresas",
+      "almuerzo": "Tallarines con pollo y verduras",
+      "cena": "Fruta cocida con infusión de manzanilla"
+    },
+    "sábado": {
+      "desayuno": "Pan integral con mermelada sin azúcar y té verde",
+      "almuerzo": "Arroz con lentejas y ensalada",
+      "cena": "Compota de manzana con té de hierbas"
+    },
+    "domingo": {
+      "desayuno": "Avena con manzana y nueces",
+      "almuerzo": "Ají de gallina con papa",
+      "cena": "Infusión con pan integral"
+    }
+  },
+  "H-N-SP-N": {
+    "lunes": {
+      "desayuno": "Avena cocida con leche, plátano y nueces",
+      "almuerzo": "Pollo a la plancha con arroz integral y ensalada de aguacate",
+      "cena": "Fruta picada con yogur natural"
+    },
+    "martes": {
+      "desayuno": "Pan integral con aguacate y huevo revuelto",
+      "almuerzo": "Lentejas con arroz y trozos de carne magra",
+      "cena": "Gelatina con crema batida"
+    },
+    "miércoles": {
+      "desayuno": "Batido de mango con avena y leche",
+      "almuerzo": "Pescado a la parrilla con camote y ensalada fresca",
+      "cena": "Infusión con galletas de avena"
+    },
+    "jueves": {
+      "desayuno": "Pan con queso fresco y bebida de quinua",
+      "almuerzo": "Tallarines con carne molida y verduras",
+      "cena": "Yogur natural con almendras"
+    },
+    "viernes": {
+      "desayuno": "Avena con frutos rojos, nueces y miel",
+      "almuerzo": "Arroz chaufa con pollo y verduras",
+      "cena": "Compota de manzana con un puñado de almendras"
+    },
+    "sábado": {
+      "desayuno": "Pan integral con mantequilla de maní y té verde",
+      "almuerzo": "Seco de carne con arroz y papa",
+      "cena": "Fruta cocida con yogur"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con leche y avena",
+      "almuerzo": "Ají de gallina con arroz",
+      "cena": "Infusión con pan integral"
+    }
+  },
+  "H-N-SP-A": {
+    "lunes": {
+      "desayuno": "Avena cocida con trozos de plátano y almendras",
+      "almuerzo": "Pollo al horno con batatas asadas y ensalada de pepino",
+      "cena": "Fruta picada con leche evaporada"
+    },
+    "martes": {
+      "desayuno": "Tostadas integrales con aguacate y huevo pochado",
+      "almuerzo": "Sopa de garbanzos con espinacas y arroz integral",
+      "cena": "Infusión de manzanilla con unas galletas de avena"
+    },
+    "miércoles": {
+      "desayuno": "Pan integral con mantequilla de almendra y jugo de naranja",
+      "almuerzo": "Pescado a la plancha con arroz integral y ensalada de zanahoria",
+      "cena": "Kefir con miel y nueces"
+    },
+    "jueves": {
+      "desayuno": "Batido de fresa con avena y leche de almendra",
+      "almuerzo": "Lentejas estofadas con arroz y ensalada fresca",
+      "cena": "Fruta cocida con leche de coco"
+    },
+    "viernes": {
+      "desayuno": "Avena con manzana, nueces y un toque de miel",
+      "almuerzo": "Arroz chaufa de pollo con verduras",
+      "cena": "Gelatina light con té de jengibre"
+    },
+    "sábado": {
+      "desayuno": "Pan integral con queso fresco y té verde",
+      "almuerzo": "Seco de pollo con papas y arroz integral",
+      "cena": "Té de hierba luisa con galletas integrales"
+    },
+    "domingo": {
+      "desayuno": "Pan integral con aguacate y tomate + jugo de piña",
+      "almuerzo": "Ají de gallina light con papa sancochada",
+      "cena": "Fruta picada con ricotta"
+    }
+  },
+  "H-N-SP-S": {
+    "lunes": {
+      "desayuno": "Avena cocida con leche, plátano y almendras",
+      "almuerzo": "Sopa criolla con arroz y trozos de carne",
+      "cena": "Jugo natural de naranja con galletas integrales"
+    },
+    "martes": {
+      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
+      "almuerzo": "Caldo de res con papas y verduras",
+      "cena": "Fruta picada con yogur natural"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena y leche de almendra",
+      "almuerzo": "Lomo saltado con arroz y papas fritas al horno",
+      "cena": "Gelatina sin azúcar con agua de piña"
+    },
+    "jueves": {
+      "desayuno": "Pan integral con queso fresco y jugo de naranja",
+      "almuerzo": "Arroz con menestrón (sopa de frijoles y vegetales)",
+      "cena": "Té verde con galletas de avena"
+    },
+    "viernes": {
+      "desayuno": "Avena con semillas de chía y fresas",
+      "almuerzo": "Sopa de quinua con verduras y pollo",
+      "cena": "Compota de manzana con yogur natural"
+    },
+    "sábado": {
+      "desayuno": "Pan integral con mantequilla de maní y té verde",
+      "almuerzo": "Causa rellena de atún con ensalada de pepino",
+      "cena": "Infusión de manzanilla con galletas integrales"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con leche y avena",
+      "almuerzo": "Seco de cordero con arroz y yuca",
+      "cena": "Fruta cocida con ricotta y un té de hierbas"
+    }
+  },
+  "H-FS-X-X": {
+    "lunes": {
+      "desayuno": "Pan con queso fresco y jugo de naranja",
+      "almuerzo": "Tallarines rojos con pollo y ensalada fresca",
+      "cena": "Flan de vainilla saludable (sin azúcar añadida)"
+    },
+    "martes": {
+      "desayuno": "Avena cocida con plátano y semillas de chía",
+      "almuerzo": "Sopa criolla con arroz y carne",
+      "cena": "Pudín de arroz con leche (sin azúcar refinada)"
+    },
+    "miércoles": {
+      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
+      "almuerzo": "Arroz con mariscos",
+      "cena": "Mil hojas de manzana con crema de avena"
+    },
+    "jueves": {
+      "desayuno": "Pan integral con palta y té de hierba luisa",
+      "almuerzo": "Seco de pollo con arroz y papas",
+      "cena": "Gelatina natural de frutas"
+    },
+    "viernes": {
+      "desayuno": "Batido de mango con avena y leche de almendra",
+      "almuerzo": "Causa rellena de atún con ensalada",
+      "cena": "Compota de manzana con canela"
+    },
+    "sábado": {
+      "desayuno": "Pan con mermelada de frutas sin azúcar y té verde",
+      "almuerzo": "Arroz con pollo y ensalada criolla",
+      "cena": "Pudín"
+    },
+    "domingo": {
+      "desayuno": "Avena con fresa y semillas de linaza",
+      "almuerzo": "Tacu tacu con pescado y ensalada de tomate",
+      "cena": "Flan de chocolate saludable"
+    }
+  },
+  "H-M-X-X": {
+    "lunes": {
+      "desayuno": "Pan integral con queso fresco y jugo de naranja",
+      "almuerzo": "Tallarines rojos con pollo y ensalada fresca",
+      "cena": "Flan de vainilla saludable (sin azúcar añadida)"
+    },
+    "martes": {
+      "desayuno": "Avena cocida con plátano y semillas de chía",
+      "almuerzo": "Sopa criolla con arroz y carne",
+      "cena": "Pudín de arroz con leche (sin azúcar refinada)"
+    },
+    "miércoles": {
+      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
+      "almuerzo": "Pollo a la parrilla con camote sancochado y ensalada fresca",
+      "cena": "Mil hojas de manzana con crema de avena"
+    },
+    "jueves": {
+      "desayuno": "Pan integral con palta y té de hierba luisa",
+      "almuerzo": "Seco de pollo con arroz y papas",
+      "cena": "Gelatina natural de frutas"
+    },
+    "viernes": {
+      "desayuno": "Batido de mango con avena y leche de almendra",
+      "almuerzo": "Ensalada de pollo desmenuzado con papas y arroz",
+      "cena": "Compota de manzana con canela"
+    },
+    "sábado": {
+      "desayuno": "Pan con mermelada de frutas sin azúcar y té verde",
+      "almuerzo": "Arroz con pollo y ensalada criolla",
+      "cena": "Pudín de choclo saludable (sin azúcar añadida)"
+    },
+    "domingo": {
+      "desayuno": "Avena con fresa y semillas de linaza",
+      "almuerzo": "Tacu tacu con carne de res y ensalada de tomate",
+      "cena": "Flan de chocolate saludable (sin azúcar)"
+    }
+  },
+    "H-G-X-X": {
+      "lunes": {
+        "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+        "almuerzo": "Pollo a la parrilla con arroz integral y ensalada de pepino",
+        "cena": "Flan de vainilla sin azúcar"
+      },
+      "martes": {
+        "desayuno": "Tostadas sin gluten con aguacate y huevo revuelto",
+        "almuerzo": "Sopa de quinua con verduras y trozos de pollo",
+        "cena": "Yogur natural con fresas"
+      },
+      "miércoles": {
+        "desayuno": "Batido de papaya con avena sin gluten y leche de almendras",
+        "almuerzo": "Tacu tacu sin gluten con carne de res y ensalada de zanahoria",
+        "cena": "Gelatina natural con fruta fresca"
+      },
+      "jueves": {
+        "desayuno": "Pan sin gluten con queso fresco y jugo de naranja natural",
+        "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+        "cena": "Ensalada de frutas frescas con jugo de limón"
+      },
+      "viernes": {
+        "desayuno": "Avena sin gluten con semillas de chía y manzana",
+        "almuerzo": "Pollo al horno con batatas asadas y ensalada fresca",
+        "cena": "Compota de manzana con canela"
+      },
+      "sábado": {
+        "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+        "almuerzo": "Causa rellena de pollo con ensalada",
+        "cena": "Pudín"
+      },
+      "domingo": {
+        "desayuno": "Batido de plátano con avena sin gluten y leche",
+        "almuerzo": "Ají de gallina sin gluten con papa sancochada",
+        "cena": "Ensalada de frutas con limón"
+      }
+    },
+    "H-IL-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin lactosa con plátano y semillas de chía",
+      "almuerzo": "Sopa de verduras con pollo",
+      "cena": "Gelatina natural con frutas frescas"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con aguacate y huevo revuelto",
+      "almuerzo": "Lomo de cerdo al horno con puré de camote",
+      "cena": "Pudín de arroz con leche sin lactosa"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin lactosa y leche de almendras",
+      "almuerzo": "Tallarines a la huancaína (sin queso) y ensalada",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con queso sin lactosa y jugo de naranja",
+      "almuerzo": "Estofado de ternera con arroz integral",
+      "cena": "Yogur sin lactosa con fresas"
+    },
+    "viernes": {
+      "desayuno": "Avena sin lactosa con semillas de chía y fresas",
+      "almuerzo": "Arroz con lentejas y vegetales",
+      "cena": "Compota de manzana con canela"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "almuerzo": "Sopa a la minuta sin fideos con arroz y zanahoria",
+      "cena": "Pudín de choclo sin azúcar"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin lactosa y leche de almendras",
+      "almuerzo": "Puré de papa con estofado de res",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    }
+  },
+  "H-VX-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+      "almuerzo": "Ensalada de quinua con vegetales (tomate, pepino, cebolla, aguacate, maíz)",
+      "cena": "Sauté de tofu con vegetales (zanahorias, espinacas, pimientos, cebolla)"
+    },
+    "martes": {
+      "desayuno": "Pan sin gluten con aguacate y tomate",
+      "almuerzo": "Lentejas estofadas con arroz integral y ensalada fresca",
+      "cena": "Tallarines veganos con salsa de tomate, albahaca y espinacas"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Tacu tacu vegano con frijoles y arroz, salteado con cebolla, ajo y pimientos",
+      "cena": "Papas a la huancaína veganas (con leche de almendra y salsa de ají amarillo)"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Causa vegana con puré de papa, aguacate y zanahoria, rellena con tofu o guacamole",
+      "cena": "Arroz con vegetales y salsa de soya (zanahorias, brócoli, pimientos)"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con semillas de chía, fresas y un toque de miel de agave",
+      "almuerzo": "Sopa criolla vegana con fideos de arroz, zanahorias, espinacas y cebolla",
+      "cena": "Ensalada de frutas frescas con jugo de limón y menta"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "cena": "Gelatina de frutas sin azúcar"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "almuerzo": "Lomo saltado vegano con tofu, cebolla, tomate, pimientos y cilantro",
+      "cena": "Compota de manzana con canela"
+    }
+  },
+  "H-VXXX-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+      "almuerzo": "Arroz integral y ensalada de pepino",
+      "cena": "Ensalada de frutas frescas"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con aguacate y tomate",
+      "almuerzo": "Lentejas estofadas con arroz integral y ensalada fresca",
+      "cena": "Tallarines veganos con salsa de tomate"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Arroz con verduras salteadas y tofu marinado",
+      "cena": "Papas a la huancaína"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Estofado de papa con zanahorias",
+      "cena": "Compota de manzana con canela"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con semillas de chía y fresas",
+      "almuerzo": "Causa rellena vegana de palta y tomate",
+      "cena": "Pizza vegetariana"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla té verde",
+      "almuerzo": "Sopa criolla vegana con fideos de arroz",
+      "cena": "Berenjenas rellenas"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "almuerzo": "Sopa de lentejas con arroz y espinacas",
+      "cena": "Ensalada de frutas frescas"
+    }
+  },
+  "XXX-N-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin gluten con leche de almendra, plátano y semillas de chía",
+      "almuerzo": "Arroz con menestra, cebolla, ajo, pimientos y tomate con ensalada fresca",
+      "cena": "Sándwich de pan integral con hummus y verduras"
+    },
+    "martes": {
+      "desayuno": "Pan sin gluten con aguacate, tomate y huevo poché",
+      "almuerzo": "Pancakes de avena y plátano acompañados con frutas frescas y miel de agave",
+      "cena": "Minestrone vegano con fideos integrales, zanahorias y frijoles"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Sopa de verduras con arroz integral, zanahorias, espinacas y cebolla",
+      "cena": "Pudín de chía con leche de coco y fresas"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "cena": "Brownie de Batata y Cacao"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con fresas, semillas de chía y leche de almendra",
+      "almuerzo": "Causa rellena de palta con zanahoria y cebolla",
+      "cena": "Gelatina natural con frutas frescas"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "cena": "Tarta de Manzana"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "almuerzo": "Arroz con vegetales y salsa de soya, acompañado de tofu",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    }
+  },
+  "XXX-FS-X-X": {
+    "lunes": {
+      "desayuno": "Avena con plátano y semillas de chía",
+      "almuerzo": "Lomo Saltado con pollo, cebolla, pimientos, papas camote y arroz integral",
+      "cena": "Ensalada de frutas frescas"
+    },
+    "martes": {
+      "desayuno": "Tostadas con aguacate, tomate y huevo poché",
+      "almuerzo": "Arroz con pollo sin piel y ensalada",
+      "cena": "Pudín de arroz con leche de almendras"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena y leche de soja",
+      "almuerzo": "Ensalada de quinua con vegetales frescos",
+      "cena": "Arroz con Leche Sin Azúcar"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y pepino",
+      "almuerzo": "Sopa de lentejas con arroz integral",
+      "cena": "Mermelada Casera de Fresas"
+    },
+    "viernes": {
+      "desayuno": "Avena con fresas y semillas de chía",
+      "almuerzo": "Sopa criolla vegetariana",
+      "cena": "Ensalada de pepino, tomate, cebolla y aguacate"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco",
+      "almuerzo": "Estofado de papa con tempeh",
+      "cena": "Tamarindo con jugo de limón"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena y leche de coco",
+      "almuerzo": "Arroz con vegetales y tofu",
+      "cena": "Tarta de Limón"
+    }
+  },
+  "XXX-M-X-X": {
+    "lunes": {
+      "desayuno": "Avena con plátano y semillas de chía",
+      "almuerzo": "Guiso de Lentejas con Papas",
+      "cena": "Sopa de quinua con zanahorias y espinacas"
+    },
+    "martes": {
+      "desayuno": "Tostadas con aguacate, tomate y huevo poché",
+      "almuerzo": "Arroz integral con pechuga de pollo, zanahorias y guisantes",
+      "cena": "Ensalada de quinua con vegetales frescos"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena y leche de soja",
+      "almuerzo": "Pollo al Horno con Papas y Zanahorias",
+      "cena": "Galletas de Avena y pasas"
+    },
+    "jueves": {
+      "desayuno": "Pan con hummus y rodajas de pepino",
+      "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+      "cena": "Compota de manzana con canela"
+    },
+    "viernes": {
+      "desayuno": "Avena con fresas y semillas de chía",
+      "almuerzo": "Arroz con frijoles y ensalada de zanahoria",
+      "cena": "Arroz con Leche "
+    },
+    "sábado": {
+      "desayuno": "Pan con mantequilla de coco y té verde",
+      "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena y leche de coco",
+      "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "cena": "Gelatina natural con frutas frescas"
+    }
+  },
+  "XXX-G-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+      "almuerzo": "Pescado al Horno",
+      "cena": "Tarta de Kiwi"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con aguacate, tomate y huevo poché",
+      "almuerzo": "Pollo a la parrilla con arroz integral, zanahorias y guisantes",
+      "cena": "Ensalada de quinua con vegetales frescos (tomate, pepino, cebolla)"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Tortillas de Maíz con Pollo y Vegetales",
+      "cena": "Pudín de arroz con leche de almendra"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+      "cena": "Compota de manzana con canela"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con fresas y semillas de chía",
+      "almuerzo": "Arroz con frijoles y ensalada de zanahoria",
+      "cena": "Compota de Durazno"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "cena": "Gelatina natural con frutas frescas"
+    }
+  },
+  "XXX-IL-X-X": {
+    "lunes": {
+      "desayuno": "Batido de Piña",
+      "almuerzo": "Sopa de Tomate con Albahaca",
+      "cena": "Tostadas de pan sin gluten con guacamole y pimientos"
+    },
+    "martes": {
+      "desayuno": "Pan sin gluten con aguacate, tomate y huevo revuelto",
+      "almuerzo": "Sopa de zanahoria y lentejas con arroz integral",
+      "cena": "Ensalada de garbanzos con pepino, cebolla morada y limón"
+    },
+    "miércoles": {
+      "desayuno": "Batido de plátano con leche y avena sin gluten",
+      "almuerzo": "Berenjenas Asadas con Salsa de Tomate",
+      "cena": "Papas camote al horno con salsa de aguacate y cilantro"
+    },
+    "jueves": {
+      "desayuno": "Tostadas sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Causa vegana rellena de palta y zanahoria",
+      "cena": "Sopa de garbanzos con espinacas"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con plátano y semillas de calabaza",
+      "almuerzo": "Seco de pollo con arroz integral y batatas",
+      "cena": "Huevos Revueltos con Espinacas y Tomate"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla y té verde",
+      "almuerzo": "Arroz con vegetales y tempeh",
+      "cena": "Ensalada de quinoa con pepino, tomate, cebolla y limón"
+    },
+    "domingo": {
+      "desayuno": "Tortilla de Verduras",
+      "almuerzo": "Estofado de papas con zanahorias y tofu",
+      "cena": "Compota de manzana con canela"
+    }
+  },
+  "XXX-V-X-X": {
+    "lunes": {
+      "desayuno": "Pancakes de Arroz Integral con Miel",
+      "almuerzo": "Ensalada de quinua con tomate, pepino, cebolla morada y aguacate",
+      "cena": "Galletas integrales"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con aguacate y tomate",
+      "almuerzo": "Sopa de calabaza y zanahoria",
+      "cena": "Ensalada fresca de pepino, cebolla morada y tomate"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Arroz Integral con Tofu y Verduras Salteadas",
+      "cena": "Sopa de zanahoria y jengibre con espinacas"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "CGuiso de Tofu con Espinacas y Papas",
+      "cena": "Berenjenas al horno con salsa de tomate casera"
+    },
+    "viernes": {
+      "desayuno": "Gachas de Avena con Plátano y Almendras",
+      "almuerzo": "Arroz con Brotes de Soja y Zanahoria",
+      "cena": "Tostadas de pan sin gluten con guacamole y pimientos"
+    },
+    "sábado": {
+      "desayuno": "Ensalada de Frutas con Miel",
+      "almuerzo": "Arroz con lentejas y ensalada de zanahoria rallada",
+      "cena": "Pastelito de Zanahoria"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "almuerzo": "Sopa de lentejas con espinacas y zanahorias",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    }
+  },
+  "XXX-VXXX-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin gluten con plátano y semillas de chía",
+      "almuerzo": "Sopa de Caigua con Verduras",
+      "cena": "Tarta de Limón"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con aguacate, tomate y cebolla morada",
+      "almuerzo": "Ensalada de quinua con espinacas, tomate, pepino y aguacate",
+      "cena": "Tarta de Higos"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "almuerzo": "Hamburguesas de Garbanzo y Espinacas",
+      "cena": "Gelatina"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "almuerzo": "Sopa de lentejas con zanahorias y espinacas",
+      "cena": "Ensalada de pepino, tomate y cebolla con jugo de limón"
+    },
+    "viernes": {
+      "desayuno": "Avena sin gluten con fresas y semillas de chía",
+      "almuerzo": "Vainitas Salteadas con Champiñones y Cebolla",
+      "cena": "Berenjenas al horno con salsa de tomate"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "almuerzo": "Arroz con tempeh y verduras salteadas",
+      "cena": "Sopa de espinacas con zanahorias"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche de almendras",
+      "almuerzo": "nsalada de Espárragos con Garbanzos",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    }
+  },
+  "H-N-MS-X": {
+    "lunes": {
+      "desayuno": "Avena con frutas frescas (plátano o manzana)",
+      "almuerzo": "Pollo a la plancha con ensalada de lechuga y tomate",
+      "cena": "Ensalada fresca de tomate, pepino y zanahoria"
+    },
+    "martes": {
+      "desayuno": "Tostadas integrales con palta y rodajas de tomate",
+      "almuerzo": "Sopa criolla (sin crema)",
+      "cena": "Verduras al vapor (brócoli, zanahoria)"
+    },
+    "miércoles": {
+      "desayuno": "Jugo de naranja natural con pan integral y huevo duro",
+      "almuerzo": "Lomo saltado con arroz integral",
+      "cena": "Sopa de verduras con pollo desmenuzado"
+    },
+    "jueves": {
+      "desayuno": "Yogur sin lactosa con granola y rodajas de fresa",
+      "almuerzo": "Sopa de zanahoria con pollo",
+      "cena": "Ensalada de espinaca, tomate y pepino con un toque de aceite de oliva"
+    },
+    "viernes": {
+      "desayuno": "Tostadas con palta y tomate",
+      "almuerzo": "Arroz con pollo (más ligero, sin piel)",
+      "cena": "Verduras al vapor (espinaca, zanahoria)"
+    },
+    "sábado": {
+      "desayuno": "Yogur sin lactosa con rodajas de kiwi y un toque de miel",
+      "almuerzo": "Pescado a la parrilla con ensalada de pepino y tomate",
+      "cena": "Mazamorra morada (sin lácteos)"
+    },
+    "domingo": {
+      "desayuno": "Pan integral con palta y tomate",
+      "almuerzo": "Sopa de calabaza con zanahoria",
+      "cena": "Empanada de pollo"
+    }
+}
+}

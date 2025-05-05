@@ -28,7 +28,6 @@ function ResetPassword() {
     try {
       setLoading(true);
 
-      // 🔍 Debug en consola
       const url = `${process.env.REACT_APP_API_URL}/api/auth/reset-password/${token}`;
       console.log("📦 Enviando solicitud a:", url);
 
@@ -39,7 +38,6 @@ function ResetPassword() {
 
       setSuccess("¡Contraseña actualizada correctamente!");
       setTimeout(() => navigate("/login"), 2500);
-
     } catch (err) {
       console.error("❌ Error al resetear:", err);
 
@@ -51,46 +49,47 @@ function ResetPassword() {
       } else {
         setError("Error inesperado: " + err.message);
       }
-
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", paddingTop: "4rem" }}>
-      <h2>Cambia tu contraseña</h2>
-      <p>Recuerda que debe tener 6 caracteres como mínimo</p>
+    <div className="auth-wrapper">
+      <div className="auth-background" />
+      <div className="auth-overlay" />
+      <div className="auth-card">
+        <h2>Cambia tu contraseña</h2>
+        <p>Recuerda que debe tener 6 caracteres como mínimo</p>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Confirmar contraseña"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="password"
+            placeholder="Nueva contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Confirmar contraseña"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p style={{ color: "green" }}>{success}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {success && <p style={{ color: "green" }}>{success}</p>}
 
-        <button
-          type="submit"
-          style={{ width: "100%", padding: 10 }}
-          disabled={loading}
-        >
-          {loading ? "Procesando..." : "Cambiar"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            style={{ width: "100%", padding: 10 }}
+            disabled={loading}
+          >
+            {loading ? "Procesando..." : "Cambiar"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

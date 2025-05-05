@@ -39,7 +39,7 @@ function AppRouter() {
       <Route
         path="/student"
         element={
-          <PrivateRoute allowedRoles={["estudiante"]}>
+          <PrivateRoute allowedRoles={["student"]}>
             <StudentLayout />
           </PrivateRoute>
         }

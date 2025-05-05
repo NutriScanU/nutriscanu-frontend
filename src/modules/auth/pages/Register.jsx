@@ -87,7 +87,6 @@ function Register() {
     const userData = {
       email,
       password,
-      confirm_password: password,
       first_name: firstName.trim(),
       last_name: lastName.trim(),
       middle_name: middleName.trim(),
