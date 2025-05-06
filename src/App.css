@@ -1,0 +1,24 @@
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 🔥 Este evita barras horizontales */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden; /* 🔥 Agrega también aquí */
+}
+
+.app-content {
+  flex: 1;
+  padding-top: 100px; /* Deja espacio para el navbar fijo */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  overflow-x: hidden; /* 🔥 Evita desbordes en main también */
+}

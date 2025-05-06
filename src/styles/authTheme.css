@@ -1,0 +1,567 @@
+/* ========================== */
+/* 🎨 Variables Globales      */
+/* ========================== */
+:root {
+  --color-success: #72C49D; /* Color para éxito o confirmación */
+  --color-error: #FF5722;   /* Color para errores (rojo anaranjado) */
+  --color-logo-primary: #FF5722; /* Color principal para la marca */
+  --color-auth-button: #fbbf24; /* Color de los botones de autenticación (amarillo) */
+  --color-auth-button-hover: #facc15; /* Hover para botones de autenticación */
+  --color-gray: #666666;    /* Color gris */
+  --color-black: #000000;   /* Color negro */
+  --color-white: #ffffff;   /* Color blanco */
+  --font-main: 'Inter', sans-serif; /* Fuente principal */
+  --border-radius: 12px;    /* Radio de borde común */
+}
+
+/* ========================== */
+/* 🧱 Estructura General       */
+/* ========================== */
+.auth-wrapper {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--font-main);
+}
+
+.auth-background {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://storage.googleapis.com/a1aa/image/737ac0d8-f863-4bfa-34b3-7e7f92bd6b4b.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+/* ========================== */
+/* 🪟 Tarjeta Principal        */
+/* ========================== */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border-radius: var(--border-radius);
+  padding: 2.5rem 2rem;
+  color: var(--color-white);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* ========================== */
+/* 🧢 Títulos y textos         */
+/* ========================== */
+.auth-logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--color-white);
+  cursor: pointer;
+  text-align: center;
+}
+
+.auth-logo:hover {
+  color: var(--color-warning);
+}
+
+.auth-card h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.auth-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  color: #e5e5e5;
+}
+
+.auth-card label {
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* ========================== */
+/* ✍️ Formularios              */
+/* ========================== */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-card input {
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background: var(--color-white);
+  color: var(--color-black);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-error {
+  border: 1px solid var(--color-error);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 2.2rem;
+}
+
+/* Icono ✔ */
+.checkmark {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-success);
+  font-weight: bold;
+}
+
+/* Carga ⏳ */
+.loader {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-warning);
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* ========================== */
+/* ❌ Errores y Validación     */
+/* ========================== */
+.error-message {
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: 4px;
+  text-align: left;
+}
+
+.general-error {
+  color: var(--color-error);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* ========================== */
+/* 🔘 Botones                  */
+/* ========================== */
+.auth-card button {
+  padding: 12px;
+  background: var(--color-auth-button); /* Color de los botones de autenticación */
+  border: none;
+  color: var(--color-black);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-sizing: border-box;
+}
+
+.auth-card button:hover {
+  background: var(--color-auth-button-hover); /* Color del hover del botón */
+}
+
+/* ========================== */
+/* 🔗 Enlaces secundarios      */
+/* ========================== */
+.forgot-link {
+  font-size: 0.85rem;
+  color: var(--color-warning);
+  text-align: right;
+  cursor: pointer;
+  margin-top: -0.5rem;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-white);
+}
+
+.auth-footer span {
+  font-weight: 600;
+  color: var(--color-warning);
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.auth-footer span:hover {
+  text-decoration: underline;
+}
+
+.btn-back-transparent {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 8px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.btn-back-transparent:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Separación entre el texto "O" y el botón */
+.center-or {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.center-or span {
+  font-size: 1.1rem;
+  color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 2rem;
+    width: 90%;
+  }
+
+  .auth-logo {
+    font-size: 1.4rem;
+  }
+
+  .auth-card h1 {
+    font-size: 1.2rem;
+  }
+
+  .auth-card p {
+    font-size: 0.9rem;
+  }
+
+  .auth-card input {
+    font-size: 0.95rem;
+  }
+
+  .btn-code-login {
+    font-size: 0.9rem;
+  }
+
+  .forgot-link-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ========================== */
+/* 🔘 Estilo del botón "Usar un código de inicio de sesión" */
+/* ========================== */
+.login-code-button {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: block;
+  box-sizing: border-box;
+}
+
+.login-code-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Enlace "¿Olvidaste la contraseña?" */
+/* Asegura que el enlace de "¿Olvidaste la contraseña?" tenga margen suficiente */
+.forgot-password-link {
+  font-size: 0.85rem;
+  color: var(--color-warning);
+  cursor: pointer;
+  display: inline-block;  /* Esto asegura que el texto ocupe solo el tamaño necesario */
+  padding: 0;
+  margin-top: 20px; /* Agrega margen superior para separar del botón */
+  text-decoration: none; /* Sin subrayado por defecto */
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;  /* Subraya cuando el mouse pasa sobre el texto */
+  color: rgba(226, 215, 215, 0.671);
+}
+
+
+
+.login-button {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+
+/* Spinner estilo Netflix */
+.loader-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.9s ease infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilo especial del título grande en "enter-code" */
+.form-enter-code h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: white;
+  text-align: center;
+}
+
+/* Texto descriptivo del envío de código */
+.form-enter-code p {
+  color: #e5e5e5;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Inputs del código (visual estilo Netflix) */
+.code-inputs input {
+  background: transparent;
+  color: white;
+  border: 1px solid #aaa;
+  width: 48px;
+  height: 48px;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.code-inputs input:last-child {
+  margin-right: 0;
+}
+
+/* Espaciado entre secciones */
+.form-enter-code,
+.form-send-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Subtexto tipo "pueden aplicar tarifas..." */
+.code-info-subtext {
+  color: #b3b3b3;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+}
+
+/* Estilo para enlaces secundarios tipo "¿Usar contraseña?" */
+.secondary-action-link {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 6px;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s ease;
+}
+
+.secondary-action-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  text-decoration: underline;
+}
+
+/* Estilo para el botón reenviar código */
+.resend-code-link {
+  font-size: 0.85rem;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.resend-code-link:hover {
+  color: var(--color-auth-button);
+  text-decoration: underline;
+}
+
+.login-code-button.secondary {
+  background: transparent;     /* sin color de fondo */
+  border: none;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+  transition: background 0.3s ease, color 0.3s ease;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+.login-code-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);  /* translúcido al pasar el mouse */
+  color: var(--color-white);              /* mantiene texto blanco */
+}
+
+
+.resend-code-button {
+  padding: 12px;
+  border-radius: var(--border-radius);
+
+  cursor: pointer;
+  color: white;
+  margin-top: 10px;
+  background: none; /* completamente transparente */
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.resend-code-button:hover {
+  background: rgba(255, 255, 255, 0.1); /* efecto translúcido al pasar mouse */
+
+}
+.login-code-button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.login-code-button.secondary.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Spinner estilo Netflix (ya está, pero le agregamos una variante pequeña) */
+.loader-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.9s ease infinite;
+  margin: 0 auto;
+}
+
+/* Spinner pequeño para botones como "Usar contraseña" y "Reenviar código" */
+.loader-spinner.small {
+  width: 15px;
+  height: 15px;
+  border-width: 2.5px;
+}
+
+/* Desactiva botón visualmente */
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+
+.code-inputs input:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+
+.register-link {
+  font-weight: 600;
+  color: var(--color-warning);
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.auth-card input:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.register-link.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

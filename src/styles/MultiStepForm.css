@@ -1,0 +1,190 @@
+/* 🌐 CONTENEDOR */
+.multi-step-form {
+  position: relative;
+  background: #ffffff;
+  padding: 3rem 2rem;
+  max-width: 840px;
+  margin: 3rem auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease;
+}
+
+/* ANIMACIÓN ENTRADA */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🡐 BOTÓN VOLVER CON TOOLTIP */
+.back-button {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  background-color: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+.back-button:hover {
+  background-color: #1e293b;
+}
+.back-button::after {
+  content: "Volver";
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: #334155;
+  opacity: 0.8;
+}
+
+/* 🧭 PROGRESO */
+.multi-step-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.multi-step-item {
+  flex: 1;
+  text-align: center;
+  transition: opacity 0.3s ease;
+  opacity: 0.5;
+}
+.multi-step-item.active {
+  opacity: 1;
+}
+
+.multi-step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+.multi-step-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* 🧾 CONTENIDO */
+.multi-step-content {
+  animation: fadeIn 0.4s ease;
+}
+
+/* 📍 NAVEGACIÓN */
+.multi-step-navigation {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.multi-step-button {
+  padding: 0.75rem 1.6rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.multi-step-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.multi-step-button:active {
+  transform: scale(0.98);
+}
+
+.multi-step-button.cancel {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.multi-step-confirmation {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+/* ✅ MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 14px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content p {
+  font-size: 1.05rem;
+  color: #1f2937;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 640px) {
+  .multi-step-progress {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .multi-step-navigation {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .back-button {
+    top: 1rem;
+    left: 1rem;
+  }
+}

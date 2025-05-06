@@ -1,0 +1,137 @@
+.calendario-nutricional-wrapper {
+  width: 100%; /* ✅ ocupa todo el ancho sin límite artificial */
+  max-width: 1600px;
+  margin: 4rem auto;
+  padding: 2rem 2rem;
+  box-sizing: border-box; /* ✅ súper importante para que padding no sume extra */
+  background: linear-gradient(to bottom right, #f9fcfb, #e3f2fd);
+  border-radius: 28px;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  overflow-x: hidden; /* ✅ para que nada sobresalga */
+}
+
+.calendario-nutricional-title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #1b1b1b;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px #ffffff;
+}
+
+.calendario-nutricional-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+}
+
+.calendario-nutricional-table th,
+.calendario-nutricional-table td {
+  padding: 1.8rem; /* ✅ Más espacio */
+  text-align: center;
+  vertical-align: middle; /* ✅ Centrado verticalmente */
+  font-size: 1.25rem; /* ✅ Más grande */
+  color: #2f2f2f;
+  border: 1px solid #e0e0e0;
+  min-width: 140px; /* ✅ Celdas más anchas */
+  height: 100px; /* ✅ Altura mínima agradable */
+  transition: background-color 0.2s ease;
+}
+
+.calendario-nutricional-table th {
+  background-color: #f0f7fa;
+  font-weight: 700;
+  font-size: 1.3rem; /* ✅ Más grande */
+  color: #00796b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.calendario-nutricional-category {
+  background-color: #e0f2f1;
+  color: #00695c;
+  font-weight: 800;
+  font-size: 1.25rem; /* ✅ Más grande */
+  text-align: left;
+  padding-left: 2rem;
+  text-transform: uppercase;
+  border-left: 5px solid #4db6ac;
+}
+
+/* Alternancia */
+.calendario-nutricional-table td:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+.calendario-nutricional-table td:nth-child(odd) {
+  background-color: #fafafa;
+}
+
+/* Hover filas */
+.calendario-nutricional-table tbody tr:hover td {
+  background-color: #f1f8e9;
+}
+
+/* Animación de entrada */
+.calendario-nutricional-wrapper {
+  animation: fadeIn 0.6s ease-in-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .calendario-nutricional-wrapper {
+    width: 95%;
+    padding: 2rem;
+  }
+
+  .calendario-nutricional-title {
+    font-size: 2rem;
+  }
+
+  .calendario-nutricional-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .calendario-nutricional-table th,
+  .calendario-nutricional-table td {
+    font-size: 1rem;
+    padding: 1rem;
+    min-width: 120px;
+  }
+}
+
+
+
+.btn-regresar {
+  display: inline-block;
+  margin-bottom: 2rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid #4db6ac;
+  border-radius: 50px;
+  color: #00796b;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.btn-regresar:hover {
+  background: #4db6ac;
+  color: #ffffff;
+}

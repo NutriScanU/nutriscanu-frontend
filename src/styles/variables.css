@@ -1,0 +1,13 @@
+:root {
+    --color-success: #72C49D;
+    --color-gray: #666666;
+    --color-error: #FF5722;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-warning: #fbbf24;
+    --color-warning-hover: #facc15;
+  
+    --font-main: 'Inter', sans-serif;
+    --border-radius: 12px;
+  }
+  
