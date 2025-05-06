@@ -714,7 +714,7 @@
       "cena": "Ensalada de garbanzos con pepino, cebolla morada y limón"
     },
     "miércoles": {
-      "desayuno": "Batido de plátano con leche y avena sin gluten",
+      "desayuno": "Batido de plátano con avena sin gluten",
       "almuerzo": "Berenjenas Asadas con Salsa de Tomate",
       "cena": "Papas camote al horno con salsa de aguacate y cilantro"
     },
@@ -809,7 +809,7 @@
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de almendras",
-      "almuerzo": "nsalada de Espárragos con Garbanzos",
+      "almuerzo": "Ensalada de Espárragos con Garbanzos",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     }
   },
