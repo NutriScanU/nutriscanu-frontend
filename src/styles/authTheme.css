@@ -565,3 +565,14 @@
   pointer-events: none;
   cursor: not-allowed;
 }
+
+.form-send-code.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.opa-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+

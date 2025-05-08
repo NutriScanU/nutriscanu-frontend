@@ -17,8 +17,8 @@ function Login() {
   const [transitioningToCode, setTransitioningToCode] = useState(false);
 
   const [loadingLogin, setLoadingLogin] = useState(false);
-  const [loadingToCode, setLoadingToCode] = useState(false);
-  
+
+
   const [resendAttempts, setResendAttempts] = useState(0);
 
   const [buttonLoading, setButtonLoading] = useState({
@@ -29,6 +29,14 @@ function Login() {
   const inputRefs = useRef([]);
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  useEffect(() => {
+    // Eliminar mensaje de error cuando el usuario modifica algún dígito
+    if (errors.code) {
+      setErrors((prev) => ({ ...prev, code: "" }));
+    }
+  }, [code]);
+
 
   useEffect(() => {
     setShowCheck(validateEmail(email));
@@ -43,6 +51,55 @@ function Login() {
     }
   }, [step]);
 
+
+  const handleVerifyCode = async (e) => {
+    e.preventDefault();
+
+    setButtonLoading(prev => ({ ...prev, blockInputs: true }));
+    setLoading(true);
+
+    try {
+      const fullCode = code.join("");
+
+      const response = await fetch(`${API_URL}/api/auth/login-with-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code: fullCode }),
+      });
+
+      const data = await response.json();
+
+      setTimeout(() => {
+        if (response.ok) {
+          // ✅ Decodificamos el token
+          const decoded = jwtDecode(data.token);
+
+          // ✅ Guardamos en localStorage
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", decoded.userId);
+
+          // ✅ Validamos el rol
+          if (decoded.role === "student") {
+            navigate("/student/home");
+          } else {
+            alert("Tu cuenta no tiene permiso para acceder al perfil de estudiante.");
+          }
+        } else {
+          setErrors(prev => ({ ...prev, code: data.message || "Código incorrecto" }));
+          setLoading(false);
+          setButtonLoading(prev => ({ ...prev, blockInputs: false }));
+        }
+      }, 2000);
+    } catch (error) {
+      setTimeout(() => {
+        setErrors(prev => ({ ...prev, code: "Error en la red. Intenta de nuevo." }));
+        setLoading(false);
+        setButtonLoading(prev => ({ ...prev, blockInputs: false }));
+      }, 2000);
+    }
+  };
+
+
   const resetForm = () => {
     setEmail("");
     setPassword("");
@@ -55,7 +112,7 @@ function Login() {
     e.preventDefault();
     const newErrors = { email: "", password: "", general: "", code: "" };
     let isValid = true;
-  
+
     if (!email.trim()) {
       newErrors.email = "Campo requerido";
       isValid = false;
@@ -63,7 +120,7 @@ function Login() {
       newErrors.email = "Por favor, ingresa un email válido.";
       isValid = false;
     }
-  
+
     if (!password.trim()) {
       newErrors.password = "Campo requerido";
       isValid = false;
@@ -71,14 +128,14 @@ function Login() {
       newErrors.password = "Tu contraseña debe tener al menos 6 caracteres.";
       isValid = false;
     }
-  
+
     if (!isValid) {
       setErrors(newErrors);
       return; // ❌ No seguimos si hay errores
     }
-  
+
     setLoadingLogin(true); // ✅ Solo si todo es válido
-  
+
     try {
       await new Promise((res) => setTimeout(res, 1000)); // Simula carga
       const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -86,17 +143,17 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-  
+
       if (!response.ok) {
         setErrors((prev) => ({ ...prev, general: "Usuario y/o contraseña incorrectos." }));
         return;
       }
-  
+
       const data = await response.json();
       const decoded = jwtDecode(data.token);
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", decoded.userId);
-  
+
       if (decoded.role === "student") {
         navigate("/student/home");
       } else {
@@ -108,18 +165,21 @@ function Login() {
       setLoadingLogin(false);
     }
   };
-  
-  
+
+
 
   const handleSendCode = async (e) => {
     e.preventDefault();
+
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: "Por favor, ingresa un email válido.", general: "" });
     }
 
-    try {
-      setLoadingLogin(true);
+    // ✅ Activamos loading y bloqueo de inputs
+    setLoadingLogin(true);
+    setButtonLoading((prev) => ({ ...prev, blockInputs: true }));
 
+    try {
       const res = await fetch(`${API_URL}/api/auth/send-login-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -133,13 +193,17 @@ function Login() {
 
       setStep("enter-code");
       setErrors({ email: "", password: "", general: "", code: "" });
+
     } catch (err) {
       alert("Error al enviar el código");
     } finally {
+      // ✅ Siempre desactivamos bloqueo y loading
       setLoadingLogin(false);
-
+      setButtonLoading((prev) => ({ ...prev, blockInputs: false }));
     }
   };
+
+
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
@@ -180,15 +244,15 @@ function Login() {
       const updated = resendAttempts + 1;
       setResendAttempts(updated);
       sessionStorage.setItem("resendAttempts", updated);
-  
+
       setButtonLoading((prev) => ({
         ...prev,
         resendCode: true,
         blockInputs: true
       }));
-  
-      handleSendCode({ preventDefault: () => {} });
-  
+
+      handleSendCode({ preventDefault: () => { } });
+
       setTimeout(() => {
         setButtonLoading((prev) => ({
           ...prev,
@@ -198,7 +262,7 @@ function Login() {
       }, 1000);
     }
   };
-  
+
 
   const handleCodeChange = (e, index) => {
     const val = e.target.value;
@@ -259,7 +323,7 @@ function Login() {
                     }
                   }}
                   className={errors.email ? "input-error" : ""}
-                  disabled={loadingLogin || transitioningToCode}/>
+                  disabled={loadingLogin || transitioningToCode} />
                 {showCheck && <span className="checkmark">✔</span>}
               </div>
               {errors.email && <div className="error-message">{errors.email}</div>}
@@ -277,235 +341,230 @@ function Login() {
                   }
                 }}
                 className={errors.password ? "input-error" : ""}
-                disabled={loadingLogin || transitioningToCode}/>
+                disabled={loadingLogin || transitioningToCode} />
               {errors.password && <div className="error-message">{errors.password}</div>}
               {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
               <button
-  type="submit"
-  disabled={loadingLogin || transitioningToCode}
-  className="login-button"
->
-  {loadingLogin ? <div className="loader-spinner" /> : "Iniciar sesión"}
-</button>
-
-
-
-
+                type="submit"
+                disabled={loadingLogin || transitioningToCode}
+                className="login-button"
+              >
+                {loadingLogin ? <div className="loader-spinner" /> : "Iniciar sesión"}
+              </button>
               <div className="center-or"><span>O</span></div>
               <div
-  className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
-  onClick={() => {
-    if (!loadingLogin && !transitioningToCode) {
-      setTransitioningToCode(true);
-      setTimeout(() => {
-        resetForm();
-        setStep("send-code");
-        setTransitioningToCode(false);
-      }, 800);
-    }
-  }}
->
-  {transitioningToCode ? <div className="loader-spinner small" /> : "Usar un código de inicio de sesión"}
-</div>
-
-
-
-
-
-<div className="auth-footer">
-  ¿Es la primera vez que usas NutriScanU?
-  <span
-    className={`register-link ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
-    onClick={() => {
-      if (!loadingLogin && !transitioningToCode) {
-        navigate("/register");
-      }
-    }}
-  >
-    Regístrate
-  </span>
-</div>
-
-
+                className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
+                onClick={() => {
+                  if (!loadingLogin && !transitioningToCode) {
+                    setTransitioningToCode(true);
+                    setTimeout(() => {
+                      resetForm();
+                      setStep("send-code");
+                      setTransitioningToCode(false);
+                    }, 800);
+                  }
+                }}
+              >
+                {transitioningToCode ? <div className="loader-spinner small" /> : "Usar un código de inicio de sesión"}
+              </div>
+              <div className="auth-footer">
+                ¿Es la primera vez que usas NutriScanU?
+                <span
+                  className={`register-link ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
+                  onClick={() => {
+                    if (!loadingLogin && !transitioningToCode) {
+                      navigate("/register");
+                    }
+                  }}
+                >
+                  Regístrate
+                </span>
+              </div>
             </form>
           </>
         )}
 
-{step === "send-code" && (
-  <form onSubmit={handleSendCode} className="form-send-code">
-    <h1>Iniciar sesión</h1>
-    <label style={{ fontWeight: "bold" }}>Email o número de celular</label>
-    
-    <input
-      type="text"
-      placeholder="Email o número de celular"
-      value={email}
-      onChange={(e) => {
-        setEmail(e.target.value);
-        if (errors.email || errors.general) {
-          setErrors(prev => ({ ...prev, email: "", general: "" }));
-        }
-      }}
-      className={errors.email ? "input-error" : ""}
-      disabled={loadingLogin}
-    />
-    
-    {errors.email && <div className="error-message">{errors.email}</div>}
-    {errors.general && <div className="error-message general-error">{errors.general}</div>}
+        {step === "send-code" && (
+          <form onSubmit={handleSendCode} className="form-send-code">
+            <h1>Iniciar sesión</h1>
+            <label style={{ fontWeight: "bold" }}>Correo</label>
 
-    <button
-      type="submit"
-      disabled={loadingLogin}
-      className="login-button"
-    >
-      {loadingLogin ? <div className="loader-spinner" /> : "Enviar código de inicio de sesión"}
-    </button>
+            <input
+              type="text"
+              placeholder="Ingrese su correo"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email || errors.general) {
+                  setErrors(prev => ({ ...prev, email: "", general: "" }));
+                }
+              }}
+              className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
+              disabled={loadingLogin || buttonLoading.blockInputs}
+            />
 
-    <div className="center-or"><span>O</span></div>
+            <button
+              type="submit"
+              disabled={loadingLogin || buttonLoading.blockInputs}
+              className={`login-button ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
+            >
+              {loadingLogin ? <div className="loader-spinner" /> : "Enviar código de inicio de sesión"}
+            </button>
 
-    <div
-      className={`login-code-button ${loadingLogin ? "disabled" : ""}`}
-      onClick={() => {
-        if (!loadingLogin) {
-          setButtonLoading((prev) => ({ ...prev, backToPassword: true }));
-          setTimeout(() => {
-            resetForm();
-            setStep("default");
-            setButtonLoading((prev) => ({ ...prev, backToPassword: false }));
-          }, 800);
-        }
-      }}
-    >
-      {buttonLoading.backToPassword ? (
-        <div className="loader-spinner small" />
-      ) : (
-        "Usar contraseña"
-      )}
-    </div>
-  </form>
-)}
+            <div className="center-or"><span>O</span></div>
+            <div
+              className={`login-code-button ${loadingLogin || buttonLoading.blockInputs ? "opa-disabled" : ""}`}
+              onClick={() => {
+                if (!buttonLoading.backToPassword && !loadingLogin && !buttonLoading.blockInputs) {
+                  setButtonLoading((prev) => ({
+                    ...prev,
+                    backToPassword: true,
+                    blockInputs: true
+                  }));
 
+                  setTimeout(() => {
+                    resetForm();
+                    setStep("default");
 
-{step === "enter-code" && (
-  <form onSubmit={handleSubmitCode} onPaste={handlePasteCode} className="form-enter-code">
-    <h2 className="text-xl font-bold text-center">Ingresa el código<br />que te acabamos de enviar</h2>
-    <p className="code-info-subtext">
-      Enviamos un código a <strong>{email}</strong>. Válido por 15 minutos.
-    </p>
-
-    <div className="code-inputs">
-      {code.map((digit, i) => (
-        <input
-          key={i}
-          type="text"
-          maxLength={1}
-          value={digit}
-          onChange={(e) => handleCodeChange(e, i)}
-          onKeyDown={(e) => handleKeyDown(e, i)}
-          ref={(el) => (inputRefs.current[i] = el)}
-          disabled={buttonLoading.blockInputs}
-        />
-      ))}
-    </div>
-
-    {errors.code && <div className="error-message">{errors.code}</div>}
-    {errors.general && <div className="error-message general-error">{errors.general}</div>}
-
-    <button
-      type="submit"
-      className="login-button"
-      disabled={
-        buttonLoading.backToPassword ||
-        buttonLoading.resendCode ||  // ✅ aquí añadimos esta condición
-        buttonLoading.blockInputs
-      }
-    >
-      Iniciar sesión
-    </button>
-
-    <div className="center-or"><span>¿No recibiste un código?</span></div>
-
-    <div
-  className={`login-code-button ${
-    buttonLoading.backToPassword || buttonLoading.resendCode || buttonLoading.blockInputs
-      ? "disabled"
-      : ""
-  }`}
-  onClick={() => {
-    if (
-      !buttonLoading.backToPassword &&
-      !buttonLoading.resendCode &&
-      !buttonLoading.blockInputs
-    ) {
-      setButtonLoading((prev) => ({
-        ...prev,
-        backToPassword: true,
-        blockInputs: true
-      }));
-      setTimeout(() => {
-        resetForm();
-        setStep("default");
-        setButtonLoading((prev) => ({
-          ...prev,
-          backToPassword: false,
-          blockInputs: false
-        }));
-      }, 800);
-    }
-  }}
->
-  {buttonLoading.backToPassword ? (
-    <div className="loader-spinner small" />
-  ) : (
-    "Usar contraseña"
-  )}
-</div>
+                    setButtonLoading((prev) => ({
+                      ...prev,
+                      backToPassword: false,
+                      blockInputs: false
+                    }));
+                  }, 800);
+                }
+              }}
+            >
+              {buttonLoading.backToPassword ? (
+                <div className="loader-spinner small" />
+              ) : (
+                "Usar contraseña"
+              )}
+            </div>
+          </form>
+        )}
 
 
-    {resendAttempts < 2 && (
-      <div
-  className={`login-code-button secondary ${
-    buttonLoading.resendCode || buttonLoading.backToPassword || buttonLoading.blockInputs
-      ? "disabled"
-      : ""
-  }`}
-  onClick={() => {
-    if (
-      !buttonLoading.resendCode &&
-      !buttonLoading.backToPassword &&
-      !buttonLoading.blockInputs
-    ) {
-      setButtonLoading((prev) => ({
-        ...prev,
-        resendCode: true,
-        blockInputs: true
-      }));
-      setResendAttempts((prev) => prev + 1);
-      setCode(["", "", "", "", ""]); // Limpia inputs
-      handleSendCode({ preventDefault: () => {} });
-      setTimeout(() => {
-        setButtonLoading((prev) => ({
-          ...prev,
-          resendCode: false,
-          blockInputs: false
-        }));
-      }, 1000);
-    }
-  }}
->
-  {buttonLoading.resendCode ? (
-    <div className="loader-spinner small" />
-  ) : (
-    "Reenviar código"
-  )}
-</div>
+        {step === "enter-code" && (
+          <form onSubmit={handleSubmitCode} onPaste={handlePasteCode} className="form-enter-code">
+            <h2 className="text-xl font-bold text-center">Ingresa el código<br />que te acabamos de enviar</h2>
+            <p className="code-info-subtext">
+              Enviamos un código a <strong>{email}</strong>. Válido por 15 minutos.
+            </p>
+
+            <div className="code-inputs">
+              {code.map((digit, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  maxLength={1}
+                  value={digit}
+                  onChange={(e) => handleCodeChange(e, i)}
+                  onKeyDown={(e) => handleKeyDown(e, i)}
+                  ref={(el) => (inputRefs.current[i] = el)}
+                  disabled={buttonLoading.blockInputs}
+                />
+              ))}
+            </div>
+
+            {errors.code && <div className="error-message">{errors.code}</div>}
+            {errors.general && <div className="error-message general-error">{errors.general}</div>}
+
+            <button
+              type="submit"
+              className="login-button"
+              onClick={handleVerifyCode}
+              disabled={
+                buttonLoading.backToPassword ||
+                buttonLoading.resendCode ||
+                buttonLoading.blockInputs
+              }
+            >
+              {loading ? <span className="loader-spinner" /> : "Iniciar sesión"}
+            </button>
 
 
-)}
+            <div className="center-or"><span>¿No recibiste un código?</span></div>
 
-  </form>
-)}
+            <div
+              className={`login-code-button ${buttonLoading.backToPassword || buttonLoading.resendCode || buttonLoading.blockInputs
+                ? "disabled"
+                : ""
+                }`}
+              onClick={() => {
+                if (
+                  !buttonLoading.backToPassword &&
+                  !buttonLoading.resendCode &&
+                  !buttonLoading.blockInputs
+                ) {
+                  setButtonLoading((prev) => ({
+                    ...prev,
+                    backToPassword: true,
+                    blockInputs: true
+                  }));
+                  setTimeout(() => {
+                    resetForm();
+                    setStep("default");
+                    setButtonLoading((prev) => ({
+                      ...prev,
+                      backToPassword: false,
+                      blockInputs: false
+                    }));
+                  }, 800);
+                }
+              }}
+            >
+              {buttonLoading.backToPassword ? (
+                <div className="loader-spinner small" />
+              ) : (
+                "Usar contraseña"
+              )}
+            </div>
+
+
+            {resendAttempts < 2 && (
+              <div
+                className={`login-code-button secondary ${buttonLoading.resendCode || buttonLoading.backToPassword || buttonLoading.blockInputs
+                  ? "disabled"
+                  : ""
+                  }`}
+                onClick={() => {
+                  if (
+                    !buttonLoading.resendCode &&
+                    !buttonLoading.backToPassword &&
+                    !buttonLoading.blockInputs
+                  ) {
+                    setButtonLoading((prev) => ({
+                      ...prev,
+                      resendCode: true,
+                      blockInputs: true
+                    }));
+                    setResendAttempts((prev) => prev + 1);
+                    setCode(["", "", "", "", ""]); // Limpia inputs
+                    handleSendCode({ preventDefault: () => { } });
+                    setTimeout(() => {
+                      setButtonLoading((prev) => ({
+                        ...prev,
+                        resendCode: false,
+                        blockInputs: false
+                      }));
+                    }, 1500);
+                  }
+                }}
+              >
+                {buttonLoading.resendCode ? (
+                  <div className="loader-spinner small" />
+                ) : (
+                  "Reenviar código"
+                )}
+              </div>
+
+
+            )}
+
+          </form>
+        )}
 
       </div>
     </div>
