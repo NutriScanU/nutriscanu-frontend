@@ -83,7 +83,10 @@ function Login() {
       setErrors((prev) => ({ ...prev, code: "" }));
     }
   }, [code, errors.code]);
-  
+  useEffect(() => {
+    setErrors({ password: "", general: "", code: "" });
+  }, [step]);
+
 
   useEffect(() => {
     setShowCheck(validateEmail(email));
@@ -452,6 +455,7 @@ function Login() {
                 Regístrate
               </span>
             </div>
+
           </form>
         )}
 
@@ -466,18 +470,51 @@ function Login() {
               placeholder="Ingresa tu correo"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={loadingLogin}
-              className={`input ${errors.email ? "input-error" : ""} ${loadingLogin ? "opa-disabled" : ""}`}
+              disabled={loadingLogin || buttonLoading.blockInputs}
+              className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
 
             <button
               type="submit"
-              disabled={loadingLogin}
-              className={`login-button ${loadingLogin ? "opa-disabled" : ""}`}
+              disabled={loadingLogin || buttonLoading.blockInputs}
+              className={`login-button ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
             >
               {loadingLogin ? <div className="loader-spinner" /> : "Enviar instrucciones"}
             </button>
+            <div
+              className={`login-code-button ${loadingLogin || buttonLoading.blockInputs ? "opa-disabled" : ""}`}
+              onClick={() => {
+                if (!buttonLoading.backToPassword && !loadingLogin && !buttonLoading.blockInputs) {
+                  // 🔒 Bloquear inputs temporalmente
+                  setButtonLoading((prev) => ({
+                    ...prev,
+                    backToPassword: true,
+                    blockInputs: true,
+                  }));
+
+                  // ⏳ Simular transición
+                  setTimeout(() => {
+                    resetForm();                         // 🧼 Limpia campos
+                    setStep("default");                  // 🔁 Volver a login
+                    setErrors({ email: "", password: "", general: "", code: "" }); // ❌ Limpia errores
+
+                    setButtonLoading((prev) => ({
+                      ...prev,
+                      backToPassword: false,
+                      blockInputs: false,
+                    }));
+                  }, 800);
+                }
+              }}
+            >
+              {buttonLoading.backToPassword ? (
+                <div className="loader-spinner small" />
+              ) : (
+                "Usar contraseña"
+              )}
+            </div>
+
           </form>
         )}
 
@@ -492,7 +529,7 @@ function Login() {
             </p>
 
             {/* Botón de retroceso */}
-            <p
+            <button
               className="back-button"
               onClick={() => {
                 setStep("default"); // Volver al formulario inicial
@@ -501,7 +538,7 @@ function Login() {
               }}
             >
               ←
-            </p>
+            </button>
           </div>
         )}
 
