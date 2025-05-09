@@ -15,11 +15,59 @@ function Login() {
   const [showCheck, setShowCheck] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transitioningToCode, setTransitioningToCode] = useState(false);
-
   const [loadingLogin, setLoadingLogin] = useState(false);
-
-
+  const formatEmail = (email) => {
+    const [username, domain] = email.split('@');  // Separar el nombre y el dominio
+    const visibleUsername = username.substring(0, 2);  // Primeras dos letras del nombre
+    const hiddenUsername = '*'.repeat(username.length - 2);  // Asteriscos para el resto del nombre
+    return `${visibleUsername}${hiddenUsername}@${domain}`;  // Combinamos y retornamos el correo formateado
+  };
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resendAttempts, setResendAttempts] = useState(0);
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    // Verifica si el correo es válido
+    if (!validateEmail(email)) {
+      return setErrors({ ...errors, email: "Por favor, ingresa un email válido." });
+    }
+    setLoadingLogin(true); // Activa el loading spinner
+    try {
+      // Hacer solicitud para verificar si el correo está registrado
+      const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
+      const data = await res.json();
+
+      if (res.ok && data.exists) {
+        // El correo está registrado, enviar el correo para restablecer la contraseña
+        const sendResponse = await fetch(`${API_URL}/api/auth/forgot-password`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        // const sendData = await sendResponse.json();
+
+        if (sendResponse.ok) {
+          setStep("success"); // Cambiar al paso de éxito
+        } else {
+          setErrors({ ...errors, general: "Hubo un error al enviar el email. Intenta nuevamente." });
+        }
+      } else {
+        // El correo no está registrado
+        setErrors(prev => ({
+          ...prev,
+          email: "El correo ingresado no está registrado. Por favor, ingresa un correo electrónico válido o regístrate.",
+          general: ""
+        }));
+      }
+
+    } catch (err) {
+      setErrors({ ...errors, general: "Error al verificar el correo. Intenta nuevamente." });
+    } finally {
+      setLoadingLogin(false); // Desactiva el loading spinner
+    }
+  };
+
+
 
   const [buttonLoading, setButtonLoading] = useState({
     backToPassword: false,
@@ -31,12 +79,11 @@ function Login() {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   useEffect(() => {
-    // Eliminar mensaje de error cuando el usuario modifica algún dígito
     if (errors.code) {
       setErrors((prev) => ({ ...prev, code: "" }));
     }
-  }, [code]);
-
+  }, [code, errors.code]);
+  
 
   useEffect(() => {
     setShowCheck(validateEmail(email));
@@ -166,23 +213,21 @@ function Login() {
     }
   };
 
-
-
   const handleSendCode = async (e) => {
     e.preventDefault();
-  
+
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: "Por favor, ingresa un email válido.", general: "" });
     }
-  
+
     setLoadingLogin(true);
     setButtonLoading((prev) => ({ ...prev, blockInputs: true }));
-  
+
     try {
       // Hacer solicitud para verificar si el correo existe
       const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
       const data = await res.json();
-  
+
       if (res.ok && data.exists) {
         // El correo está registrado, continuar con el envío del código
         await fetch(`${API_URL}/api/auth/send-login-code`, {
@@ -190,7 +235,7 @@ function Login() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-  
+
         setStep("enter-code"); // Cambiar al paso de ingresar código
         setErrors({ email: "", password: "", general: "", code: "" });
       } else if (!data.exists) {
@@ -201,7 +246,7 @@ function Login() {
           general: ""
         }));
       }
-  
+
     } catch (err) {
       setErrors(prev => ({
         ...prev,
@@ -212,9 +257,6 @@ function Login() {
       setButtonLoading((prev) => ({ ...prev, blockInputs: false }));
     }
   };
-  
-
-
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
@@ -274,7 +316,6 @@ function Login() {
     }
   };
 
-
   const handleCodeChange = (e, index) => {
     const val = e.target.value;
     if (!/^\d?$/.test(val)) return;
@@ -310,91 +351,166 @@ function Login() {
 
   return (
     <div className="auth-wrapper">
+      <header className="auth-header">
+        <div className="auth-header-container">
+          {/* Logo alineado a la izquierda */}
+          <div className="auth-logo" onClick={() => navigate("/")}>
+            NutriScanU
+          </div>
+
+          {/* Botón de "Iniciar sesión" en la esquina derecha solo cuando esté en "Olvidaste la contraseña" */}
+          {isForgotPassword && (
+            <button
+              className="login-button-right"
+              onClick={() => {
+                setIsForgotPassword(false); // Cambiar a login principal
+                setStep("default");
+              }}
+            >
+              Iniciar sesión
+            </button>
+          )}
+        </div>
+      </header>
       <div className="auth-background" />
       <div className="auth-overlay" />
       <div className="auth-card">
-        <div className="auth-logo" onClick={() => navigate("/")}>NutriScanU</div>
+        {/* <div className="auth-logo" onClick={() => navigate("/")}>NutriScanU</div> */}
 
+        {/* Formulario de inicio de sesión */}
         {step === "default" && (
-          <>
+          <form onSubmit={handleLogin}>
             <h1>Bienvenido de vuelta</h1>
             <p>Qué bueno verte otra vez :)</p>
-            <form onSubmit={handleLogin}>
-              <label htmlFor="email">Correo</label>
-              <div className="input-with-icon">
-                <input
-                  id="email"
-                  type="text"
-                  placeholder="Ingresa tu correo"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email || errors.general) {
-                      setErrors((prev) => ({ ...prev, email: "", general: "" }));
-                    }
-                  }}
-                  className={errors.email ? "input-error" : ""}
-                  disabled={loadingLogin || transitioningToCode} />
-                {showCheck && <span className="checkmark">✔</span>}
-              </div>
-              {errors.email && <div className="error-message">{errors.email}</div>}
-
-              <label htmlFor="password">Contraseña</label>
+            <label htmlFor="email">Correo</label>
+            <div className="input-with-icon">
               <input
-                id="password"
-                type="password"
-                placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (errors.password || errors.general) {
-                    setErrors((prev) => ({ ...prev, password: "", general: "" }));
-                  }
-                }}
-                className={errors.password ? "input-error" : ""}
-                disabled={loadingLogin || transitioningToCode} />
-              {errors.password && <div className="error-message">{errors.password}</div>}
-              {errors.general && <div className="error-message general-error">{errors.general}</div>}
-
-              <button
-                type="submit"
+                id="email"
+                type="text"
+                placeholder="Ingresa tu correo"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={errors.email ? "input-error" : ""}
                 disabled={loadingLogin || transitioningToCode}
-                className="login-button"
-              >
-                {loadingLogin ? <div className="loader-spinner" /> : "Iniciar sesión"}
-              </button>
-              <div className="center-or"><span>O</span></div>
-              <div
-                className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
+              />
+              {showCheck && <span className="checkmark">✔</span>}
+            </div>
+            {errors.email && <div className="error-message">{errors.email}</div>}
+
+            <label htmlFor="password">Contraseña</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={errors.password ? "input-error" : ""}
+              disabled={loadingLogin || transitioningToCode}
+            />
+            {errors.password && <div className="error-message">{errors.password}</div>}
+            {errors.general && <div className="error-message general-error">{errors.general}</div>}
+
+            <button
+              type="submit"
+              disabled={loadingLogin || transitioningToCode}
+              className="login-button"
+            >
+              {loadingLogin ? <div className="loader-spinner" /> : "Iniciar sesión"}
+            </button>
+            <div className="center-or"><span>O</span></div>
+            <div
+              className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
+              onClick={() => {
+                if (!loadingLogin && !transitioningToCode) {
+                  setTransitioningToCode(true);
+                  setTimeout(() => {
+                    resetForm();
+                    setStep("send-code");
+                    setTransitioningToCode(false);
+                  }, 800);
+                }
+              }}
+            >
+              {transitioningToCode ? <div className="loader-spinner small" /> : "Usar un código de inicio de sesión"}
+            </div>
+            <div
+              className={`forgot-password-link ${loadingLogin || transitioningToCode ? "opa-disabled" : ""}`}
+              onClick={() => setStep("forgot-password")} // Cambiar estado al hacer clic
+            >
+              ¿Olvidaste la contraseña?
+            </div>
+            <div className="auth-footer">
+              ¿Es la primera vez que usas NutriScanU?
+              <span
+                className={`register-link ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
                 onClick={() => {
                   if (!loadingLogin && !transitioningToCode) {
-                    setTransitioningToCode(true);
-                    setTimeout(() => {
-                      resetForm();
-                      setStep("send-code");
-                      setTransitioningToCode(false);
-                    }, 800);
+                    navigate("/register");
                   }
                 }}
               >
-                {transitioningToCode ? <div className="loader-spinner small" /> : "Usar un código de inicio de sesión"}
-              </div>
-              <div className="auth-footer">
-                ¿Es la primera vez que usas NutriScanU?
-                <span
-                  className={`register-link ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
-                  onClick={() => {
-                    if (!loadingLogin && !transitioningToCode) {
-                      navigate("/register");
-                    }
-                  }}
-                >
-                  Regístrate
-                </span>
-              </div>
-            </form>
-          </>
+                Regístrate
+              </span>
+            </div>
+          </form>
         )}
+
+        {/* Formulario de restablecimiento de contraseña */}
+        {step === "forgot-password" && (
+          <form onSubmit={handleForgotPassword} className="forgot-password-form">
+            <h2>Restablecer tu contraseña</h2>
+            <label htmlFor="email">Correo</label>
+            <input
+              id="email"
+              type="text"
+              placeholder="Ingresa tu correo"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loadingLogin}
+              className={`input ${errors.email ? "input-error" : ""} ${loadingLogin ? "opa-disabled" : ""}`}
+            />
+            {errors.email && <div className="error-message">{errors.email}</div>}
+
+            <button
+              type="submit"
+              disabled={loadingLogin}
+              className={`login-button ${loadingLogin ? "opa-disabled" : ""}`}
+            >
+              {loadingLogin ? <div className="loader-spinner" /> : "Enviar instrucciones"}
+            </button>
+          </form>
+        )}
+
+
+        {/* Mensaje de éxito después de enviar el correo */}
+        {step === "success" && (
+          <div className="success-message">
+            <h2>¡Listo!</h2>
+            <p>
+              Te acabamos de enviar un correo con las instrucciones a{" "}
+              <strong>{formatEmail(email)}</strong>. Sigue las instrucciones para restablecer tu contraseña.
+            </p>
+
+            {/* Botón de retroceso */}
+            <p
+              className="back-button"
+              onClick={() => {
+                setStep("default"); // Volver al formulario inicial
+                setEmail(""); // Limpiar el correo
+                setPassword(""); // Limpiar la contraseña
+              }}
+            >
+              ←
+            </p>
+          </div>
+        )}
+
+
+
+
+
+
+
 
         {step === "send-code" && (
           <form onSubmit={handleSendCode} className="form-send-code">
@@ -415,7 +531,7 @@ function Login() {
               disabled={loadingLogin || buttonLoading.blockInputs}
             />
             {errors.email && <div className="error-message">{errors.email}</div>} {
-              /* Mostrar mensaje de error */ 
+              /* Mostrar mensaje de error */
               errors.general && <div className="error-message general-error">{errors.general}</div>
             }
             <button
