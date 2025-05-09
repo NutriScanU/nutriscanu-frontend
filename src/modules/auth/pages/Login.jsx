@@ -145,7 +145,7 @@ function Login() {
       });
 
       if (!response.ok) {
-        setErrors((prev) => ({ ...prev, general: "Usuario y/o contraseña incorrectos." }));
+        setErrors((prev) => ({ ...prev, general: "Correo y/o contraseña incorrectos." }));
         return;
       }
 
@@ -170,38 +170,49 @@ function Login() {
 
   const handleSendCode = async (e) => {
     e.preventDefault();
-
+  
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: "Por favor, ingresa un email válido.", general: "" });
     }
-
-    // ✅ Activamos loading y bloqueo de inputs
+  
     setLoadingLogin(true);
     setButtonLoading((prev) => ({ ...prev, blockInputs: true }));
-
+  
     try {
-      const res = await fetch(`${API_URL}/api/auth/send-login-code`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!res.ok) {
-        setErrors({ ...errors, general: "Error al enviar el código", code: "" });
-        return;
+      // Hacer solicitud para verificar si el correo existe
+      const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
+      const data = await res.json();
+  
+      if (res.ok && data.exists) {
+        // El correo está registrado, continuar con el envío del código
+        await fetch(`${API_URL}/api/auth/send-login-code`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+  
+        setStep("enter-code"); // Cambiar al paso de ingresar código
+        setErrors({ email: "", password: "", general: "", code: "" });
+      } else if (!data.exists) {
+        // El correo no está registrado
+        setErrors(prev => ({
+          ...prev,
+          email: "El correo ingresado no está registrado. Por favor, ingrese un correo electrónico válido o regístrese.",
+          general: ""
+        }));
       }
-
-      setStep("enter-code");
-      setErrors({ email: "", password: "", general: "", code: "" });
-
+  
     } catch (err) {
-      alert("Error al enviar el código");
+      setErrors(prev => ({
+        ...prev,
+        general: "Error al verificar el correo. Por favor, intente nuevamente."
+      }));
     } finally {
-      // ✅ Siempre desactivamos bloqueo y loading
       setLoadingLogin(false);
       setButtonLoading((prev) => ({ ...prev, blockInputs: false }));
     }
   };
+  
 
 
 
@@ -403,7 +414,10 @@ function Login() {
               className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
               disabled={loadingLogin || buttonLoading.blockInputs}
             />
-
+            {errors.email && <div className="error-message">{errors.email}</div>} {
+              /* Mostrar mensaje de error */ 
+              errors.general && <div className="error-message general-error">{errors.general}</div>
+            }
             <button
               type="submit"
               disabled={loadingLogin || buttonLoading.blockInputs}
