@@ -161,7 +161,18 @@ function Register() {
             )}
 
             {step === 2 && (
+
               <form>
+                {/* Botón de retroceso */}
+                <button
+                  className="back-button"
+                  onClick={() => {
+                    setEmail(""); // Limpiar el correo
+                    setPassword(""); // Limpiar la contraseña
+                  }}
+                >
+                  ←
+                </button>
                 <label>Nombres</label>
                 <input
                   type="text"

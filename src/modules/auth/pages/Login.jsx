@@ -385,6 +385,8 @@ function Login() {
           <form onSubmit={handleLogin}>
             <h1>Bienvenido de vuelta</h1>
             <p>Qué bueno verte otra vez :)</p>
+
+            {/* Correo */}
             <label htmlFor="email">Correo</label>
             <div className="input-with-icon">
               <input
@@ -392,7 +394,12 @@ function Login() {
                 type="text"
                 placeholder="Ingresa tu correo"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  // Limpiar los errores cuando el usuario empieza a escribir
+                  if (errors.email) setErrors(prev => ({ ...prev, email: "" }));
+                  if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+                }}
                 className={errors.email ? "input-error" : ""}
                 disabled={loadingLogin || transitioningToCode}
               />
@@ -400,19 +407,26 @@ function Login() {
             </div>
             {errors.email && <div className="error-message">{errors.email}</div>}
 
+            {/* Contraseña */}
             <label htmlFor="password">Contraseña</label>
             <input
               id="password"
               type="password"
               placeholder="Ingresa tu contraseña"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                // Limpiar los errores cuando el usuario empieza a escribir
+                if (errors.password) setErrors(prev => ({ ...prev, password: "" }));
+                if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+              }}
               className={errors.password ? "input-error" : ""}
               disabled={loadingLogin || transitioningToCode}
             />
             {errors.password && <div className="error-message">{errors.password}</div>}
             {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
+            {/* Botón de inicio de sesión */}
             <button
               type="submit"
               disabled={loadingLogin || transitioningToCode}
@@ -420,15 +434,19 @@ function Login() {
             >
               {loadingLogin ? <div className="loader-spinner" /> : "Iniciar sesión"}
             </button>
+
+            {/* Opción para usar código de inicio de sesión */}
             <div className="center-or"><span>O</span></div>
             <div
               className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
               onClick={() => {
+                // Guardar el correo en sessionStorage
+                sessionStorage.setItem("email", email); // Guardamos el correo ingresado
                 if (!loadingLogin && !transitioningToCode) {
                   setTransitioningToCode(true);
                   setTimeout(() => {
                     resetForm();
-                    setStep("send-code");
+                    setStep("send-code"); // Pasamos al paso de enviar el código
                     setTransitioningToCode(false);
                   }, 800);
                 }
@@ -436,12 +454,16 @@ function Login() {
             >
               {transitioningToCode ? <div className="loader-spinner small" /> : "Usar un código de inicio de sesión"}
             </div>
+
+            {/* Enlace para la recuperación de contraseña */}
             <div
               className={`forgot-password-link ${loadingLogin || transitioningToCode ? "opa-disabled" : ""}`}
               onClick={() => setStep("forgot-password")} // Cambiar estado al hacer clic
             >
               ¿Olvidaste la contraseña?
             </div>
+
+            {/* Enlace para registrarse */}
             <div className="auth-footer">
               ¿Es la primera vez que usas NutriScanU?
               <span
@@ -455,10 +477,9 @@ function Login() {
                 Regístrate
               </span>
             </div>
-
           </form>
         )}
-
+        
         {/* Formulario de restablecimiento de contraseña */}
         {step === "forgot-password" && (
           <form onSubmit={handleForgotPassword} className="forgot-password-form">
@@ -518,7 +539,6 @@ function Login() {
           </form>
         )}
 
-
         {/* Mensaje de éxito después de enviar el correo */}
         {step === "success" && (
           <div className="success-message">
@@ -543,21 +563,16 @@ function Login() {
         )}
 
 
-
-
-
-
-
-
         {step === "send-code" && (
-          <form onSubmit={handleSendCode} className="form-send-code">
+          <form onSubmit={handleSubmitCode} className="form-send-code">
             <h1>Iniciar sesión</h1>
             <label style={{ fontWeight: "bold" }}>Correo</label>
 
+            {/* Recuperar el correo de sessionStorage */}
             <input
               type="text"
               placeholder="Ingrese su correo"
-              value={email}
+              value={sessionStorage.getItem("email") || email} // Recuperamos el correo guardado
               onChange={(e) => {
                 setEmail(e.target.value);
                 if (errors.email || errors.general) {
@@ -567,10 +582,9 @@ function Login() {
               className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
               disabled={loadingLogin || buttonLoading.blockInputs}
             />
-            {errors.email && <div className="error-message">{errors.email}</div>} {
-              /* Mostrar mensaje de error */
-              errors.general && <div className="error-message general-error">{errors.general}</div>
-            }
+            {errors.email && <div className="error-message">{errors.email}</div>}
+            {errors.general && <div className="error-message general-error">{errors.general}</div>}
+
             <button
               type="submit"
               disabled={loadingLogin || buttonLoading.blockInputs}
@@ -592,7 +606,7 @@ function Login() {
 
                   setTimeout(() => {
                     resetForm();
-                    setStep("default");
+                    setStep("default"); // Volver al formulario inicial
 
                     setButtonLoading((prev) => ({
                       ...prev,
@@ -611,7 +625,6 @@ function Login() {
             </div>
           </form>
         )}
-
 
         {step === "enter-code" && (
           <form onSubmit={handleSubmitCode} onPaste={handlePasteCode} className="form-enter-code">
