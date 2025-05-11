@@ -25,6 +25,8 @@
   justify-content: center;
   overflow: hidden;
   font-family: var(--font-main);
+  cursor: default;
+  
 }
 
 .auth-background {
@@ -72,7 +74,16 @@
   cursor: pointer;
   text-align: center;
 }
-
+/* ========================== */
+/* 🔘 Botones y demás elementos (sin cursor de texto) */
+/* ========================== */
+.auth-card button,
+.auth-logo,
+.login-code-button,
+.register-link,
+.forgot-password-link {
+  cursor: pointer; /* Los botones y enlaces mostrarán el cursor de la mano */
+}
 /* .auth-logo:hover {
   color: var(--color-warning);
 } */
@@ -331,7 +342,10 @@
   padding: 0;
   margin-top: 20px; /* Agrega margen superior para separar del botón */
   text-decoration: none; /* Sin subrayado por defecto */
+  width: auto; /* Asegura que el ancho se ajuste al contenido */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
+
 
 .forgot-password-link:hover {
   text-decoration: underline;  /* Subraya cuando el mouse pasa sobre el texto */
@@ -344,7 +358,7 @@
   position: relative;
   width: 100%;
   height: 45px;
-  background-color: #e50914;
+
   color: white;
   border: none;
   border-radius: 4px;
@@ -363,16 +377,7 @@
 }
 
 
-/* Spinner estilo Netflix */
-.loader-spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
-  border-radius: 50%;
-  animation: spin 0.9s ease infinite;
-  margin: 0 auto;
-}
+
 
 @keyframes spin {
   to {
@@ -403,11 +408,19 @@
   color: white;
   border: 1px solid #aaa;
   width: 48px;
+  cursor: text; /* Mostrar rayita vertical solo en el campo de código */
   height: 48px;
   text-align: center;
   font-size: 24px;
   border-radius: 6px;
   margin-right: 10px;
+}
+
+
+
+.code-inputs input:focus {
+  border: 1px solid var(--color-auth-button);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .code-inputs input:last-child {
@@ -516,8 +529,7 @@
   cursor: not-allowed;
 }
 
-
-/* Spinner estilo Netflix (ya está, pero le agregamos una variante pequeña) */
+/* Spinner estilo Netflix */
 .loader-spinner {
   width: 24px;
   height: 24px;
@@ -528,12 +540,14 @@
   margin: 0 auto;
 }
 
-/* Spinner pequeño para botones como "Usar contraseña" y "Reenviar código" */
+/* className="loader-spinner small" Spinner pequeño para botones como "Usar contraseña" y "Reenviar código" */
 .loader-spinner.small {
-  width: 15px;
-  height: 15px;
-  border-width: 2.5px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
 }
+
 
 /* Desactiva botón visualmente */
 .login-button:disabled {
@@ -584,7 +598,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #007bff;
+
   color: white;
   padding: 10px 20px;
   border: none;
@@ -592,9 +606,7 @@
   border-radius: 4px;
 }
 
-.login-button-right:hover {
-  background-color: #0056b3;
-}
+
 
 
 /* Asegúrate de que el diseño sea consistente */
@@ -620,3 +632,96 @@
 
 
 
+/* Eliminar el cursor de texto (rayita vertical) en los botones */
+button, .login-button, .login-code-button, .resend-code-button {
+  cursor: pointer;  /* Muestra la mano cuando el cursor pasa sobre el botón */
+}
+
+/* Botones deshabilitados */
+button:disabled, .login-button:disabled, .login-code-button.disabled {
+  cursor: not-allowed; /* Cambiar a un cursor de "no permitido" cuando el botón está deshabilitado */
+  opacity: 0.5; /* Cambiar la opacidad para indicar que está deshabilitado */
+}
+
+/* Para cualquier otro enlace o área clickeable, asegúrate de que no muestre el cursor de texto */
+a, .register-link, .forgot-password-link {
+  cursor: pointer;
+}
+/* Cuando el botón está en proceso de carga (cuando 'loading' es true) */
+button[disabled], .login-button[disabled], .login-code-button.disabled, .resend-code-button[disabled] {
+  pointer-events: none; /* No permitir interacción con el botón */
+  opacity: 0.6; /* Reducir opacidad */
+}
+
+/* Ajustes para el spinner en botones que están en carga */
+button:disabled .loader-spinner, .login-button:disabled .loader-spinner,
+.login-code-button.disabled .loader-spinner, .resend-code-button[disabled] .loader-spinner {
+  display: inline-block;
+}
+
+/* Esto evitará que el cursor de texto parpadee en los botones */
+button, .login-button, .login-code-button, .resend-code-button {
+  cursor: pointer;
+  user-select: none; /* Prevenir la selección de texto */
+}
+
+/* Estilos para el globito de notificación */
+.notification-error {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out, slideOut 0.3s ease-out 7.5s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+
+.auth-wrapper > *:not(input) {
+  cursor: default; /* Evita que otros elementos muestren el cursor de texto */
+}
+/* ========================== */
+/* 🔘 Deshabilitar rayita vertical para todo lo que no sea input */
+/* ========================== */
+.auth-wrapper > *:not(input) {
+  cursor: default; /* Asegura que fuera de los inputs no haya rayita vertical */
+}
+
+/* ========================== */
+/* 🔘 Habilitar rayita vertical solo en los campos de texto (inputs) */
+input:focus, .code-inputs input:focus {
+  cursor: text; /* Cuando el input está enfocado, mantiene el cursor de texto */
+}
+
+/* ========================== */
+/* 🔘 Asegurar que fuera de los inputs no se pueda escribir ni seleccionar texto */
+* {
+  user-select: none; /* Prevenir selección de texto fuera de los inputs */
+}

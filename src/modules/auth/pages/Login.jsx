@@ -67,8 +67,6 @@ function Login() {
     }
   };
 
-
-
   const [buttonLoading, setButtonLoading] = useState({
     backToPassword: false,
     resendCode: false,
@@ -82,7 +80,9 @@ function Login() {
     if (errors.code) {
       setErrors((prev) => ({ ...prev, code: "" }));
     }
-  }, [code, errors.code]);
+  }, [code]);
+
+
   useEffect(() => {
     setErrors({ password: "", general: "", code: "" });
   }, [step]);
@@ -105,12 +105,21 @@ function Login() {
   const handleVerifyCode = async (e) => {
     e.preventDefault();
 
+    // Validar si el código está incompleto
+    if (code.some((digit) => digit.trim() === "")) {
+      return setErrors((prev) => ({ ...prev, code: "Código incompleto" }));
+    }
+
+    // Validar si el código no tiene 5 dígitos
+    const fullCode = code.join("");
+    if (!/^\d{5}$/.test(fullCode)) {
+      return setErrors((prev) => ({ ...prev, code: "Código incorrecto" }));
+    }
+
     setButtonLoading(prev => ({ ...prev, blockInputs: true }));
     setLoading(true);
 
     try {
-      const fullCode = code.join("");
-
       const response = await fetch(`${API_URL}/api/auth/login-with-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -119,26 +128,26 @@ function Login() {
 
       const data = await response.json();
 
+      // Esperar para mostrar el mensaje de error con el spinner
       setTimeout(() => {
         if (response.ok) {
-          // ✅ Decodificamos el token
+          // Decodificar el token y navegar
           const decoded = jwtDecode(data.token);
 
-          // ✅ Guardamos en localStorage
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", decoded.userId);
 
-          // ✅ Validamos el rol
           if (decoded.role === "student") {
             navigate("/student/home");
           } else {
             alert("Tu cuenta no tiene permiso para acceder al perfil de estudiante.");
           }
         } else {
-          setErrors(prev => ({ ...prev, code: data.message || "Código incorrecto" }));
-          setLoading(false);
-          setButtonLoading(prev => ({ ...prev, blockInputs: false }));
+          // Mostrar el error si el código es incorrecto o expirado
+          setErrors(prev => ({ ...prev, code: data.message || "Código incorrecto o expirado" }));
         }
+        setLoading(false);
+        setButtonLoading(prev => ({ ...prev, blockInputs: false }));
       }, 2000);
     } catch (error) {
       setTimeout(() => {
@@ -148,6 +157,7 @@ function Login() {
       }, 2000);
     }
   };
+
 
 
   const resetForm = () => {
@@ -277,7 +287,7 @@ function Login() {
       });
 
       if (!res.ok) {
-        return setErrors({ code: "", general: "Código incorrecto o expirado" });
+        return setErrors({ code: "", general: "Código  o expirado" });
       }
 
       const data = await res.json();
@@ -292,30 +302,6 @@ function Login() {
       }
     } catch (err) {
       alert("Error de red.");
-    }
-  };
-
-  const handleResendCodeClick = () => {
-    if (!buttonLoading.resendCode && !buttonLoading.backToPassword && resendAttempts < 2) {
-      const updated = resendAttempts + 1;
-      setResendAttempts(updated);
-      sessionStorage.setItem("resendAttempts", updated);
-
-      setButtonLoading((prev) => ({
-        ...prev,
-        resendCode: true,
-        blockInputs: true
-      }));
-
-      handleSendCode({ preventDefault: () => { } });
-
-      setTimeout(() => {
-        setButtonLoading((prev) => ({
-          ...prev,
-          resendCode: false,
-          blockInputs: false
-        }));
-      }, 1000);
     }
   };
 
@@ -384,8 +370,6 @@ function Login() {
         {step === "default" && (
           <form onSubmit={handleLogin}>
             <h1>Bienvenido de vuelta</h1>
-            <p>Qué bueno verte otra vez :)</p>
-
             {/* Correo */}
             <label htmlFor="email">Correo</label>
             <div className="input-with-icon">
@@ -441,7 +425,7 @@ function Login() {
               className={`login-code-button ${loadingLogin || transitioningToCode ? "disabled" : ""}`}
               onClick={() => {
                 // Guardar el correo en sessionStorage
-                sessionStorage.setItem("email", email); // Guardamos el correo ingresado
+
                 if (!loadingLogin && !transitioningToCode) {
                   setTransitioningToCode(true);
                   setTimeout(() => {
@@ -456,12 +440,15 @@ function Login() {
             </div>
 
             {/* Enlace para la recuperación de contraseña */}
-            <div
+            <div>
+            <span
               className={`forgot-password-link ${loadingLogin || transitioningToCode ? "opa-disabled" : ""}`}
               onClick={() => setStep("forgot-password")} // Cambiar estado al hacer clic
             >
               ¿Olvidaste la contraseña?
+            </span>
             </div>
+
 
             {/* Enlace para registrarse */}
             <div className="auth-footer">
@@ -479,7 +466,7 @@ function Login() {
             </div>
           </form>
         )}
-        
+
         {/* Formulario de restablecimiento de contraseña */}
         {step === "forgot-password" && (
           <form onSubmit={handleForgotPassword} className="forgot-password-form">
@@ -564,15 +551,14 @@ function Login() {
 
 
         {step === "send-code" && (
-          <form onSubmit={handleSubmitCode} className="form-send-code">
+          <form onSubmit={handleSendCode} className="form-send-code">
             <h1>Iniciar sesión</h1>
             <label style={{ fontWeight: "bold" }}>Correo</label>
 
-            {/* Recuperar el correo de sessionStorage */}
             <input
               type="text"
               placeholder="Ingrese su correo"
-              value={sessionStorage.getItem("email") || email} // Recuperamos el correo guardado
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 if (errors.email || errors.general) {
@@ -582,9 +568,10 @@ function Login() {
               className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
               disabled={loadingLogin || buttonLoading.blockInputs}
             />
-            {errors.email && <div className="error-message">{errors.email}</div>}
-            {errors.general && <div className="error-message general-error">{errors.general}</div>}
-
+            {errors.email && <div className="error-message">{errors.email}</div>} {
+              /* Mostrar mensaje de error */
+              errors.general && <div className="error-message general-error">{errors.general}</div>
+            }
             <button
               type="submit"
               disabled={loadingLogin || buttonLoading.blockInputs}
@@ -606,7 +593,7 @@ function Login() {
 
                   setTimeout(() => {
                     resetForm();
-                    setStep("default"); // Volver al formulario inicial
+                    setStep("default");
 
                     setButtonLoading((prev) => ({
                       ...prev,
