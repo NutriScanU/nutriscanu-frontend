@@ -10,13 +10,14 @@ function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [success, setSuccess] = useState(false);
-
+  const onlyLetters = (value) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
 
@@ -36,13 +37,18 @@ function Register() {
     } else {
       try {
         const response = await axios.post(`${API_URL}/api/auth/check-email`, { email });
+
+        // ✅ Si el correo ya está registrado
         if (response.data.exists === true) {
           newErrors.email = "El email ingresado ya se encuentra en uso";
           isValid = false;
         }
       } catch (err) {
-        if (err.response?.status !== 404) {
-          newErrors.general = "No se pudo verificar el correo.";
+
+        if (err.response?.status === 404) {
+          // Nada que hacer, el correo está libre
+        } else {
+          newErrors.general = "No se pudo verificar el correo. Intenta más tarde.";
           isValid = false;
         }
       }
@@ -61,6 +67,7 @@ function Register() {
       return;
     }
 
+    // ✅ Todo válido: avanzar a paso 2
     setErrors({ email: "", password: "", general: "" });
     setStep(2);
   };
@@ -97,7 +104,7 @@ function Register() {
       await registerUsuario(userData);
       setSuccess(true);
     } catch (err) {
-      console.error("❌ Error en el registro:", err);
+
       setErrors((prev) => ({ ...prev, general: "Error al registrar. Verifica los campos." }));
     }
   };
@@ -116,7 +123,7 @@ function Register() {
         ) : (
           <>
             <h1 className="form-title">Crea tu cuenta</h1>
-            <p className="form-subtitle">Empieza tu camino de aprendizaje</p>
+            <p className="form-subtitle">Empezemos...</p>
 
             {step === 1 && (
               <form>
@@ -136,7 +143,7 @@ function Register() {
 
                 <label htmlFor="password">Contraseña</label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder="Ingresa tu contraseña"
                   value={password}
@@ -161,7 +168,6 @@ function Register() {
             )}
 
             {step === 2 && (
-
               <form>
                 {/* Botón de retroceso */}
                 <button
@@ -173,12 +179,18 @@ function Register() {
                 >
                   ←
                 </button>
+
                 <label>Nombres</label>
                 <input
                   type="text"
                   placeholder="Nombres"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    if (onlyLetters(e.target.value)) {
+                      setFirstName(e.target.value);
+                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+                    }
+                  }}
                 />
 
                 <label>Apellido paterno</label>
@@ -186,7 +198,12 @@ function Register() {
                   type="text"
                   placeholder="Apellido paterno"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    if (onlyLetters(e.target.value)) {
+                      setLastName(e.target.value);
+                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+                    }
+                  }}
                 />
 
                 <label>Apellido materno</label>
@@ -194,7 +211,12 @@ function Register() {
                   type="text"
                   placeholder="Apellido materno"
                   value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value)}
+                  onChange={(e) => {
+                    if (onlyLetters(e.target.value)) {
+                      setMiddleName(e.target.value);
+                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+                    }
+                  }}
                 />
 
                 <label>DNI</label>
@@ -202,11 +224,17 @@ function Register() {
                   type="text"
                   placeholder="DNI"
                   value={documentNumber}
-                  onChange={(e) => setDocumentNumber(e.target.value)}
+                  onChange={(e) => {
+                    const input = e.target.value.replace(/\D/g, "");
+                    if (input.length <= 8) {
+                      setDocumentNumber(input);
+                      if (errors.dni) setErrors(prev => ({ ...prev, dni: "" }));
+                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+                    }
+                  }}
                   className={errors.dni ? "input-error" : ""}
                 />
                 {errors.dni && <div className="error-message">{errors.dni}</div>}
-
                 {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
                 <button type="button" onClick={handleSubmit}>
@@ -214,6 +242,7 @@ function Register() {
                 </button>
               </form>
             )}
+
           </>
         )}
       </div>

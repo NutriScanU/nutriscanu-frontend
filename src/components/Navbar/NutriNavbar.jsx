@@ -48,13 +48,13 @@ const NutriNavbar = () => {
           <ul className="nutri-nav-links">
             <li><Link to="/">Home</Link></li>
             <li><Link to="#">Features</Link></li>
-            <li><Link to="#">Community</Link></li>
+            <li><Link to="#">Comunidad</Link></li>
             <li><Link to="#">Blog</Link></li>
-            <li><Link to="#">Pricing</Link></li>
+            <li><Link to="#">Planes</Link></li>
           </ul>
 
           <Link to="/login" className="nutri-register-now">
-            Register Now →
+            Regístrese Ahora →
           </Link>
         </nav>
 

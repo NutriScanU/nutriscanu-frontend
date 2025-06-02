@@ -4,7 +4,7 @@ import "./BloodAnalysisForm.css";
 const BloodAnalysisForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
     age: "",
-    gender: "",
+
     smoking_history: "",
     bmi: "",
     hbA1c: "",
@@ -18,6 +18,17 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const numericFields = [
+    "age",
+    "bmi",
+    "hbA1c",
+    "blood_glucose_level",
+    "hemoglobin",
+    "insulin",
+    "triglycerides",
+    "hematocrit",
+    "red_blood_cells"
+  ];
 
   useEffect(() => {
     if (initialData) setFormData(initialData);
@@ -25,7 +36,6 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
 
   const ranges = {
     age: { min: 16, max: 35 },
-
   };
 
   const fieldLabels = {
@@ -54,39 +64,40 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
 
-    if (name === "gender") {
-      const updated = { ...formData, [name]: value };
-      setFormData(updated);
-      if (submitted) validateAllFields(updated);
+    if (numericFields.includes(name)) {
+      validateField(name, value);
     } else {
-      const updated = { ...formData, [name]: value };
-      setFormData(updated);
-      validateField(name, value, formData.gender);
+      // Si ya se había intentado enviar, validamos todo de nuevo
+      if (submitted) {
+        const newErrors = { ...errors };
+        if (value.trim() !== "") {
+          delete newErrors[name];
+        }
+        setErrors(newErrors);
+      }
     }
   };
 
-  const validateField = (name, value, gender) => {
-    const range = ranges[name];
-    if (!range) return;
+  const validateField = (name, value) => {
+    if (!numericFields.includes(name)) return; // 👉 Evita validar género/tabaquismo como números
 
-    let min = range.min;
-    let max = range.max;
+    const validNumber = /^\d+(\.\d+)?$/;
 
-    if (typeof range === "object" && range.Male && gender) {
-      min = range[gender]?.min;
-      max = range[gender]?.max;
-    }
-
-    const num = parseFloat(value);
-
-    if (!value) {
+    if (!value.trim()) {
       setErrors((prev) => ({ ...prev, [name]: "Falta llenar este campo" }));
-    } else if (isNaN(num)) {
-      setErrors((prev) => ({ ...prev, [name]: "Debe ser un número válido" }));
-    } else if (num < min || num > max) {
-      setErrors((prev) => ({ ...prev, [name]: `Debe estar entre ${min} y ${max}` }));
+    } else if (!validNumber.test(value)) {
+      setErrors((prev) => ({ ...prev, [name]: "Debe ingresar solo números válidos, sin letras ni espacios" }));
     } else {
+      if (name === "age") {
+        const ageNum = parseInt(value);
+        if (ageNum < 16 || ageNum > 35) {
+          setErrors((prev) => ({ ...prev, [name]: "Debe estar entre 16 y 35" }));
+          return;
+        }
+      }
       setErrors((prev) => {
         const copy = { ...prev };
         delete copy[name];
@@ -95,43 +106,46 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
     }
   };
 
+
   const validateAllFields = (data) => {
     const newErrors = {};
+    const validNumber = /^\d+(\.\d+)?$/;
+
+    if (!data.gender) {
+      newErrors.gender = "Debe seleccionar un género";
+    }
+
+    if (!data.smoking_history || data.smoking_history === "") {
+      newErrors.smoking_history = "Debe seleccionar una opción";
+    }
 
     Object.entries(data).forEach(([key, value]) => {
-      const range = ranges[key];
-      if (!range) return;
-
-      let min = range.min;
-      let max = range.max;
-
-      if (typeof range === "object" && range.Male && data.gender) {
-        min = range[data.gender]?.min;
-        max = range[data.gender]?.max;
-      }
-
-      const num = parseFloat(value);
-
-      if (!value) {
+      if (!value.trim()) {
         newErrors[key] = "Falta llenar este campo";
-      } else if (isNaN(num)) {
-        newErrors[key] = "Debe ser un número válido";
-      } else if (num < min || num > max) {
-        newErrors[key] = `Debe estar entre ${min} y ${max}`;
+      } else if (numericFields.includes(key) && !validNumber.test(value)) {
+        newErrors[key] = "Debe ingresar solo números válidos, sin letras ni espacios";
+      } else if (key === "age") {
+        const ageNum = parseInt(value);
+        if (ageNum < 16 || ageNum > 35) {
+          newErrors[key] = "Debe estar entre 16 y 35";
+        }
       }
+
     });
 
     setErrors(newErrors);
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    validateAllFields(formData);
-    if (Object.keys(errors).length === 0) {
+    const newErrors = validateAllFields(formData);
+    if (Object.keys(newErrors).length === 0) {
       onSubmit(formData);
     }
   };
+
 
   return (
     <form className="blood-form" onSubmit={handleSubmit}>
@@ -187,7 +201,7 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
             onChange={handleChange}
             className={`blood-input ${errors.smoking_history ? "error-input" : ""}`}
           >
-            <option value="" disabled hidden>-- Selecciona --</option>
+            <option value="">-- Selecciona --</option>
             <option value="Never">Nunca</option>
             <option value="Current">Actualmente</option>
             <option value="Former">Anteriormente</option>

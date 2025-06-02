@@ -1,0 +1,13 @@
+
+/* Estilo para la alerta de anemia */
+
+.alerta-anemia {
+  background-color: #ffe5e5;
+  border: 1px solid #ff4d4d;
+  color: #a70000;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}

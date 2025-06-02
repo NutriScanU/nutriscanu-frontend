@@ -15,6 +15,7 @@ function Login() {
   const [showCheck, setShowCheck] = useState(false);
   const [loading, setLoading] = useState(false);
   const [transitioningToCode, setTransitioningToCode] = useState(false);
+  const [validatedEmail, setValidatedEmail] = useState("");
   const [loadingLogin, setLoadingLogin] = useState(false);
   const formatEmail = (email) => {
     const [username, domain] = email.split('@');  // Separar el nombre y el dominio
@@ -26,33 +27,35 @@ function Login() {
   const [resendAttempts, setResendAttempts] = useState(0);
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    // Verifica si el correo es válido
+
     if (!validateEmail(email)) {
       return setErrors({ ...errors, email: "Por favor, ingresa un email válido." });
     }
-    setLoadingLogin(true); // Activa el loading spinner
+
+    setLoadingLogin(true);
+
     try {
-      // Hacer solicitud para verificar si el correo está registrado
-      const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
+      const res = await fetch(`${API_URL}/api/auth/check-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
       const data = await res.json();
 
       if (res.ok && data.exists) {
-        // El correo está registrado, enviar el correo para restablecer la contraseña
         const sendResponse = await fetch(`${API_URL}/api/auth/forgot-password`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
 
-        // const sendData = await sendResponse.json();
-
         if (sendResponse.ok) {
-          setStep("success"); // Cambiar al paso de éxito
+          setStep("success");
         } else {
           setErrors({ ...errors, general: "Hubo un error al enviar el email. Intenta nuevamente." });
         }
       } else {
-        // El correo no está registrado
         setErrors(prev => ({
           ...prev,
           email: "El correo ingresado no está registrado. Por favor, ingresa un correo electrónico válido o regístrate.",
@@ -63,9 +66,10 @@ function Login() {
     } catch (err) {
       setErrors({ ...errors, general: "Error al verificar el correo. Intenta nuevamente." });
     } finally {
-      setLoadingLogin(false); // Desactiva el loading spinner
+      setLoadingLogin(false);
     }
   };
+
 
   const [buttonLoading, setButtonLoading] = useState({
     backToPassword: false,
@@ -102,15 +106,14 @@ function Login() {
   }, [step]);
 
 
+  // ✅ handleVerifyCode también debe usar validatedEmail
   const handleVerifyCode = async (e) => {
     e.preventDefault();
 
-    // Validar si el código está incompleto
     if (code.some((digit) => digit.trim() === "")) {
       return setErrors((prev) => ({ ...prev, code: "Código incompleto" }));
     }
 
-    // Validar si el código no tiene 5 dígitos
     const fullCode = code.join("");
     if (!/^\d{5}$/.test(fullCode)) {
       return setErrors((prev) => ({ ...prev, code: "Código incorrecto" }));
@@ -123,17 +126,14 @@ function Login() {
       const response = await fetch(`${API_URL}/api/auth/login-with-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code: fullCode }),
+        body: JSON.stringify({ email: validatedEmail, code: fullCode }), // 🟢 cambio aquí
       });
 
       const data = await response.json();
 
-      // Esperar para mostrar el mensaje de error con el spinner
       setTimeout(() => {
         if (response.ok) {
-          // Decodificar el token y navegar
           const decoded = jwtDecode(data.token);
-
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", decoded.userId);
 
@@ -143,7 +143,6 @@ function Login() {
             alert("Tu cuenta no tiene permiso para acceder al perfil de estudiante.");
           }
         } else {
-          // Mostrar el error si el código es incorrecto o expirado
           setErrors(prev => ({ ...prev, code: data.message || "Código incorrecto o expirado" }));
         }
         setLoading(false);
@@ -166,6 +165,7 @@ function Login() {
     setCode(["", "", "", "", ""]);
     setErrors({ email: "", password: "", general: "", code: "" });
     setShowCheck(false);
+    setValidatedEmail(""); // 🧼 Limpiar email validado
   };
 
   const handleLogin = async (e) => {
@@ -237,22 +237,27 @@ function Login() {
     setButtonLoading((prev) => ({ ...prev, blockInputs: true }));
 
     try {
-      // Hacer solicitud para verificar si el correo existe
-      const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
+      // ✅ Llamada corregida con POST
+      const res = await fetch(`${API_URL}/api/auth/check-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
       const data = await res.json();
 
       if (res.ok && data.exists) {
-        // El correo está registrado, continuar con el envío del código
+        setValidatedEmail(email); // 🔒 Guardar email validado
+
         await fetch(`${API_URL}/api/auth/send-login-code`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
 
-        setStep("enter-code"); // Cambiar al paso de ingresar código
+        setStep("enter-code");
         setErrors({ email: "", password: "", general: "", code: "" });
       } else if (!data.exists) {
-        // El correo no está registrado
         setErrors(prev => ({
           ...prev,
           email: "El correo ingresado no está registrado. Por favor, ingrese un correo electrónico válido o regístrese.",
@@ -271,6 +276,7 @@ function Login() {
     }
   };
 
+
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     if (code.some((digit) => digit.trim() === "")) {
@@ -283,11 +289,11 @@ function Login() {
       const res = await fetch(`${API_URL}/api/auth/login-with-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code: finalCode }),
+        body: JSON.stringify({ email: validatedEmail, code: finalCode }), // 🟢 cambio aquí
       });
 
       if (!res.ok) {
-        return setErrors({ code: "", general: "Código  o expirado" });
+        return setErrors({ code: "", general: "Código o expirado" });
       }
 
       const data = await res.json();
@@ -369,7 +375,7 @@ function Login() {
         {/* Formulario de inicio de sesión */}
         {step === "default" && (
           <form onSubmit={handleLogin}>
-            <h1>Bienvenido de vuelta</h1>
+            <h1>Bienvenido de vuelta :)</h1>
             {/* Correo */}
             <label htmlFor="email">Correo</label>
             <div className="input-with-icon">
@@ -441,12 +447,12 @@ function Login() {
 
             {/* Enlace para la recuperación de contraseña */}
             <div>
-            <span
-              className={`forgot-password-link ${loadingLogin || transitioningToCode ? "opa-disabled" : ""}`}
-              onClick={() => setStep("forgot-password")} // Cambiar estado al hacer clic
-            >
-              ¿Olvidaste la contraseña?
-            </span>
+              <span
+                className={`forgot-password-link ${loadingLogin || transitioningToCode ? "opa-disabled" : ""}`}
+                onClick={() => setStep("forgot-password")} // Cambiar estado al hacer clic
+              >
+                ¿Olvidaste la contraseña?
+              </span>
             </div>
 
 

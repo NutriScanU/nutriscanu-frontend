@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useEffect } from "react"; // 👈 Asegúrate de importar esto arriba
+
 import { useNavigate } from "react-router-dom";
 import BloodAnalysisForm from "../pages/BloodAnalysisForm";
 import RecommendationForm from "../pages/RecommendationForm";
@@ -11,6 +13,15 @@ const MultiStepForm = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [mensajeIncompleto, setMensajeIncompleto] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 🔁 Reiniciar flujo completamente al montar el componente
+    setClinicData(null);
+    setHabitsData(null);
+    setStep(1);
+    localStorage.removeItem("recommendationFormData"); // 🧹 Limpiar almacenamiento local
+  }, []);
+
 
   const handleGoBack = () => {
     navigate("/student/home");

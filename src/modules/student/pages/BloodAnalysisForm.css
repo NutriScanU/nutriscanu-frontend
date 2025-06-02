@@ -166,3 +166,7 @@ input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+.blood-input option[disabled] {
+  display: none;
+}
