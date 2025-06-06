@@ -1,79 +1,90 @@
-import React, { useState, useEffect } from "react";
-import "./Profile.css"; // Asegúrate de tener estilos para la alerta
+// src/modules/student/pages/Profile.jsx
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import './Profile.css';
 
-function Perfil() {
-  const [usuario, setUsuario] = useState({
-    nombre: "",
-    correo: "",
-    telefono: "",
-    tieneAnemia: false, // Nuevo campo para anemia
-  });
+const Profile = () => {
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-    // Simular carga de datos (en la realidad lo traerías de backend o estado global)
-    const datosCargados = {
-      nombre: "Juan Pérez",
-      correo: "juan.perez@example.com",
-      telefono: "987654321",
-      tieneAnemia: true,  // Por ejemplo, resultado del análisis
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/students/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        setProfileData(res.data);
+      } catch (err) {
+        console.error('❌ Error al obtener perfil:', err);
+      } finally {
+        setLoading(false);
+      }
     };
-    setUsuario(datosCargados);
+    fetchProfile();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsuario((prev) => ({ ...prev, [name]: value }));
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   };
 
-  const handleGuardar = () => {
-    console.log("Datos guardados:", usuario);
-    alert("Datos guardados correctamente!");
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/students/update-photo`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials: true
+      });
+
+      // Actualizar foto tras éxito
+      setProfileData((prev) => ({
+        ...prev,
+        profile: {
+          ...prev.profile,
+          profile_image: res.data.profile_image
+        }
+      }));
+    } catch (err) {
+      console.error('❌ Error al subir imagen:', err);
+    }
   };
+
+  if (loading) return <div className="loading">Cargando perfil...</div>;
+  if (!profileData) return <div className="error">No se pudo cargar el perfil.</div>;
+
+  const { profile } = profileData;
+  const fullName = `${profile?.first_name || ''} ${profile?.middle_name || ''} ${profile?.last_name || ''}`;
+  const profileImage = profile?.profile_image || 'https://via.placeholder.com/150';
 
   return (
-    <div>
-      <h2>Perfil del estudiante</h2>
-      <p>Aquí podrás actualizar tus datos personales.</p>
-
-      {/* Mostrar alerta o mensaje si tiene anemia */}
-      {usuario.tieneAnemia && (
-        <div className="alerta-anemia">
-          ⚠️ Atención: Se detectó que tienes anemia. Puedes revisar tu plan de recomendacion de habitos alientnicios y consultar también con su especialista.
-        </div>
-      )}
-
-      <form onSubmit={(e) => { e.preventDefault(); handleGuardar(); }}>
-        <div>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="nombre"
-            value={usuario.nombre}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Correo:</label>
-          <input
-            type="email"
-            name="correo"
-            value={usuario.correo}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Teléfono:</label>
-          <input
-            type="tel"
-            name="telefono"
-            value={usuario.telefono}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Guardar</button>
-      </form>
+    <div className="profile-container">
+      <div className="profile-image-wrapper">
+        <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+        <button onClick={handleImageClick} className="edit-image-button">
+          <img src="/icons/edit-pencil.svg" alt="Editar" />
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
+        />
+      </div>
+      <h2 className="full-name">{fullName}</h2>
     </div>
   );
-}
+};
 
-export default Perfil;
+export default Profile;

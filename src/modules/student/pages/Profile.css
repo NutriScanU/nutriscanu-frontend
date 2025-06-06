@@ -1,13 +1,35 @@
-
-/* Estilo para la alerta de anemia */
-
-.alerta-anemia {
-  background-color: #ffe5e5;
-  border: 1px solid #ff4d4d;
-  color: #a70000;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-weight: bold;
+.profile-container {
   text-align: center;
+  padding: 2rem;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4CAF50;
+}
+
+.edit-image-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: white;
+  border-radius: 50%;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.full-name {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
