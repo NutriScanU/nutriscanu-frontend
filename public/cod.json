@@ -1,853 +1,1532 @@
 {
-    "H-N-MP-N": {
-      "lunes": {
-        "desayuno": "Pan con palta y huevo",
-        "almuerzo": "Pollo a la plancha con arroz y ensalada",
-        "cena": "Fruta con yogur"
-      },
-      "martes": {
-        "desayuno": "Batido de papaya con avena y pan con queso fresco",
-        "almuerzo": "Estofado de carne con arroz",
-        "cena": "Gelatina con galletas de soda"
-      },
-      "miércoles": {
-        "desayuno": "Pan con tortilla de verduras y mate de hierbas",
-        "almuerzo": "Arroz chaufa de pollo",
-        "cena": "Fruta picada"
-      },
-      "jueves": {
-        "desayuno": "Pan con jamonada de pavo y bebida de cebada",
-        "almuerzo": "Tallarines rojos con presa de pollo",
-        "cena": "Yogur con granola"
-      },
-      "viernes": {
-        "desayuno": "Pan con huevo revuelto y jugo de naranja",
-        "almuerzo": "Lentejas con arroz y huevo",
-        "cena": "Emoliente y pan con mantequilla"
-      },
-      "sábado": {
-        "desayuno": "Pan con queso fresco y bebida de kiwicha",
-        "almuerzo": "Seco de pollo con arroz",
-        "cena": "Fruta de estación"
-      },
-      "domingo": {
-        "desayuno": "Avena con plátano",
-        "almuerzo": "Ají de gallina con arroz",
-        "cena": "Infusión con pan y mermelada"
-      }
-    },
-    "H-N-MP-A": {
+  "H-N-MP-N-M(0-1-2-3/A)": {
     "lunes": {
-      "desayuno": "Pan con tortilla de huevo y espinaca",
-      "almuerzo": "Arroz con pollo y ensalada",
-      "cena": "Fruta con yogur"
+      "desayuno": "Quinua con manzana + pan con palta",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Guiso de garbanzos con arroz",
+      "snack": "Gelatina",
+      "cena": "Guiso de garbanzos + infusión ligera"
     },
     "martes": {
-      "desayuno": "Avena con plátano y linaza",
-      "almuerzo": "Estofado de carne con arroz",
-      "cena": "Gelatina con galletas"
+      "desayuno": "Jugo de plátano con avena + pan con huevo",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Gelatina",
+      "cena": "Sopa de quinua con verduras + infusión ligera(opcional)"
     },
     "miércoles": {
-      "desayuno": "Pan con queso fresco y mate de coca",
-      "almuerzo": "Tallarines verdes con huevo duro",
-      "cena": "Fruta picada"
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + jugo de naranja",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Saltado de vainitas con zanahoria, pollo y arroz",
+      "snack": "Gelatina",
+      "cena": "Saltado de pollo con vainitas + infusión ligera"
     },
     "jueves": {
-      "desayuno": "Pan con palta y jugo de papaya",
-      "almuerzo": "Sopa de quinua con presa",
-      "cena": "Infusión con pan y mantequilla"
+      "desayuno": "Jugo de papaya + pan con queso fresco",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Arroz con pollo con zarza de cebolla",
+      "snack": "Gelatina",
+      "cena": "Arroz con pollo + infusión ligera"
     },
     "viernes": {
-      "desayuno": "Batido de plátano con avena y pan con huevo sancochado",
-      "almuerzo": "Lentejas con arroz y plátano",
-      "cena": "Emoliente con pan"
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Sopa de menestras",
+      "snack": "Gelatina",
+      "cena": "Sopa de menestras + infusión ligera(opcional)"
     },
     "sábado": {
-      "desayuno": "Pan con atún y bebida de kiwicha",
-      "almuerzo": "Seco de carne con yuca",
-      "cena": "Fruta cocida"
+      "desayuno": "Jugo surtido (fruta de estación) + pan con huevo sancochado",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Sudado de pescado con yuca y tomate",
+      "snack": "Gelatina",
+      "cena": "Sudado de pescado + infusión ligera"
     },
     "domingo": {
-      "desayuno": "Avena con frutas y semilla de chía",
-      "almuerzo": "Ají de gallina con arroz",
-      "cena": "Infusión con pan integral"
+      "desayuno": "Ensalada de frutas + yogur natural",
+      "colasion": "Fruta de estacion + Agua",
+      "almuerzo": "Tallarines verdes con papa dorada y presa de pollo",
+      "snack": "Gelatina",
+      "cena": "Tallarines verdes con pollo + infusión ligera"
     }
   },
-  "H-N-MP-S": {
+  "H-N-MP-N-M(0-1-2-3/M-S)": {
     "lunes": {
-      "desayuno": "Pan con tortilla de verduras y bebida de cebada",
-      "almuerzo": "Sopa criolla con arroz",
-      "cena": "Fruta cocida"
+      "desayuno": "Yogur natural + fruta picada",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz",
+      "snack": "Gelatina",
+      "cena": "Guiso de garbanzos + infusión ligera"
     },
     "martes": {
-      "desayuno": "Pan con mantequilla de maní y jugo de mandarina",
-      "almuerzo": "Arroz con huevo y plátano",
-      "cena": "Gelatina con avena"
+      "desayuno": "Jugo de papaya + pan con queso fresco",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Saltado de vainitas con zanahoria, pollo y arroz",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Saltado de vainitas con pollo y arroz (opcional) + infusión ligera"
     },
     "miércoles": {
-      "desayuno": "Kiwicha con leche y pan con miel",
-      "almuerzo": "Pescado apanado con yuca sancochada",
-      "cena": "Infusión con tostadas"
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + Infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de verduras con pollo deshilachado",
+      "snack": "Galletas integrales",
+      "cena": "Sopa de verduras + infusión ligera (opcional)"
     },
     "jueves": {
-      "desayuno": "Pan con jamón de pollo y bebida de maca",
-      "almuerzo": "Locro con arroz y huevo",
-      "cena": "Fruta picada"
+      "desayuno": "Ensalada de frutas + yogur natural",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la plancha con arroz y ensalada",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Pescado a la plancha con ensalada (sin arroz) + infusión ligera"
     },
     "viernes": {
-      "desayuno": "Batido de mango con pan de anís",
-      "almuerzo": "Arroz tapado con ensalada",
-      "cena": "Infusión con pan de yema"
+      "desayuno": "Quinua con manzana o con leche + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tortilla de verduras con arroz y ensalada fresca",
+      "snack": "Gelatina",
+      "cena": "Tortilla de verduras + infusión ligera"
     },
     "sábado": {
-      "desayuno": "Pan con sangrecita y mate de coca",
-      "almuerzo": "Arroz chaufa casero de pollo",
-      "cena": "Compota natural"
+      "desayuno": "Jugo surtido + 1 cdta. de algarrobina + Pan con pollo deshilachado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Causa limeña de atún + ensalada de lechuga y tomate",
+      "snack": "Yogur con frutas",
+      "cena": "Causa limeña (porción pequeña) + infusión ligera"
     },
     "domingo": {
-      "desayuno": "Pan con queso fresco y emoliente",
-      "almuerzo": "Pollo saltado con papa y arroz",
-      "cena": "Infusión con galletas de soda"
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ensalada rusa sin mayonesa con arroz",
+      "snack": "Mazamorra de frutas (porción moderada)",
+      "cena": "Ensalada rusa sin mayonesa (porción pequeña) + infusión ligera"
+    }
+  },
+  "H-N-MP-N-M(4-5-6-7/A)": {
+    "lunes": {
+      "desayuno": "Leche con quinua o maca + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Arroz con pollo con zarza de cebolla",
+      "snack": "Gelatina",
+      "cena": "Arroz con pollo + infusión ligera"
+    },
+    "martes": {
+      "desayuno": "Pan con pollo deshilachado + emoliente caliente",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de pallares con arroz, huevo frito y ensalada fresca",
+      "snack": "Galletas integrales",
+      "cena": "Guiso de pallares + ensalada fresca + infusión ligera"
+    },
+    "miércoles": {
+      "desayuno": "Jugo de plátano con avena + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la plancha con arroz y ensalada",
+      "snack": "Ensalada de frutas con yogur",
+      "cena": "Pescado a la plancha con ensalada + infusión ligera"
+    },
+    "jueves": {
+      "desayuno": "Café con leche (sin azúcar) + pan con tortilla",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tallarines verdes con papa dorada y presa de pollo",
+      "snack": "Mazamorra de frutas",
+      "cena": "Tallarines verdes con presa de pollo + infusión ligera"
+    },
+    "viernes": {
+      "desayuno": "Yogur natural + granola + fruta picada",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Saltado de verduras con pollo y arroz",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Saltado de verduras con pollo + infusión ligera"
+    },
+    "sábado": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + jugo de naranja",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Causa limeña de atún + ensalada de lechuga",
+      "snack": "Gelatina",
+      "cena": "Causa limeña de atún + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Jugo surtido + pan con huevo sancochado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sudado de pescado con yuca y tomate",
+      "snack": "Yogur con frutas",
+      "cena": "Sudado de pescado + infusión ligera"
+    }
+  },
+  "H-N-MP-N-M(4-5-6-7/M-S)": {
+    "lunes": {
+      "desayuno": "Yogur natural + fruta picada",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tortilla de verduras con arroz y ensalada fresca",
+      "snack": "Mazamorra de frutas",
+      "cena": "Tortilla de verduras con ensalada fresca + infusión ligera"
+    },
+    "martes": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz",
+      "snack": "Galletas integrales",
+      "cena": "Guiso de garbanzos + infusión ligera"
+    },
+    "miércoles": {
+      "desayuno": "Jugo de fresa + pan con queso fresco",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Saltado de vainitas con zanahoria, pollo y arroz",
+      "snack": "Gelatina",
+      "cena": "Saltado de vainitas con pollo + infusión ligera"
+    },
+    "jueves": {
+      "desayuno": "Infusión + pan con pollo deshilachado, tomate y lechuga",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Causa limeña de atún + ensalada de lechuga y tomate",
+      "snack": "Yogur con frutas",
+      "cena": "Causa limeña + infusión ligera"
+    },
+    "viernes": {
+      "desayuno": "Huevitos de codorniz + quinua",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de verduras con pollo",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Sopa de verduras + infusión ligera (opcional)"
+    },
+    "sábado": {
+      "desayuno": "Café con leche (sin azúcar) + pan con tortilla",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la plancha con arroz integral y ensalada",
+      "snack": "Mazamorra de frutas",
+      "cena": "Pescado a la plancha con ensalada + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Jugo surtido + 1 cdta. de algarrobina + pan con pollo deshilachado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ensalada rusa sin mayonesa con arroz y pollo a la plancha",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Ensalada rusa sin mayonesa con arroz + infusión ligera"
+    }
+  },
+  "H-N-MP-A-M(A)": {
+    "lunes": {
+      "desayuno": "Jugo de plátano con avena + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de pallares con ensalada y arroz",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Guiso de pallares + infusión ligera"
+    },
+    "martes": {
+      "desayuno": "Leche con quinua o maca + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pollo a la plancha con papa sancochada y ensalada",
+      "snack": "Mazamorra de frutas",
+      "cena": "Pollo a la plancha con ensalada + infusión ligera"
+    },
+    "miércoles": {
+      "desayuno": "Pan con pollo deshilachado + Quinua o Emoliente",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Sopa de quinua + infusión ligera (opcional)"
+    },
+    "jueves": {
+      "desayuno": "Jugo surtido + 1 cdta. de algarrobina + pan con pollo deshilachado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sudado de pescado con yuca o papa y arroz",
+      "snack": "Gelatina",
+      "cena": "Sudado de pescado con arroz + infusión ligera"
+    },
+    "viernes": {
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Arroz con pollo con zarza de cebolla",
+      "snack": "Yogur con frutas",
+      "cena": "Arroz con pollo + infusión ligera"
+    },
+    "sábado": {
+      "desayuno": "Quinua con manzana o con leche + pan con palta",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Lentejas con arroz y pechuga de pollo",
+      "snack": "Galletas integrales",
+      "cena": "Lentejas con pechuga de pollo + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + jugo de naranja",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tallarines verdes con papa dorada y presa de pollo",
+      "snack": "Ensalada de frutas con yogur",
+      "cena": "Tallarines verdes con presa de pollo + infusión ligera"
+    }
+  },
+  "H-N-MP-A-M(M-S)": {
+    "lunes": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de verduras con pechuga de pollo",
+      "snack": "Yogur con frutas",
+      "cena": "Sopa de verduras con pechuga de pollo + infusión ligera (opcional)"
+    },
+    "martes": {
+      "desayuno": "Jugo de papaya + pan con queso fresco",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Caldo de gallina",
+      "snack": "Mazamorra de frutas",
+      "cena": "Infusión con pan integral con miel"
+    },
+    "miércoles": {
+      "desayuno": "Yogur natural + fruta picada",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de pallares con arroz con huevo frito y ensalada fresca",
+      "snack": "Galletas integrales",
+      "cena": "Guiso de pallares con ensalada fresca + infusión ligera"
+    },
+    "jueves": {
+      "desayuno": "Leche con maca + pan con pollo deshilachado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de trigo con zapallo y papa",
+      "snack": "Gelatina",
+      "cena": "Sopa de trigo con zapallo + infusión ligera (opcional)"
+    },
+    "viernes": {
+      "desayuno": "Huevitos de codorniz + quinua",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Causa limeña de atún + ensalada de lechuga y tomate",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Causa limeña de atún + infusión ligera"
+    },
+    "sábado": {
+      "desayuno": "Café con leche (sin azúcar) + pan con tortilla",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Salteado de vainitas con zanahoria, pollo y arroz",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Salteado de vainitas con arroz + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Ensalada de frutas + 1 cdta. de algarrobina",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ensalada rusa sin mayonesa con arroz y pollo a la plancha",
+      "snack": "Galletas integrales",
+      "cena": "Ensalada rusa sin mayonesa con pollo + infusión ligera"
+    }
+  },
+  "H-N-MP-S-M(M-S)": {
+    "lunes": {
+      "desayuno": "Leche con maca + pan con pollo deshilachado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de menestras",
+      "snack": "Yogur con frutas",
+      "cena": "Sopa de menestras + infusión ligera (opcional)"
+    },
+    "martes": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Caldo de gallina",
+      "snack": "Mazamorra de frutas",
+      "cena": "Caldo de gallina + infusión ligera (opcional)"
+    },
+    "miércoles": {
+      "desayuno": "Jugo surtido (fruta de estación) + pan con huevo sancochado",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz",
+      "snack": "Galletas integrales",
+      "cena": "Guiso de garbanzos + infusión ligera"
+    },
+    "jueves": {
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la plancha con arroz y ensalada",
+      "snack": "Gelatina",
+      "cena": "Pescado a la plancha con ensalada + infusión ligera"
+    },
+    "viernes": {
+      "desayuno": "Huevitos de codorniz + quinua",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Lentejas con arroz y huevo sancochado",
+      "snack": "Frutos secos (porción pequeña)",
+      "cena": "Lentejas con huevo sancochado + infusión ligera"
+    },
+    "sábado": {
+      "desayuno": "Yogur natural + fruta picada + 1 cdta. de algarrobina",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de pallares con arroz y huevo sancochado",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Guiso de pallares con huevo sancochado + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Café con leche (sin azúcar) + pan con palta",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Galletas integrales",
+      "cena": "Sopa de quinua + infusión ligera (opcional)"
+    }
+  },
+  "H-N-MP-S-M(A)": {
+    "lunes": {
+      "desayuno": "Pan integral con tortilla de huevo y espinaca + bebida de quinua",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Arroz con pollo con zarza de cebolla",
+      "snack": "Gelatina",
+      "cena": "Arroz con pollo + infusión ligera"
+    },
+    "martes": {
+      "desayuno": "Avena cocida con leche + manzana picada + 1 cdta. de linaza",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Seco de pollo con arroz",
+      "snack": "Gelatina",
+      "cena": "Seco de pollo con arroz (pequeña porción) + infusión ligera"
+    },
+    "miércoles": {
+      "desayuno": "Batido de plátano con quinua cocida + pan con queso fresco",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ají de gallina con arroz",
+      "snack": "Galletas integrales",
+      "cena": "Ají de gallina con arroz (pequeña porción) + infusión ligera"
+    },
+    "jueves": {
+      "desayuno": "Pan con sangrecita + emoliente",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz",
+      "snack": "Gelatina",
+      "cena": "Guiso de garbanzos + infusión ligera"
+    },
+    "viernes": {
+      "desayuno": "Pan con pollo deshilachado y palta + jugo natural de naranja",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tallarines verdes con papa dorada y presa de pollo",
+      "snack": "Gelatina",
+      "cena": "Tallarines verdes con presa de pollo + infusión ligera"
+    },
+    "sábado": {
+      "desayuno": "Pan con tortilla de atún + jugo de mango sin azúcar",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Saltado de verduras con pollo y arroz",
+      "snack": "Galletas integrales",
+      "cena": "Saltado de verduras con pollo + infusión ligera"
+    },
+    "domingo": {
+      "desayuno": "Yogur natural + granola + plátano + 1 cdta. de algarrobina",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Gelatina",
+      "cena": "Sopa de quinua + infusión ligera (opcional)"
     }
   },
   "H-N-BP-N": {
     "lunes": {
-      "desayuno": "Pan integral con palta",
-      "almuerzo": "Pollo a la plancha con arroz y ensalada cocida",
-      "cena": "Infusión con fruta picada"
+      "desayuno": "Leche con maca + pan con huevo",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pollo a la plancha con papa sancochada y ensalada cocida",
+      "snack": "Gelatina",
+      "cena": "Pollo a la plancha con ensalada cocida + infusión ligera"
     },
     "martes": {
-      "desayuno": "Batido de papaya con linaza y pan integral",
-      "almuerzo": "Tallarines con verduras salteadas y huevo duro",
-      "cena": "Yogur natural con avena"
+      "desayuno": "Jugo de papaya con linaza y pan integral",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tallarines con verduras salteadas y huevo",
+      "snack": "Galletas integrales",
+      "cena": "Tallarines (pequeña porción) + infusión ligera"
     },
     "miércoles": {
       "desayuno": "Pan con queso fresco bajo en sal y emoliente",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Sopa de verduras con trozos de pollo",
-      "cena": "Gelatina sin azúcar"
+      "snack": "Gelatina",
+      "cena": "Sopa de verduras con pollo + infusión ligera (opcional)"
     },
     "jueves": {
-      "desayuno": "Pan con atún y mate de hierbas",
+      "desayuno": "Yogur natural con fruta",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Pescado al vapor con camote y ensalada",
-      "cena": "Fruta cocida"
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Pescado al vapor con ensalada + infusión ligera"
     },
     "viernes": {
       "desayuno": "Avena con trozos de manzana",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Lentejas con arroz y ensalada fresca",
-      "cena": "Infusión con pan de salvado"
+      "snack": "Gelatina",
+      "cena": "Tortilla de verduras + infusión ligera"
     },
     "sábado": {
-      "desayuno": "Batido de fresa con agua y pan con tomate",
-      "almuerzo": "Ensalada grande con pollo deshilachado y arroz",
-      "cena": "Compota natural"
+      "desayuno": "Jugo de fresa y pan con tortilla",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ensalada grande con pollo deshilachado",
+      "snack": "Galletas integrales",
+      "cena": "Pollo deshilachado con ensalada + infusión ligera"
     },
     "domingo": {
-      "desayuno": "Pan con jamón de pavo y té verde",
-      "almuerzo": "Ají de gallina light con papa sancochada",
-      "cena": "Infusión con tostadas integrales"
+      "desayuno": "Ensalada de frutas + infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Arroz con pollo con mucha ensalada (y menos arroz)",
+      "snack": "Gelatina",
+      "cena": "Pan integral con queso fresco + infusión ligera"
     }
   },
   "H-N-BP-A": {
     "lunes": {
       "desayuno": "Avena cocida con plátano y nueces",
-      "almuerzo": "Pollo a la plancha con ensalada de zanahoria y arroz ",
-      "cena": "Fruta picada con yogur"
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pollo a la plancha con ensalada de zanahoria y arroz",
+      "snack": "Gelatina natural",
+      "cena": "Pollo a la plancha con ensalada + infusión ligera"
     },
     "martes": {
       "desayuno": "Pan integral con palta y té verde",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Lentejas con arroz y ensalada fresca",
-      "cena": "Gelatina light con agua de cebada"
+      "snack": "Frutos secos (almendras o nueces, porción pequeña)",
+      "cena": "Sopa ligera de verduras + infusión ligera"
     },
     "miércoles": {
-      "desayuno": "Batido de mango con avena y pan integral",
+      "desayuno": "Jugo de papaya con avena y pan integral",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Pescado a la parrilla con camote sancochado",
-      "cena": "Infusión con pan integral y mermelada sin azúcar"
+      "snack": "Gelatina natural",
+      "cena": "Pescado a la parrilla con ensalada ligera + infusión ligera"
     },
     "jueves": {
-      "desayuno": "Pan con huevo duro y jugo de naranja natural",
-      "almuerzo": "Tallarines integrales con pollo y ensalada",
-      "cena": "Yogur natural con avena y chía"
+      "desayuno": "Pan con huevo revuelto o sancochado y naranja en trozos",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Frutos secos (alternar con gelatina si se repite)",
+      "cena": "Sopa de quinua con verduras (porción más pequeña) + infusión ligera"
     },
     "viernes": {
       "desayuno": "Avena con semillas de chía y frutilla",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Sopa de verduras con arroz y pollo",
-      "cena": "Compota de manzana con té de manzanilla"
+      "snack": "Gelatina natural",
+      "cena": "Sopa de verduras + infusión ligera (opcional)"
     },
     "sábado": {
-      "desayuno": "Pan con aguacate y té de hierbas",
-      "almuerzo": "arroz con pavo y verduras al vapor",
-      "cena": "Ensalada de pepino y tomate con limón"
+      "desayuno": "Pan con palta y té de hierbas",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Arroz con pavo y verduras al vapor",
+      "snack": "Frutos secos (mezcla moderada)",
+      "cena": "Pavo con verduras al vapor + infusión ligera"
     },
     "domingo": {
-      "desayuno": "Pan con queso fresco y jugo de piña",
-      "almuerzo": "Ají de gallina light con papa",
-      "cena": "Fruta picada con infusión de hierba luisa"
+      "desayuno": "Pan con queso fresco y jugo de fresa",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Causa limeña con pollo y ensalada",
+      "snack": "Gelatina natural",
+      "cena": "Causa limeña con pollo (porción más pequeña) + infusión ligera"
     }
   },
   "H-N-BP-S": {
     "lunes": {
       "desayuno": "Avena cocida con linaza, plátano y almendras",
-      "almuerzo": "Pollo a la plancha con camote sancochado y ensalada fresca",
-      "cena": "Fruta picada con yogur natural"
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pollo a la plancha con camote o papa sancochado y ensalada fresca",
+      "snack": "Gelatina",
+      "cena": "Pollo a la plancha con ensalada fresca + infusión ligera"
     },
     "martes": {
-      "desayuno": "Pan integral con aguacate y huevo revuelto",
+      "desayuno": "Quinua con manzana + pan con palta",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Lentejas con arroz y ensalada de zanahoria",
-      "cena": "Gelatina light con agua de cebada"
+      "snack": "Gelatina",
+      "cena": "Tortilla de espinaca con zanahoria rallada + infusión ligera"
     },
     "miércoles": {
-      "desayuno": "Batido de papaya con avena y leche de almendra",
-      "almuerzo": "Pescado a la parrilla con arroz y ensalada de pepino",
-      "cena": "Infusión con manzana y canela"
+      "desayuno": "Jugo de papaya con avena y leche de almendra + pan integral",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la parrilla con arroz y ensalada",
+      "snack": "Ensalada de frutas",
+      "cena": "Pescado a la parrilla con ensalada + infusión ligera"
     },
     "jueves": {
-      "desayuno": "Pan con queso fresco y bebida de quinua",
+      "desayuno": "Bebida de quinua caliente + pan con queso fresco",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Sopa de verduras con quinua y pollo",
-      "cena": "Yogur natural con frutos rojos"
+      "snack": "Gelatina",
+      "cena": "Sopa de verduras + infusión ligera (opcional)"
     },
     "viernes": {
       "desayuno": "Avena con semillas de chía y fresas",
-      "almuerzo": "Tallarines con pollo y verduras",
-      "cena": "Fruta cocida con infusión de manzanilla"
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Estofado de zapallito italiano con huevo",
+      "snack": "Gelatina",
+      "cena": "Tortilla de espinaca con zanahoria rallada + infusión ligera"
     },
     "sábado": {
-      "desayuno": "Pan integral con mermelada sin azúcar y té verde",
+      "desayuno": "Pan integral con palta y yogur natural",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Arroz con lentejas y ensalada",
-      "cena": "Compota de manzana con té de hierbas"
+      "snack": "Frutos secos (pequeña porción)",
+      "cena": "Ensalada fresca con huevo sancochado y camote sancochado + infusión ligera"
     },
     "domingo": {
       "desayuno": "Avena con manzana y nueces",
-      "almuerzo": "Ají de gallina con papa",
-      "cena": "Infusión con pan integral"
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ensalada rusa sin mayonesa + pollo a la plancha",
+      "snack": "Ensalada de frutas",
+      "cena": "Pan integral con palta y huevo sancochado + infusión ligera"
     }
   },
   "H-N-SP-N": {
     "lunes": {
       "desayuno": "Avena cocida con leche, plátano y nueces",
-      "almuerzo": "Pollo a la plancha con arroz integral y ensalada de aguacate",
-      "cena": "Fruta picada con yogur natural"
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pollo a la plancha con arroz y ensalada de palta",
+      "snack": "Gelatina natural o yogur natural con frutas",
+      "cena": "Pollo a la plancha con ensalada de palta + infusión ligera"
     },
     "martes": {
-      "desayuno": "Pan integral con aguacate y huevo revuelto",
+      "desayuno": "Jugo de papaya con linaza + pan integral con palta y huevo sancochado",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lentejas con arroz y trozos de carne magra",
-      "cena": "Gelatina con crema batida"
+      "snack": "Ensalada de frutas con avena o granola",
+      "cena": "Lentejas con carne magra + infusión ligera"
     },
     "miércoles": {
-      "desayuno": "Batido de mango con avena y leche",
+      "desayuno": "Batido de mango con avena y leche + pan integral con queso fresco",
+      "colasion": "Fruta picada + agua",
       "almuerzo": "Pescado a la parrilla con camote y ensalada fresca",
-      "cena": "Infusión con galletas de avena"
+      "snack": "Yogur natural con 1 cda. de miel o granola",
+      "cena": "Pescado a la parrilla con ensalada fresca + infusión ligera"
     },
     "jueves": {
-      "desayuno": "Pan con queso fresco y bebida de quinua",
+      "desayuno": "Pan con queso fresco + bebida caliente de quinua o maca",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Tallarines con carne molida y verduras",
-      "cena": "Yogur natural con almendras"
+      "snack": "Gelatina natural o yogur natural con frutas",
+      "cena": "Tallarines con verduras (porción menor) + infusión ligera"
     },
     "viernes": {
-      "desayuno": "Avena con frutos rojos, nueces y miel",
-      "almuerzo": "Arroz chaufa con pollo y verduras",
-      "cena": "Compota de manzana con un puñado de almendras"
+      "desayuno": "Avena con frutos rojos, nueces y 1 cda. de miel",
+      "colasion": "Fruta picada + agua",
+      "almuerzo": "Arroz chaufa de pollo y verduras",
+      "snack": "Ensalada de frutas con granola o avena",
+      "cena": "Arroz chaufa (porción menor) + infusión ligera"
     },
     "sábado": {
-      "desayuno": "Pan integral con mantequilla de maní y té verde",
+      "desayuno": "Pan integral con mantequilla de maní + té verde o emoliente",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de carne con arroz y papa",
-      "cena": "Fruta cocida con yogur"
+      "snack": "Yogur natural con fruta o gelatina",
+      "cena": "Seco de carne con verduras + infusión ligera"
     },
     "domingo": {
       "desayuno": "Batido de plátano con leche y avena",
+      "colasion": "Fruta picada + agua",
       "almuerzo": "Ají de gallina con arroz",
-      "cena": "Infusión con pan integral"
+      "snack": "Ensalada de frutas o yogur natural",
+      "cena": "Ají de gallina con papa sancochada (porción menor) + infusión ligera"
     }
   },
   "H-N-SP-A": {
     "lunes": {
-      "desayuno": "Avena cocida con trozos de plátano y almendras",
+      "desayuno": "Avena cocida con trozos de plátano + leche con quinua",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Pollo al horno con batatas asadas y ensalada de pepino",
-      "cena": "Fruta picada con leche evaporada"
+      "snack": "Gelatina de frutas",
+      "cena": "Pollo al horno + infusión ligera"
     },
     "martes": {
-      "desayuno": "Tostadas integrales con aguacate y huevo pochado",
+      "desayuno": "Tostadas integrales con palta y huevo pochado + emoliente natural caliente",
+      "colasion": "Fruta de estación + Agua",
       "almuerzo": "Sopa de garbanzos con espinacas y arroz integral",
-      "cena": "Infusión de manzanilla con unas galletas de avena"
+      "snack": "Ensalada de frutas con un toque de miel",
+      "cena": "Sopa de garbanzos + infusión ligera"
     },
     "miércoles": {
-      "desayuno": "Pan integral con mantequilla de almendra y jugo de naranja",
-      "almuerzo": "Pescado a la plancha con arroz integral y ensalada de zanahoria",
-      "cena": "Kefir con miel y nueces"
+      "desayuno": "Pan integral con mantequilla y jugo de naranja",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Pescado a la parrilla con arroz integral y ensalada de zanahoria",
+      "snack": "Galletas integrales",
+      "cena": "Yogur natural con miel y fruta picadas + infusión ligera"
     },
     "jueves": {
-      "desayuno": "Batido de fresa con avena y leche de almendra",
-      "almuerzo": "Lentejas estofadas con arroz y ensalada fresca",
-      "cena": "Fruta cocida con leche de coco"
+      "desayuno": "Jugo de fresa con avena y pan con queso",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Guiso de pallares con arroz y huevo",
+      "snack": "Porción moderada de frutos secos",
+      "cena": "Guiso de pallares + infusión ligera"
     },
     "viernes": {
-      "desayuno": "Avena con manzana, nueces y un toque de miel",
-      "almuerzo": "Arroz chaufa de pollo con verduras",
-      "cena": "Gelatina light con té de jengibre"
+      "desayuno": "Avena con manzana y un toque de miel + infusión",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Tallarines verdes con papa y presa de pollo + ensalada cocida",
+      "snack": "Mazamorra de frutas (manzana, fresa y membrillo)",
+      "cena": "Arroz con leche casero + infusión ligera"
     },
     "sábado": {
       "desayuno": "Pan integral con queso fresco y té verde",
-      "almuerzo": "Seco de pollo con papas y arroz integral",
-      "cena": "Té de hierba luisa con galletas integrales"
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Seco de pollo con papas y arroz",
+      "snack": "Galletas integrales",
+      "cena": "JSeco de pollo con papas y arroz (pequeña porción) + infusión ligera"
     },
     "domingo": {
-      "desayuno": "Pan integral con aguacate y tomate + jugo de piña",
-      "almuerzo": "Ají de gallina light con papa sancochada",
-      "cena": "Fruta picada con ricotta"
+      "desayuno": "Pan integral con palta + jugo de piña",
+      "colasion": "Fruta de estación + Agua",
+      "almuerzo": "Ají de gallina tradicional con arroz blanco y huevo sancochado",
+      "snack": "Ensalada de frutas con yogur",
+      "cena": "Pan con huevo cocido con fruta picada con miel + infusión ligera"
     }
   },
   "H-N-SP-S": {
     "lunes": {
       "desayuno": "Avena cocida con leche, plátano y almendras",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla con arroz y trozos de carne",
+      "snack": "Gelatina",
       "cena": "Jugo natural de naranja con galletas integrales"
     },
     "martes": {
-      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
+      "desayuno": "Tostadas integrales con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Caldo de res con papas y verduras",
+      "snack": "Gelatina",
       "cena": "Fruta picada con yogur natural"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena y leche de almendra",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lomo saltado con arroz y papas fritas al horno",
+      "snack": "Gelatina",
       "cena": "Gelatina sin azúcar con agua de piña"
     },
     "jueves": {
       "desayuno": "Pan integral con queso fresco y jugo de naranja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con menestrón (sopa de frijoles y vegetales)",
+      "snack": "Yogurt natural",
       "cena": "Té verde con galletas de avena"
     },
     "viernes": {
       "desayuno": "Avena con semillas de chía y fresas",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de quinua con verduras y pollo",
+      "snack": "Yogurt natural",
       "cena": "Compota de manzana con yogur natural"
     },
     "sábado": {
       "desayuno": "Pan integral con mantequilla de maní y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Causa rellena de atún con ensalada de pepino",
+      "snack": "Mazamorra de frutas",
       "cena": "Infusión de manzanilla con galletas integrales"
     },
     "domingo": {
       "desayuno": "Batido de plátano con leche y avena",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de cordero con arroz y yuca",
+      "snack": "Mazamorra de frutas",
       "cena": "Fruta cocida con ricotta y un té de hierbas"
     }
   },
-  "H-FS-X-X": {
+  "H-FS-SP-X": {
+    "lunes": {
+      "desayuno": "Quinua con manzana o con leche + pan con huevo",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Tallarines rojos con pollo y ensalada fresca",
+      "snack": "Gelatina",
+      "cena": "Pan con palta y huevo sancochado + infusión digestiva"
+    },
+    "martes": {
+      "desayuno": "Avena cocida con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa criolla con arroz y carne",
+      "snack": "Gelatina",
+      "cena": "Arroz con leche (sin azúcar refinada)"
+    },
+    "miércoles": {
+      "desayuno": "Tostadas integrales con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Arroz con mariscos",
+      "snack": "Gelatina",
+      "cena": "Pan con tortilla de verduras y bebida de avena"
+    },
+    "jueves": {
+      "desayuno": "Leche con quinua, maca o kiwicha + pan con huevo",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Seco de pollo con arroz y papas",
+      "snack": "Mazamorra de frutas",
+      "cena": "Pan integral con pollo deshilachado y tomate + emoliente caliente"
+    },
+    "viernes": {
+      "desayuno": "Jugo de mango con avena y leche de vaca",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Guiso de pallares con arroz con huevo frito y ensalada fresca",
+      "snack": "Mazamorra de frutas",
+      "cena": "Papa sancochada con huevo revuelto + infusión de hierbas"
+    },
+    "sábado": {
+      "desayuno": "Pan con pollo deshilachado + Quinua o Emoliente",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Arroz con pollo y ensalada criolla",
+      "snack": "Yogurt natural",
+      "cena": "Tortilla de acelga con pan integral y emoliente de linaza"
+    },
+    "domingo": {
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Tacu tacu con pescado y ensalada de tomate",
+      "snack": "Yogurt natural",
+      "cena": "Pan con queso fresco + bebida caliente de kiwicha o maca"
+    }
+  },
+  "H-FS-(MP-MS)-X": {
     "lunes": {
       "desayuno": "Pan con queso fresco y jugo de naranja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Tallarines rojos con pollo y ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Flan de vainilla saludable (sin azúcar añadida)"
     },
     "martes": {
       "desayuno": "Avena cocida con plátano y semillas de chía",
-      "almuerzo": "Sopa criolla con arroz y carne",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Ensalada de frutas con miel",
       "cena": "Pudín de arroz con leche (sin azúcar refinada)"
     },
     "miércoles": {
-      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
-      "almuerzo": "Arroz con mariscos",
+      "desayuno": "Tostadas integrales con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pescado a la plancha con arroz integral y ensalada",
+      "snack": "Gelatina",
       "cena": "Mil hojas de manzana con crema de avena"
     },
     "jueves": {
       "desayuno": "Pan integral con palta y té de hierba luisa",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de pollo con arroz y papas",
+      "snack": "Yogurt natural",
       "cena": "Gelatina natural de frutas"
     },
     "viernes": {
-      "desayuno": "Batido de mango con avena y leche de almendra",
+      "desayuno": "Jugo de mango y leche de vaca",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Causa rellena de atún con ensalada",
+      "snack": "Gelatina",
       "cena": "Compota de manzana con canela"
     },
     "sábado": {
-      "desayuno": "Pan con mermelada de frutas sin azúcar y té verde",
+      "desayuno": "Pan con mermelada de frutas y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con pollo y ensalada criolla",
+      "snack": "Yogurt natural",
       "cena": "Pudín"
     },
     "domingo": {
       "desayuno": "Avena con fresa y semillas de linaza",
-      "almuerzo": "Tacu tacu con pescado y ensalada de tomate",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz",
+      "snack": "Yogurt natural",
       "cena": "Flan de chocolate saludable"
+    }
+  },
+  "H-FS-BP-X": {
+    "lunes": {
+      "desayuno": "Pan con tortilla de verduras (espinaca, zanahoria) + jugo de naranja",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pollo a la plancha con arroz y ensalada",
+      "snack": "Gelatina",
+      "cena": "Ensalada de frutas con yogur natural bajo en grasa"
+    },
+    "martes": {
+      "desayuno": "Avena cocida con plátano en rodajas y canela",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa de quinua con verduras y huevo",
+      "snack": "Gelatina",
+      "cena": "Infusión con 2 tostadas integrales"
+    },
+    "miércoles": {
+      "desayuno": "Tostadas con palta y huevo sancochado",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pescado a la plancha con arroz integral y ensalada",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Manzana cocida con canela y yogur descremado"
+    },
+    "jueves": {
+      "desayuno": "Pan con tomate y huevo revuelto + té verde",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Saltado de verduras con pollo y arroz",
+      "snack": "Gelatina",
+      "cena": "Gelatina natural de frutas"
+    },
+    "viernes": {
+      "desayuno": "Avena cocida + fruta picada (plátano, manzana o papaya)",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Causa limeña de atún con ensalada de lechuga y tomate",
+      "snack": "Yogurt natural",
+      "cena": "Compota de manzana natural sin azúcar añadida"
+    },
+    "sábado": {
+      "desayuno": "Pan con huevo sancochado + café o infusión",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Guiso de garbanzos con espinaca y arroz integral",
+      "snack": "Gelatina",
+      "cena": "Fruta fresca con infusión digestiva"
+    },
+    "domingo": {
+      "desayuno": "Avena con fresa en agua y semillas de linaza",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Ensalada rusa (papa, zanahoria, betarraga) sin mayonesa con arroz y huevo sancochado",
+      "snack": "Yogurt natural",
+      "cena": "Infusión con galletas integrales"
     }
   },
   "H-M-X-X": {
     "lunes": {
       "desayuno": "Pan integral con queso fresco y jugo de naranja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Tallarines rojos con pollo y ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Flan de vainilla saludable (sin azúcar añadida)"
     },
     "martes": {
       "desayuno": "Avena cocida con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla con arroz y carne",
-      "cena": "Pudín de arroz con leche (sin azúcar refinada)"
+      "snack": "Yogurt natural",
+      "cena": "Arroz con leche (sin azúcar refinada)"
     },
     "miércoles": {
-      "desayuno": "Tostadas integrales con aguacate y huevo revuelto",
+      "desayuno": "Tostadas integrales con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pollo a la parrilla con camote sancochado y ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Mil hojas de manzana con crema de avena"
     },
     "jueves": {
       "desayuno": "Pan integral con palta y té de hierba luisa",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de pollo con arroz y papas",
+      "snack": "Frutos secos",
       "cena": "Gelatina natural de frutas"
     },
     "viernes": {
       "desayuno": "Batido de mango con avena y leche de almendra",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Ensalada de pollo desmenuzado con papas y arroz",
+      "snack": "Gelatina",
       "cena": "Compota de manzana con canela"
     },
     "sábado": {
       "desayuno": "Pan con mermelada de frutas sin azúcar y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con pollo y ensalada criolla",
+      "snack": "Mazamorra de frutas",
       "cena": "Pudín de choclo saludable (sin azúcar añadida)"
     },
     "domingo": {
       "desayuno": "Avena con fresa y semillas de linaza",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Tacu tacu con carne de res y ensalada de tomate",
+      "snack": "Mazamorra de frutas",
       "cena": "Flan de chocolate saludable (sin azúcar)"
     }
   },
-    "H-G-X-X": {
-      "lunes": {
-        "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
-        "almuerzo": "Pollo a la parrilla con arroz integral y ensalada de pepino",
-        "cena": "Flan de vainilla sin azúcar"
-      },
-      "martes": {
-        "desayuno": "Tostadas sin gluten con aguacate y huevo revuelto",
-        "almuerzo": "Sopa de quinua con verduras y trozos de pollo",
-        "cena": "Yogur natural con fresas"
-      },
-      "miércoles": {
-        "desayuno": "Batido de papaya con avena sin gluten y leche de almendras",
-        "almuerzo": "Tacu tacu sin gluten con carne de res y ensalada de zanahoria",
-        "cena": "Gelatina natural con fruta fresca"
-      },
-      "jueves": {
-        "desayuno": "Pan sin gluten con queso fresco y jugo de naranja natural",
-        "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
-        "cena": "Ensalada de frutas frescas con jugo de limón"
-      },
-      "viernes": {
-        "desayuno": "Avena sin gluten con semillas de chía y manzana",
-        "almuerzo": "Pollo al horno con batatas asadas y ensalada fresca",
-        "cena": "Compota de manzana con canela"
-      },
-      "sábado": {
-        "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
-        "almuerzo": "Causa rellena de pollo con ensalada",
-        "cena": "Pudín"
-      },
-      "domingo": {
-        "desayuno": "Batido de plátano con avena sin gluten y leche",
-        "almuerzo": "Ají de gallina sin gluten con papa sancochada",
-        "cena": "Ensalada de frutas con limón"
-      }
-    },
-    "H-IL-X-X": {
+  "H-G-X-X": {
     "lunes": {
-      "desayuno": "Avena sin lactosa con plátano y semillas de chía",
-      "almuerzo": "Sopa de verduras con pollo",
-      "cena": "Gelatina natural con frutas frescas"
+      "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pollo a la parrilla con arroz integral y ensalada de pepino",
+      "snack": "Gelatina",
+      "cena": "Flan de vainilla sin azúcar"
     },
     "martes": {
-      "desayuno": "Tostadas sin gluten con aguacate y huevo revuelto",
-      "almuerzo": "Lomo de cerdo al horno con puré de camote",
-      "cena": "Pudín de arroz con leche sin lactosa"
+      "desayuno": "Tostadas sin gluten con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa de quinua con verduras y trozos de pollo",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Yogur natural con fresas"
     },
     "miércoles": {
-      "desayuno": "Batido de papaya con avena sin lactosa y leche de almendras",
-      "almuerzo": "Tallarines a la huancaína (sin queso) y ensalada",
-      "cena": "Ensalada de frutas frescas con jugo de limón"
+      "desayuno": "Batido de papaya con avena sin gluten y leche de almendras",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Tacu tacu sin gluten con carne de res y ensalada de zanahoria",
+      "snack": "Gelatina",
+      "cena": "Gelatina natural con fruta fresca"
     },
     "jueves": {
-      "desayuno": "Pan sin gluten con queso sin lactosa y jugo de naranja",
-      "almuerzo": "Estofado de ternera con arroz integral",
-      "cena": "Yogur sin lactosa con fresas"
+      "desayuno": "Pan sin gluten con queso fresco y jugo de naranja natural",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+      "snack": "Yogur natural",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
     },
     "viernes": {
-      "desayuno": "Avena sin lactosa con semillas de chía y fresas",
-      "almuerzo": "Arroz con lentejas y vegetales",
+      "desayuno": "Avena sin gluten con semillas de chía y manzana",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pollo al horno con batatas asadas y ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Compota de manzana con canela"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Causa rellena de pollo con ensalada",
+      "snack": "Yogur natural",
+      "cena": "Pudín"
+    },
+    "domingo": {
+      "desayuno": "Batido de plátano con avena sin gluten y leche",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Ají de gallina sin gluten con papa sancochada",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Ensalada de frutas con limón"
+    }
+  },
+  "H-IL-X-X": {
+    "lunes": {
+      "desayuno": "Avena sin lactosa con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa de verduras con pollo",
+      "snack": "Gelatina",
+      "cena": "Gelatina natural con frutas frescas"
+    },
+    "martes": {
+      "desayuno": "Tostadas sin gluten con palta y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Lomo de cerdo al horno con puré de camote",
+      "snack": "Ensalada de frutas con miel",
+      "cena": "Pudín de arroz con leche sin lactosa"
+    },
+    "miércoles": {
+      "desayuno": "Batido de papaya con avena sin lactosa y leche de almendras",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Tallarines a la huancaína (sin queso) y ensalada",
+      "snack": "Gelatina",
+      "cena": "Ensalada de frutas frescas con jugo de limón"
+    },
+    "jueves": {
+      "desayuno": "Pan sin gluten con queso sin lactosa y jugo de naranja",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Estofado de ternera con arroz integral",
+      "snack": "Gelatina",
+      "cena": "Yogur sin lactosa con fresas"
+    },
+    "viernes": {
+      "desayuno": "Avena sin lactosa con semillas de chía y fresas",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Arroz con lentejas y vegetales",
+      "snack": "Gelatina",
+      "cena": "Compota de manzana con canela"
+    },
+    "sábado": {
+      "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa a la minuta sin fideos con arroz y zanahoria",
+      "snack": "Ensalada de frutas con miel",
       "cena": "Pudín de choclo sin azúcar"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin lactosa y leche de almendras",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Puré de papa con estofado de res",
+      "snack": "Ensalada de frutas con miel",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     }
   },
   "H-VX-X-X": {
     "lunes": {
       "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
-      "almuerzo": "Ensalada de quinua con vegetales (tomate, pepino, cebolla, aguacate, maíz)",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Ensalada de quinua con vegetales (tomate, pepino, cebolla, palta, maíz)",
+      "snack": "Gelatina",
       "cena": "Sauté de tofu con vegetales (zanahorias, espinacas, pimientos, cebolla)"
     },
     "martes": {
-      "desayuno": "Pan sin gluten con aguacate y tomate",
+      "desayuno": "Pan sin gluten con palta y tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lentejas estofadas con arroz integral y ensalada fresca",
+      "snack": "Ensalada de frutas con miel",
       "cena": "Tallarines veganos con salsa de tomate, albahaca y espinacas"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Tacu tacu vegano con frijoles y arroz, salteado con cebolla, ajo y pimientos",
+      "snack": "Gelatina",
       "cena": "Papas a la huancaína veganas (con leche de almendra y salsa de ají amarillo)"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
-      "almuerzo": "Causa vegana con puré de papa, aguacate y zanahoria, rellena con tofu o guacamole",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Causa vegana con puré de papa, palta y zanahoria, rellena con tofu o guacamole",
+      "snack": "Frutos secos",
       "cena": "Arroz con vegetales y salsa de soya (zanahorias, brócoli, pimientos)"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con semillas de chía, fresas y un toque de miel de agave",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla vegana con fideos de arroz, zanahorias, espinacas y cebolla",
+      "snack": "Gelatina",
       "cena": "Ensalada de frutas frescas con jugo de limón y menta"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "snack": "Yogur natural",
       "cena": "Gelatina de frutas sin azúcar"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lomo saltado vegano con tofu, cebolla, tomate, pimientos y cilantro",
+      "snack": "Yogur natural",
       "cena": "Compota de manzana con canela"
     }
   },
   "H-VXXX-X-X": {
     "lunes": {
       "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz integral y ensalada de pepino",
+      "snack": "Gelatina",
       "cena": "Ensalada de frutas frescas"
     },
     "martes": {
-      "desayuno": "Tostadas sin gluten con aguacate y tomate",
+      "desayuno": "Tostadas sin gluten con palta y tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lentejas estofadas con arroz integral y ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Tallarines veganos con salsa de tomate"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con verduras salteadas y tofu marinado",
+      "snack": "Yogurt natural",
       "cena": "Papas a la huancaína"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con zanahorias",
+      "snack": "Yogurt natural",
       "cena": "Compota de manzana con canela"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con semillas de chía y fresas",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Causa rellena vegana de palta y tomate",
+      "snack": "Gelatina",
       "cena": "Pizza vegetariana"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla vegana con fideos de arroz",
+      "snack": "Gelatina",
       "cena": "Berenjenas rellenas"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de lentejas con arroz y espinacas",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de frutas frescas"
     }
   },
   "XXX-N-X-X": {
     "lunes": {
       "desayuno": "Avena sin gluten con leche de almendra, plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con menestra, cebolla, ajo, pimientos y tomate con ensalada fresca",
+      "snack": "Gelatina",
       "cena": "Sándwich de pan integral con hummus y verduras"
     },
     "martes": {
-      "desayuno": "Pan sin gluten con aguacate, tomate y huevo poché",
+      "desayuno": "Pan sin gluten con palta, tomate y huevo poché",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pancakes de avena y plátano acompañados con frutas frescas y miel de agave",
+      "snack": "Mazamorra de frutas",
       "cena": "Minestrone vegano con fideos integrales, zanahorias y frijoles"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de verduras con arroz integral, zanahorias, espinacas y cebolla",
+      "snack": "Gelatina",
       "cena": "Pudín de chía con leche de coco y fresas"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "snack": "Yogurt natural",
       "cena": "Brownie de Batata y Cacao"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con fresas, semillas de chía y leche de almendra",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Causa rellena de palta con zanahoria y cebolla",
+      "snack": "Gelatina",
       "cena": "Gelatina natural con frutas frescas"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "snack": "Yogurt natural",
       "cena": "Tarta de Manzana"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales y salsa de soya, acompañado de tofu",
+      "snack": "Mazamorra de frutas",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     }
   },
   "XXX-FS-X-X": {
     "lunes": {
       "desayuno": "Avena con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lomo Saltado con pollo, cebolla, pimientos, papas camote y arroz integral",
+      "snack": "Gelatina",
       "cena": "Ensalada de frutas frescas"
     },
     "martes": {
-      "desayuno": "Tostadas con aguacate, tomate y huevo poché",
+      "desayuno": "Tostadas con palta, tomate y huevo poché",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con pollo sin piel y ensalada",
+      "snack": "Yogurt natural",
       "cena": "Pudín de arroz con leche de almendras"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Ensalada de quinua con vegetales frescos",
+      "snack": "Gelatina",
       "cena": "Arroz con Leche Sin Azúcar"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de lentejas con arroz integral",
+      "snack": "Mazamorra de frutas",
       "cena": "Mermelada Casera de Fresas"
     },
     "viernes": {
       "desayuno": "Avena con fresas y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla vegetariana",
-      "cena": "Ensalada de pepino, tomate, cebolla y aguacate"
+      "snack": "Gelatina",
+      "cena": "Ensalada de pepino, tomate, cebolla y palta"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con tempeh",
+      "snack": "Yogurt natural",
       "cena": "Tamarindo con jugo de limón"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales y tofu",
+      "snack": "Mazamorra de frutas",
       "cena": "Tarta de Limón"
     }
   },
   "XXX-M-X-X": {
     "lunes": {
       "desayuno": "Avena con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Guiso de Lentejas con Papas",
+      "snack": "Gelatina",
       "cena": "Sopa de quinua con zanahorias y espinacas"
     },
     "martes": {
-      "desayuno": "Tostadas con aguacate, tomate y huevo poché",
+      "desayuno": "Tostadas con palta, tomate y huevo poché",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz integral con pechuga de pollo, zanahorias y guisantes",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de quinua con vegetales frescos"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pollo al Horno con Papas y Zanahorias",
+      "snack": "Gelatina",
       "cena": "Galletas de Avena y pasas"
     },
     "jueves": {
       "desayuno": "Pan con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+      "snack": "Ensalada de frutas con miel",
       "cena": "Compota de manzana con canela"
     },
     "viernes": {
       "desayuno": "Avena con fresas y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con frijoles y ensalada de zanahoria",
-      "cena": "Arroz con Leche "
+      "snack": "Gelatina",
+      "cena": "Arroz con Leche"
     },
     "sábado": {
       "desayuno": "Pan con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "snack": "Gelatina",
       "cena": "Gelatina natural con frutas frescas"
     }
   },
   "XXX-G-X-X": {
     "lunes": {
       "desayuno": "Avena sin gluten con plátano, semillas de chía y leche de almendra",
-      "almuerzo": "Pescado al Horno",
-      "cena": "Tarta de Kiwi"
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Pescado al horno",
+      "snack": "Gelatina",
+      "cena": "Tarta de kiwi"
     },
     "martes": {
-      "desayuno": "Tostadas sin gluten con aguacate, tomate y huevo poché",
+      "desayuno": "Tostadas sin gluten con palta, tomate y huevo poché",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pollo a la parrilla con arroz integral, zanahorias y guisantes",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de quinua con vegetales frescos (tomate, pepino, cebolla)"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
-      "almuerzo": "Tortillas de Maíz con Pollo y Vegetales",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Tortillas de maíz con pollo y vegetales",
+      "snack": "Gelatina",
       "cena": "Pudín de arroz con leche de almendra"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de pollo con arroz integral y papas sancochadas",
+      "snack": "Mazamorra de frutas",
       "cena": "Compota de manzana con canela"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con fresas y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con frijoles y ensalada de zanahoria",
-      "cena": "Compota de Durazno"
+      "snack": "Gelatina",
+      "cena": "Compota de durazno"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papa con zanahorias y tempeh",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales salteados y tofu marinado",
+      "snack": "Gelatina",
       "cena": "Gelatina natural con frutas frescas"
     }
   },
   "XXX-IL-X-X": {
     "lunes": {
-      "desayuno": "Batido de Piña",
-      "almuerzo": "Sopa de Tomate con Albahaca",
+      "desayuno": "Batido de piña",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Sopa de tomate con albahaca",
+      "snack": "Gelatina",
       "cena": "Tostadas de pan sin gluten con guacamole y pimientos"
     },
     "martes": {
-      "desayuno": "Pan sin gluten con aguacate, tomate y huevo revuelto",
+      "desayuno": "Pan sin gluten con palta, tomate y huevo revuelto",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de zanahoria y lentejas con arroz integral",
+      "snack": "Gelatina",
       "cena": "Ensalada de garbanzos con pepino, cebolla morada y limón"
     },
     "miércoles": {
       "desayuno": "Batido de plátano con avena sin gluten",
-      "almuerzo": "Berenjenas Asadas con Salsa de Tomate",
-      "cena": "Papas camote al horno con salsa de aguacate y cilantro"
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Berenjenas asadas con salsa de tomate",
+      "snack": "Yogur vegetal natural",
+      "cena": "Papas camote al horno con salsa de palta y cilantro"
     },
     "jueves": {
       "desayuno": "Tostadas sin gluten con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Causa vegana rellena de palta y zanahoria",
+      "snack": "Gelatina",
       "cena": "Sopa de garbanzos con espinacas"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con plátano y semillas de calabaza",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Seco de pollo con arroz integral y batatas",
-      "cena": "Huevos Revueltos con Espinacas y Tomate"
+      "snack": "Mazamorra de frutas",
+      "cena": "Huevos revueltos con espinacas y tomate"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con vegetales y tempeh",
+      "snack": "Gelatina",
       "cena": "Ensalada de quinoa con pepino, tomate, cebolla y limón"
     },
     "domingo": {
-      "desayuno": "Tortilla de Verduras",
+      "desayuno": "Tortilla de verduras",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Estofado de papas con zanahorias y tofu",
+      "snack": "Yogur vegetal natural",
       "cena": "Compota de manzana con canela"
     }
   },
   "XXX-V-X-X": {
     "lunes": {
-      "desayuno": "Pancakes de Arroz Integral con Miel",
-      "almuerzo": "Ensalada de quinua con tomate, pepino, cebolla morada y aguacate",
+      "desayuno": "Pancakes de arroz integral con miel",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Ensalada de quinua con tomate, pepino, cebolla morada y palta",
+      "snack": "Gelatina vegetal",
       "cena": "Galletas integrales"
     },
     "martes": {
-      "desayuno": "Tostadas sin gluten con aguacate y tomate",
+      "desayuno": "Tostadas sin gluten con palta y tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de calabaza y zanahoria",
+      "snack": "Gelatina vegetal",
       "cena": "Ensalada fresca de pepino, cebolla morada y tomate"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
-      "almuerzo": "Arroz Integral con Tofu y Verduras Salteadas",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Arroz integral con tofu y verduras salteadas",
+      "snack": "Mazamorra de frutas",
       "cena": "Sopa de zanahoria y jengibre con espinacas"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
-      "almuerzo": "CGuiso de Tofu con Espinacas y Papas",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Guiso de tofu con espinacas y papas",
+      "snack": "Gelatina vegetal",
       "cena": "Berenjenas al horno con salsa de tomate casera"
     },
     "viernes": {
-      "desayuno": "Gachas de Avena con Plátano y Almendras",
-      "almuerzo": "Arroz con Brotes de Soja y Zanahoria",
+      "desayuno": "Gachas de avena con plátano y almendras",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Arroz con brotes de soja y zanahoria",
+      "snack": "Yogurt vegetal",
       "cena": "Tostadas de pan sin gluten con guacamole y pimientos"
     },
     "sábado": {
-      "desayuno": "Ensalada de Frutas con Miel",
+      "desayuno": "Ensalada de frutas con miel",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con lentejas y ensalada de zanahoria rallada",
-      "cena": "Pastelito de Zanahoria"
+      "snack": "Gelatina vegetal",
+      "cena": "Pastelito de zanahoria"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de coco",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de lentejas con espinacas y zanahorias",
+      "snack": "Yogurt vegetal",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     }
   },
   "XXX-VXXX-X-X": {
     "lunes": {
       "desayuno": "Avena sin gluten con plátano y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de Caigua con Verduras",
+      "snack": "Gelatina",
       "cena": "Tarta de Limón"
     },
     "martes": {
-      "desayuno": "Tostadas sin gluten con aguacate, tomate y cebolla morada",
-      "almuerzo": "Ensalada de quinua con espinacas, tomate, pepino y aguacate",
+      "desayuno": "Tostadas sin gluten con palta, tomate y cebolla morada",
+      "colasion": "Fruta de estación + agua",
+      "almuerzo": "Ensalada de quinua con espinacas, tomate, pepino y palta",
+      "snack": "Gelatina",
       "cena": "Tarta de Higos"
     },
     "miércoles": {
       "desayuno": "Batido de papaya con avena sin gluten y leche de soja",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Hamburguesas de Garbanzo y Espinacas",
+      "snack": "Yogurt natural",
       "cena": "Gelatina"
     },
     "jueves": {
       "desayuno": "Pan sin gluten con hummus y rodajas de pepino",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de lentejas con zanahorias y espinacas",
+      "snack": "Mazamorra de frutas",
       "cena": "Ensalada de pepino, tomate y cebolla con jugo de limón"
     },
     "viernes": {
       "desayuno": "Avena sin gluten con fresas y semillas de chía",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Vainitas Salteadas con Champiñones y Cebolla",
+      "snack": "Gelatina",
       "cena": "Berenjenas al horno con salsa de tomate"
     },
     "sábado": {
       "desayuno": "Pan sin gluten con mantequilla de coco y té verde",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con tempeh y verduras salteadas",
+      "snack": "Yogurt natural",
       "cena": "Sopa de espinacas con zanahorias"
     },
     "domingo": {
       "desayuno": "Batido de plátano con avena sin gluten y leche de almendras",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Ensalada de Espárragos con Garbanzos",
+      "snack": "Mazamorra de frutas",
       "cena": "Ensalada de frutas frescas con jugo de limón"
     }
   },
   "H-N-MS-X": {
     "lunes": {
       "desayuno": "Avena con frutas frescas (plátano o manzana)",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pollo a la plancha con ensalada de lechuga y tomate",
+      "snack": "Gelatina",
       "cena": "Ensalada fresca de tomate, pepino y zanahoria"
     },
     "martes": {
       "desayuno": "Tostadas integrales con palta y rodajas de tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa criolla (sin crema)",
+      "snack": "Mazamorra de frutas",
       "cena": "Verduras al vapor (brócoli, zanahoria)"
     },
     "miércoles": {
       "desayuno": "Jugo de naranja natural con pan integral y huevo duro",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Lomo saltado con arroz integral",
+      "snack": "Gelatina",
       "cena": "Sopa de verduras con pollo desmenuzado"
     },
     "jueves": {
       "desayuno": "Yogur sin lactosa con granola y rodajas de fresa",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de zanahoria con pollo",
+      "snack": "Yogurt natural",
       "cena": "Ensalada de espinaca, tomate y pepino con un toque de aceite de oliva"
     },
     "viernes": {
       "desayuno": "Tostadas con palta y tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Arroz con pollo (más ligero, sin piel)",
+      "snack": "Gelatina",
       "cena": "Verduras al vapor (espinaca, zanahoria)"
     },
     "sábado": {
       "desayuno": "Yogur sin lactosa con rodajas de kiwi y un toque de miel",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Pescado a la parrilla con ensalada de pepino y tomate",
+      "snack": "Yogurt natural",
       "cena": "Mazamorra morada (sin lácteos)"
     },
     "domingo": {
       "desayuno": "Pan integral con palta y tomate",
+      "colasion": "Fruta de estación + agua",
       "almuerzo": "Sopa de calabaza con zanahoria",
+      "snack": "Mazamorra de frutas",
       "cena": "Empanada de pollo"
     }
-}
+  }
 }

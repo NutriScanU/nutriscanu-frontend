@@ -172,14 +172,14 @@
   width: 100%;
   border-radius: 10px;
   font-weight: bold;
-  background-color: #6366f1;
+  background-color: #FF5722;
   color: white;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
-  background-color: #4f46e5;
+  background-color: #FF5722;
 }
 
 /* --- Overlay oscuro cuando el menú está abierto --- */

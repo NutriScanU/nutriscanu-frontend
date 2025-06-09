@@ -1,0 +1,122 @@
+.home-container {
+  padding: 0 2rem 4rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* HERO visual */
+.hero-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f9ff;
+  border-radius: 1.5rem;
+  margin-top: 4rem;
+  padding: 4rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 280px;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  color: var(--color-logo-primary);
+  margin-bottom: 1rem;
+}
+
+.hero-content h1 span {
+  color: #f97316;
+}
+
+.hero-content p {
+  font-size: 1.15rem;
+  color: #374151;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: var(--color-auth-button);
+  color: #111827;
+  border: none;
+  padding: 0.9rem 1.6rem;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--color-auth-button-hover);
+}
+
+.hero-image {
+  flex: 1;
+  min-width: 280px;
+  height: 280px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/3604/3604278.png'); /* Cambiable */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Sección ¿Cómo funciona? */
+.how-it-works {
+  margin: 5rem 0 3rem;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.step {
+  flex: 1;
+  min-width: 240px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 1rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.step img {
+  width: 60px;
+  margin-bottom: 1rem;
+}
+
+.step p {
+  font-size: 1rem;
+  color: #374151;
+}
+
+/* ¿Por qué elegirnos? */
+.why-nutriscan {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.why-nutriscan h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.why-nutriscan p {
+  font-size: 1.05rem;
+  color: #374151;
+}

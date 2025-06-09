@@ -44,3 +44,15 @@ export async function checkEmail(email) {
 
   return handleResponse(response);
 }
+
+export async function checkDni(document_number) {
+  const response = await fetch(`${API_BASE}/api/auth/check-dni`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ document_number }),
+  });
+
+  return handleResponse(response);
+}

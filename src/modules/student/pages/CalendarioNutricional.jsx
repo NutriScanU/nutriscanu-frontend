@@ -14,7 +14,7 @@ const CalendarioNutricional = () => {
       return;
     }
 
-    fetch("/cod.json")  // Asegúrate de que la ruta sea correcta
+    fetch("/cod.json")
       .then((res) => res.json())
       .then((data) => {
         if (data[categoria]) {
@@ -29,8 +29,8 @@ const CalendarioNutricional = () => {
       });
   }, []);
 
-  const diasSemana = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];  // Cambié a minúsculas
-  const categorias = ["desayuno", "almuerzo", "cena"];  // Cambié a minúsculas
+  const diasSemana = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+  const categorias = ["desayuno", "colasion", "almuerzo", "snack", "cena"]; // ✅ Añadido colasion y snack
 
   if (error) {
     return (
@@ -60,14 +60,16 @@ const CalendarioNutricional = () => {
           <tr>
             <th></th>
             {diasSemana.map((dia) => (
-              <th key={dia}>{dia.charAt(0).toUpperCase() + dia.slice(1)}</th>  // Capitaliza la primera letra para mostrar correctamente
+              <th key={dia}>{dia.charAt(0).toUpperCase() + dia.slice(1)}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {categorias.map((categoria) => (
             <tr key={categoria}>
-              <td className="calendario-nutricional-category">{categoria.charAt(0).toUpperCase() + categoria.slice(1)}</td>  {/* Capitaliza la primera letra de la categoría */}
+              <td className="calendario-nutricional-category">
+                {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+              </td>
               {diasSemana.map((dia) => (
                 <td key={`${dia}-${categoria}`}>
                   {menu[dia]?.[categoria]?.split("\n").map((linea, i) => (

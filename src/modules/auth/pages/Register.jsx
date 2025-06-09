@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUsuario } from "../services/authService";
+import { registerUsuario, checkDni  } from "../services/authService";
 import axios from "axios";
 import "../../../styles/authTheme.css";
 
@@ -17,7 +17,7 @@ function Register() {
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
 
   const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
 
@@ -84,6 +84,19 @@ function Register() {
     if (!validateDNI(documentNumber)) {
       newErrors.dni = "El DNI debe tener 8 dígitos numéricos.";
       isValid = false;
+    } else {
+      try {
+        const response = await checkDni(documentNumber);
+        if (response.exists === true) {
+          newErrors.dni = "El DNI ya ha sido registrado.";
+          isValid = false;
+        }
+      } catch (err) {
+        if (err.message !== "El DNI no está registrado ❌") {
+          newErrors.general = "Error al verificar el DNI. Intenta más tarde.";
+          isValid = false;
+        }
+      }
     }
 
     if (!isValid) {
@@ -104,10 +117,13 @@ function Register() {
       await registerUsuario(userData);
       setSuccess(true);
     } catch (err) {
-
-      setErrors((prev) => ({ ...prev, general: "Error al registrar. Verifica los campos." }));
+      setErrors((prev) => ({
+        ...prev,
+        general: "Error al registrar. Verifica los campos.",
+      }));
     }
   };
+
 
   return (
     <div className="auth-wrapper">

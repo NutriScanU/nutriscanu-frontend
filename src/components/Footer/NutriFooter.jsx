@@ -8,7 +8,7 @@ const NutriFooter = () => {
       <div className="nutri-footer">
 
         {/* Secciones de enlaces */}
-        <div className="footer-links">
+        {/* <div className="footer-links">
           <div>
             <h4>Compañía</h4>
             <ul>
@@ -43,7 +43,7 @@ const NutriFooter = () => {
               <li><a href="#">Términos y condiciones</a></li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* Divider */}
         <hr className="footer-divider" />
