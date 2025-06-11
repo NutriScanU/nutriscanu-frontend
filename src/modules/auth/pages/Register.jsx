@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUsuario, checkDni  } from "../services/authService";
+import { registerUsuario, checkDni } from "../services/authService";
 import axios from "axios";
 import "../../../styles/authTheme.css";
 
@@ -76,34 +76,37 @@ function Register() {
     const newErrors = { dni: "", general: "" };
     let isValid = true;
 
+    // Validación de campos obligatorios (nombres, apellidos, etc.)
     if (!firstName.trim() || !lastName.trim() || !middleName.trim()) {
       newErrors.general = "Todos los campos son obligatorios.";
       isValid = false;
     }
 
+    // Validación del formato del DNI
     if (!validateDNI(documentNumber)) {
       newErrors.dni = "El DNI debe tener 8 dígitos numéricos.";
       isValid = false;
     } else {
+      // Verificar si el DNI ya está registrado
       try {
         const response = await checkDni(documentNumber);
         if (response.exists === true) {
-          newErrors.dni = "El DNI ya ha sido registrado.";
+          newErrors.dni = "El DNI ya ha sido registrado."; // Error si ya existe
           isValid = false;
         }
       } catch (err) {
-        if (err.message !== "El DNI no está registrado ❌") {
-          newErrors.general = "Error al verificar el DNI. Intenta más tarde.";
-          isValid = false;
-        }
+        newErrors.general = "Error al verificar el DNI. Intenta más tarde."; // Error en caso de fallo de la consulta
+        isValid = false;
       }
     }
 
+    // Si los campos no son válidos, mostramos los errores y no seguimos con el registro
     if (!isValid) {
       setErrors((prev) => ({ ...prev, ...newErrors }));
       return;
     }
 
+    // Si todo es válido, se procede al registro del usuario
     const userData = {
       email,
       password,
@@ -114,8 +117,8 @@ function Register() {
     };
 
     try {
-      await registerUsuario(userData);
-      setSuccess(true);
+      await registerUsuario(userData); // Aquí se registra al usuario
+      setSuccess(true); // Si el registro es exitoso, mostramos el mensaje de éxito
     } catch (err) {
       setErrors((prev) => ({
         ...prev,
@@ -123,6 +126,8 @@ function Register() {
       }));
     }
   };
+
+
 
 
   return (

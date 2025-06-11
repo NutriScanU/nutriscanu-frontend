@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import './Profile.css';
 
 const Profile = () => {
+  // Estados del componente
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,9 +20,10 @@ const Profile = () => {
   const [tempLastName, setTempLastName] = useState('');
   const [errors, setErrors] = useState({});
 
-  const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const apiBase = process.env.REACT_APP_API_URL;
+
+  // Función para traducir las condiciones de salud
   const translateCondition = (condition) => {
     switch (condition) {
       case 'Healthy':
@@ -38,7 +40,7 @@ const Profile = () => {
     }
   };
 
-
+  // Función que se ejecuta al montar el componente (useEffect)
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -51,11 +53,11 @@ const Profile = () => {
 
         // Iniciar animación para la probabilidad
         if (res.data.probability !== undefined) {
-          setLocalProbability(0);  // Comienza en 0
+          setLocalProbability(0);
           let increment = 1;
           const targetProbability = res.data.probability;
           const interval = setInterval(() => {
-            setLocalProbability(prev => {
+            setLocalProbability((prev) => {
               if (prev < targetProbability) {
                 return prev + increment;
               } else {
@@ -75,37 +77,7 @@ const Profile = () => {
     fetchProfile();
   }, [apiBase]);
 
-  const handleImageClick = () => fileInputRef.current.click();
-
-  const handleImageChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-      const token = localStorage.getItem('token');
-      const res = await axios.put(`${apiBase}/api/students/update-photo`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
-      });
-
-      setProfileData((prev) => ({
-        ...prev,
-        profile: {
-          ...prev.profile,
-          profile_image: res.data.profile_image
-        }
-      }));
-    } catch (err) {
-      console.error('❌ Error al subir imagen:', err);
-    }
-  };
-
+  // Función para manejar la edición del nombre
   const handleEditName = () => {
     setTempFirstName('');
     setTempMiddleName('');
@@ -114,6 +86,7 @@ const Profile = () => {
     setShowEditModal(true);
   };
 
+  // Validación de los campos de nombre
   const validateFields = () => {
     const onlyLetters = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
     const newErrors = {};
@@ -131,10 +104,12 @@ const Profile = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Función para abrir el modal de confirmación
   const handleOpenConfirm = () => {
     if (validateFields()) setShowConfirmModal(true);
   };
 
+  // Función para confirmar el guardado de nuevos datos
   const handleConfirmSave = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -156,6 +131,7 @@ const Profile = () => {
         }
       }));
 
+      // Mostrar mensaje de éxito
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 3000); // Mostrar por 3 segundos
 
@@ -166,13 +142,16 @@ const Profile = () => {
     }
   };
 
+  // Función para cancelar la edición de nombre
   const handleCancelEdit = () => {
     setShowEditModal(false);
     setErrors({});
   };
 
+  // Función para cancelar la confirmación
   const handleCancelConfirm = () => setShowConfirmModal(false);
 
+  // Función para manejar cambios en los campos de entrada
   const handleInputChange = (setter, fieldName) => (e) => {
     const value = e.target.value;
     setter(value);
@@ -191,21 +170,23 @@ const Profile = () => {
     }
   };
 
+  // Si está cargando o hay error, se muestran mensajes apropiados
   if (loading) return <div className="loading">Cargando perfil...</div>;
   if (error) return <div className="error">{error}</div>;
   if (!profileData) return <div className="error">No se pudo cargar el perfil.</div>;
 
+  // Datos del perfil y lógica de la interfaz
   const { profile, health_condition, probability, has_recommendation } = profileData;
-  const fullName = `${profile?.first_name || ''} ${profile?.middle_name || ''} ${profile?.last_name || ''}`;
+  const fullName = `${profile?.first_name || ''}  ${profile?.last_name || ''} ${profile?.middle_name || ''}`;
   const profileImage = profile?.profile_image
     ? `${apiBase}${profile.profile_image}`
     : '/images/Student/Profile/default-profile.png';
 
   const getColorByCondition = () => {
-    if (health_condition === 'Diabetes') return '#FF5733'; // Color para Diabetes
-    if (health_condition === 'Anemia') return '#FF9F00'; // Color para Anemia
-    if (health_condition === 'Ambos') return '#5C6BC0'; // Color para Ambas
-    return '#4CAF50'; // Color para Sano
+    if (health_condition === 'Diabetes') return '#FF5733';
+    if (health_condition === 'Anemia') return '#FF9F00';
+    if (health_condition === 'Ambos') return '#5C6BC0';
+    return '#4CAF50'; // Saludable
   };
 
   return (
@@ -216,26 +197,15 @@ const Profile = () => {
       </div>
 
       <div className="profile-content">
+        {/* Imagen de perfil (sin funcionalidad de edición) */}
         <div className="profile-image-wrapper">
           <img
             src={profileImage}
             alt="Foto de perfil"
             className="profile-image"
-            /* onClick={handleImageClick}*/
             onError={(e) => {
               e.target.src = '/images/Student/Profile/default-profile.png';
             }}
-          />
-
-          <button className="edit-image-button" /*onClick={handleImageClick}*/>
-            <img src="/images/Student/Profile/icon-edit.png" alt="Editar" />
-          </button>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={handleImageChange}
-            style={{ display: 'none' }}
           />
         </div>
 
@@ -253,8 +223,8 @@ const Profile = () => {
 
           <div className="health-meter" style={{ color: getColorByCondition() }}>
             <CircularProgressbar
-              value={localProbability}
-              text={`${localProbability}%`}
+              value={localProbability < 100 ? localProbability : 99.99}  // Evita que se llene completamente
+              text={`${localProbability < 100 ? localProbability : 99.99}%`}
               strokeWidth={10}
               styles={{
                 path: { stroke: getColorByCondition(), strokeLinecap: 'round' },
@@ -262,6 +232,7 @@ const Profile = () => {
                 text: { fill: '#333', fontSize: '24px', fontWeight: 'bold' },
               }}
             />
+
           </div>
         </div>
 
@@ -292,13 +263,7 @@ const Profile = () => {
           )}
         </div>
 
-
-        {isPlanVisible && has_recommendation && (
-          <div className="complete-plan">
-            <p>Este es el plan completo de hábitos alimenticios...</p>
-          </div>
-        )}
-
+        {/* Modal de éxito */}
         {showSuccessMessage && (
           <div className="success-message">
             <span>¡Nombre actualizado correctamente!</span>
@@ -310,7 +275,7 @@ const Profile = () => {
         <p>2025 © Tus datos protegidos con NutriScanU</p>
       </footer>
 
-      {/* Modal de edición */}
+      {/* Modal de edición de nombre */}
       {showEditModal && (
         <div className="modal-overlay">
           <div className="modal-confirm">
