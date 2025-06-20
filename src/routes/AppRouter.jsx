@@ -14,7 +14,6 @@ import StudentLayout from "../layouts/StudentLayout";
 import StudentHome from "../modules/student/pages/StudentHome";
 import Profile from "../modules/student/pages/Profile";
 import AnalysisStatus from "../modules/student/pages/AnalysisStatus";
-import Recommendations from "../modules/student/pages/Recommendations";
 import MultiStepForm from "../modules/student/components/MultiStepForm";
 import CalendarioNutricional from "../modules/student/pages/CalendarioNutricional"; // Importa tu nuevo componente
 

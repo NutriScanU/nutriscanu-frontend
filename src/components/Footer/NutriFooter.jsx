@@ -7,44 +7,6 @@ const NutriFooter = () => {
     <footer className="nutri-footer-wrapper">
       <div className="nutri-footer">
 
-        {/* Secciones de enlaces */}
-        {/* <div className="footer-links">
-          <div>
-            <h4>Compañía</h4>
-            <ul>
-              <li><a href="#">Sobre nosotros</a></li>
-              <li><a href="#">Contáctanos</a></li>
-              <li><a href="#">Blog</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4>Servicios</h4>
-            <ul>
-              <li><a href="#">Detección de enfermedades</a></li>
-              <li><a href="#">Recomendaciones nutricionales</a></li>
-              <li><a href="#">Planificación semanal de comidas</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4>Recursos</h4>
-            <ul>
-              <li><a href="#">Guías de alimentación</a></li>
-              <li><a href="#">Consejos de estilo de vida</a></li>
-              <li><a href="#">Preguntas frecuentes</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="#">Política de privacidad</a></li>
-              <li><a href="#">Términos y condiciones</a></li>
-            </ul>
-          </div>
-        </div> */}
-
         {/* Divider */}
         <hr className="footer-divider" />
 
@@ -57,12 +19,23 @@ const NutriFooter = () => {
           </div>
 
           <div className="footer-socials">
-            <a href="#"><img src="/icons/facebook.svg" alt="Facebook" /></a>
-            <a href="#"><img src="/icons/linkedin.svg" alt="LinkedIn" /></a>
-            <a href="#"><img src="/icons/twitter.svg" alt="Twitter" /></a>
-            <a href="#"><img src="/icons/instagram.svg" alt="Instagram" /></a>
-            <a href="#"><img src="/icons/youtube.svg" alt="YouTube" /></a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/facebook.svg" alt="Facebook" />
+            </a>
+            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/linkedin.svg" alt="LinkedIn" />
+            </a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/twitter.svg" alt="Twitter" />
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/instagram.svg" alt="Instagram" />
+            </a>
+            <a href="https://www.youtube.com/channel/" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/youtube.svg" alt="YouTube" />
+            </a>
           </div>
+
         </div>
 
       </div>

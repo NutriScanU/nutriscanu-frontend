@@ -11,7 +11,7 @@ const MultiStepForm = () => {
   const [clinicData, setClinicData] = useState(null);
   const [habitsData, setHabitsData] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [mensajeIncompleto, setMensajeIncompleto] = useState("");
+  const [setMensajeIncompleto] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {

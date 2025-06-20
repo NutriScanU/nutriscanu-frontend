@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -11,7 +11,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [localProbability, setLocalProbability] = useState(0);
-  const [isPlanVisible, setIsPlanVisible] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -176,7 +175,7 @@ const Profile = () => {
   if (!profileData) return <div className="error">No se pudo cargar el perfil.</div>;
 
   // Datos del perfil y lógica de la interfaz
-  const { profile, health_condition, probability, has_recommendation } = profileData;
+  const { profile, health_condition, has_recommendation } = profileData;
   const fullName = `${profile?.first_name || ''}  ${profile?.last_name || ''} ${profile?.middle_name || ''}`;
   const profileImage = profile?.profile_image
     ? `${apiBase}${profile.profile_image}`
@@ -291,21 +290,21 @@ const Profile = () => {
 
             <input
               type="text"
-              placeholder="Apellido paterno"
-              value={tempMiddleName}
-              onChange={handleInputChange(setTempMiddleName, 'middleName')}
-              className={errors.middleName ? 'input-error' : ''}
-            />
-            {errors.middleName && <span className="error-msg">{errors.middleName}</span>}
-
-            <input
-              type="text"
               placeholder="Apellido materno"
               value={tempLastName}
               onChange={handleInputChange(setTempLastName, 'lastName')}
               className={errors.lastName ? 'input-error' : ''}
             />
             {errors.lastName && <span className="error-msg">{errors.lastName}</span>}
+
+            <input
+              type="text"
+              placeholder="Apellido paterno"
+              value={tempMiddleName}
+              onChange={handleInputChange(setTempMiddleName, 'middleName')}
+              className={errors.middleName ? 'input-error' : ''}
+            />
+            {errors.middleName && <span className="error-msg">{errors.middleName}</span>}
 
             <div className="modal-actions">
               <button className="confirm-btn" onClick={handleOpenConfirm}>Guardar</button>

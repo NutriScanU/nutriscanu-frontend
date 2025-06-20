@@ -84,7 +84,7 @@ function Login() {
     if (errors.code) {
       setErrors((prev) => ({ ...prev, code: "" }));
     }
-  }, [code]);
+  }, [code, errors.code]);
 
 
   useEffect(() => {
@@ -268,7 +268,7 @@ function Login() {
     } catch (err) {
       setErrors(prev => ({
         ...prev,
-        general: "Error al verificar el correo. Por favor, intente nuevamente."
+        general: "Servidor caido. Intenta más tarde.",
       }));
     } finally {
       setLoadingLogin(false);
@@ -534,7 +534,7 @@ function Login() {
 
         {/* Mensaje de éxito después de enviar el correo */}
         {step === "success" && (
-          <div className="success-message">
+          <div className="default">
             <h2>¡Listo!</h2>
             <p>
               Te acabamos de enviar un correo con las instrucciones a{" "}
