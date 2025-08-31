@@ -9,24 +9,67 @@ function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [confirmError, setConfirmError] = useState("");
+  const [serverError, setServerError] = useState(""); // Para errores del servidor
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0); // Para la cuenta regresiva
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Activar loading desde el inicio
     setError("");
+    setConfirmError("");
+    setServerError(""); // Limpiar errores del servidor
     setSuccess("");
 
-    // ✅ Validaciones simples
-    if (password.length < 6 || confirmPassword.length < 6) {
-      return setError("La contraseña debe tener al menos 6 caracteres.");
+    let hasErrors = false;
+
+    // ✅ PRIORIDAD 1: Validación de campos vacíos - CADA CAMPO POR SEPARADO
+    if (!password.trim()) {
+      setError("Completa este campo");
+      hasErrors = true;
     }
-    if (password !== confirmPassword) {
-      return setError("Las contraseñas no coinciden.");
+    if (!confirmPassword.trim()) {
+      setConfirmError("Completa este campo");
+      hasErrors = true;
     }
 
+    // Si hay campos vacíos, no continuar con otras validaciones
+    if (hasErrors) {
+      setLoading(false); // Desactivar loading si hay errores
+      return;
+    }
+
+    // ✅ PRIORIDAD 2: Validación de longitud mínima (solo si no hay campos vacíos)
+    if (password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres.");
+      hasErrors = true;
+    }
+    
+    // Validar también el campo de confirmación por separado
+    if (confirmPassword.length < 6) {
+      setConfirmError("La contraseña debe tener al menos 6 caracteres.");
+      hasErrors = true;
+    }
+
+    // Si hay errores de longitud, no continuar
+    if (hasErrors) {
+      setLoading(false); // Desactivar loading si hay errores
+      return;
+    }
+
+    // ✅ PRIORIDAD 3: Validación de coincidencia (solo si ambos tienen 6+ caracteres)
+    if (password !== confirmPassword) {
+      setServerError("Las contraseñas no coinciden");
+      setLoading(false); // Desactivar loading si hay errores
+      console.log("🔴 Estableciendo serverError:", "Las contraseñas no coinciden"); // Debug
+      return;
+    }
+
+    // ✅ PRIORIDAD 4: Envío al servidor (solo si todo es válido)
     try {
-      setLoading(true);
+      // Ya está en loading desde el inicio
 
       const url = `${process.env.REACT_APP_API_URL}/api/auth/reset-password/${token}`;
       console.log("📦 Enviando solicitud a:", url);
@@ -36,18 +79,37 @@ function ResetPassword() {
         confirm_password: confirmPassword,
       });
 
-      setSuccess("¡Contraseña actualizada correctamente!");
-      setTimeout(() => navigate("/login"), 2500);
+      setSuccess("Tu contraseña ha sido actualizada correctamente");
+      
+      // Iniciar cuenta regresiva de 5 segundos
+      setCountdown(5);
+      const countdownInterval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(countdownInterval);
+            navigate("/login");
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     } catch (err) {
       console.error("❌ Error al resetear:", err);
 
       if (err.response) {
         console.error("🔍 Respuesta del backend:", err.response.data);
-        setError(err.response.data?.error || "Error del servidor.");
+        // Manejo específico para diferentes tipos de errores del servidor
+        if (err.response.status === 400 || err.response.status === 404) {
+          setServerError("Token inválido o expirado");
+        } else if (err.response.status === 500) {
+          setServerError("Error del servidor. Intenta más tarde.");
+        } else {
+          setServerError(err.response.data?.error || err.response.data?.message || "Error del servidor.");
+        }
       } else if (err.request) {
-        setError("No se pudo conectar con el servidor.");
+        setServerError("No se pudo conectar con el servidor.");
       } else {
-        setError("Error inesperado: " + err.message);
+        setServerError("Error inesperado: " + err.message);
       }
     } finally {
       setLoading(false);
@@ -63,31 +125,132 @@ function ResetPassword() {
         <p>Recuerda que debe tener 6 caracteres como mínimo</p>
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="password"
-            placeholder="Nueva contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Confirmar contraseña"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+          <div style={{ marginBottom: "15px" }}>
+            <input
+              type="password"
+              placeholder="Nueva contraseña"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (error) setError(""); // Limpiar error al escribir
+                if (serverError) setServerError(""); // Limpiar error del servidor al escribir
+              }}
+              style={{
+                border: error ? "2px solid #ff4444" : "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "5px",
+                width: "100%",
+                fontSize: "16px",
+                boxSizing: "border-box",
+                backgroundColor: (loading || success) ? "#f5f5f5" : "#fff",
+                cursor: (loading || success) ? "not-allowed" : "text"
+              }}
+              disabled={loading || success}
+            />
+            {error && (
+              <p style={{ 
+                color: "#ff4444", 
+                fontSize: "14px", 
+                marginTop: "5px", 
+                marginBottom: "0",
+                fontWeight: "500" 
+              }}>
+                {error}
+              </p>
+            )}
+          </div>
+          
+          <div style={{ marginBottom: "15px" }}>
+            <input
+              type="password"
+              placeholder="Confirmar contraseña"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                if (confirmError) setConfirmError(""); // Limpiar error al escribir
+                if (serverError) setServerError(""); // Limpiar error del servidor al escribir
+              }}
+              style={{
+                border: confirmError ? "2px solid #ff4444" : "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "5px",
+                width: "100%",
+                fontSize: "16px",
+                boxSizing: "border-box",
+                backgroundColor: (loading || success) ? "#f5f5f5" : "#fff",
+                cursor: (loading || success) ? "not-allowed" : "text"
+              }}
+              disabled={loading || success}
+            />
+            {confirmError && (
+              <p style={{ 
+                color: "#ff4444", 
+                fontSize: "14px", 
+                marginTop: "5px", 
+                marginBottom: "0",
+                fontWeight: "500" 
+              }}>
+                {confirmError}
+              </p>
+            )}
+          </div>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {success && <p style={{ color: "green" }}>{success}</p>}
+          {success && (
+            <p style={{ 
+              color: "#28a745", 
+              fontSize: "14px", 
+              marginBottom: "15px",
+              fontWeight: "500",
+              textAlign: "center" 
+            }}>
+              {success}
+            </p>
+          )}
+
+          {/* Error del servidor encima del botón */}
+          {serverError && (
+            <p style={{ 
+              color: "#ff4444", 
+              fontSize: "14px", 
+              marginBottom: "15px",
+              fontWeight: "500",
+              textAlign: "center"
+            }}>
+              {serverError}
+            </p>
+          )}
 
           <button
             type="submit"
             style={{ width: "100%", padding: 10 }}
-            disabled={loading}
+            disabled={loading || success}
           >
             {loading ? "Procesando..." : "Cambiar"}
           </button>
+
+          {/* Mensaje de cuenta regresiva debajo del botón */}
+          {success && countdown > 0 && (
+            <p style={{ 
+              color: "#f5f5f5", 
+              fontSize: "16px", 
+              marginTop: "20px",
+              fontWeight: "600",
+              textAlign: "center",
+              animation: "breathe 1.5s ease-in-out infinite",
+              textShadow: "0 1px 3px rgba(0,123,255,0.3)"
+            }}>
+              Se redirigirá a la pantalla de inicio principal, espera {countdown}
+            </p>
+          )}
+
+          {/* Agregar los keyframes CSS para la animación de respiración */}
+          <style jsx>{`
+            @keyframes breathe {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.05); }
+              100% { transform: scale(1); }
+            }
+          `}</style>
         </form>
       </div>
     </div>

@@ -290,7 +290,7 @@ const Profile = () => {
 
             <input
               type="text"
-              placeholder="Apellido materno"
+              placeholder="Apellido paterno"
               value={tempLastName}
               onChange={handleInputChange(setTempLastName, 'lastName')}
               className={errors.lastName ? 'input-error' : ''}
@@ -299,12 +299,14 @@ const Profile = () => {
 
             <input
               type="text"
-              placeholder="Apellido paterno"
+              placeholder="Apellido materno"
               value={tempMiddleName}
               onChange={handleInputChange(setTempMiddleName, 'middleName')}
               className={errors.middleName ? 'input-error' : ''}
             />
             {errors.middleName && <span className="error-msg">{errors.middleName}</span>}
+
+            
 
             <div className="modal-actions">
               <button className="confirm-btn" onClick={handleOpenConfirm}>Guardar</button>

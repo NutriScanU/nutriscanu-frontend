@@ -81,10 +81,8 @@ function Login() {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   useEffect(() => {
-    if (errors.code) {
-      setErrors((prev) => ({ ...prev, code: "" }));
-    }
-  }, [code, errors.code]);
+    // Eliminado: el error se limpia directamente en handleCodeChange
+  }, []);
 
 
   useEffect(() => {
@@ -110,13 +108,12 @@ function Login() {
   const handleVerifyCode = async (e) => {
     e.preventDefault();
 
-    if (code.some((digit) => digit.trim() === "")) {
+    const fullCode = code.join("");
+    if (fullCode.length < 5 || code.some((digit) => digit.trim() === "")) {
       return setErrors((prev) => ({ ...prev, code: "Código incompleto" }));
     }
-
-    const fullCode = code.join("");
     if (!/^\d{5}$/.test(fullCode)) {
-      return setErrors((prev) => ({ ...prev, code: "Código incorrecto" }));
+      return setErrors((prev) => ({ ...prev, code: "El código que digitó no es válido." }));
     }
 
     setButtonLoading(prev => ({ ...prev, blockInputs: true }));
@@ -317,6 +314,10 @@ function Login() {
     const newCode = [...code];
     newCode[index] = val;
     setCode(newCode);
+    // Limpiar el error al escribir en los inputs del código
+    if (errors.code) {
+      setErrors(prev => ({ ...prev, code: "" }));
+    }
     if (val && index < 4) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -337,6 +338,10 @@ function Login() {
     if (/^\d{5}$/.test(pastedData)) {
       const digits = pastedData.split("");
       setCode(digits);
+      // Limpiar el error al pegar el código
+      if (errors.code) {
+        setErrors(prev => ({ ...prev, code: "" }));
+      }
       digits.forEach((digit, i) => {
         if (inputRefs.current[i]) inputRefs.current[i].value = digit;
       });
@@ -483,7 +488,11 @@ function Login() {
               type="text"
               placeholder="Ingresa tu correo"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email) setErrors(prev => ({ ...prev, email: "" }));
+                if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
+              }}
               disabled={loadingLogin || buttonLoading.blockInputs}
               className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
             />
@@ -623,7 +632,7 @@ function Login() {
           <form onSubmit={handleSubmitCode} onPaste={handlePasteCode} className="form-enter-code">
             <h2 className="text-xl font-bold text-center">Ingresa el código<br />que te acabamos de enviar</h2>
             <p className="code-info-subtext">
-              Enviamos un código a <strong>{email}</strong>. Válido por 15 minutos.
+              Enviamos un código a <strong>{email}</strong>. Válido por 10 minutos.
             </p>
 
             <div className="code-inputs">
@@ -676,6 +685,7 @@ function Login() {
                     backToPassword: true,
                     blockInputs: true
                   }));
+                  // No limpiar el error aquí, revertido al comportamiento anterior
                   setTimeout(() => {
                     resetForm();
                     setStep("default");
@@ -713,6 +723,7 @@ function Login() {
                       resendCode: true,
                       blockInputs: true
                     }));
+                    // No limpiar el error aquí, revertido al comportamiento anterior
                     setResendAttempts((prev) => prev + 1);
                     setCode(["", "", "", "", ""]); // Limpia inputs
                     handleSendCode({ preventDefault: () => { } });
