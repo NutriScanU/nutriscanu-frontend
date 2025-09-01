@@ -1,88 +1,958 @@
 /* 🌐 CONTENEDOR */
 .multi-step-form {
   position: relative;
-  background: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 3rem 2rem;
   max-width: 840px;
   margin: 3rem auto;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', sans-serif;
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    0 8px 25px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   overflow: hidden;
-  animation: fadeIn 0.5s ease;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.multi-step-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
 }
 
 /* ANIMACIÓN ENTRADA */
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.95);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 🡐 BOTÓN VOLVER CON TOOLTIP */
-.back-button {
+/* Animación del spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pulso suave */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 🕐 ESTILOS DEL TEMPORIZADOR */
+.loading-section {
+  margin-top: 2.5rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.08) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(99, 102, 241, 0.08),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.loading-section::before {
+  content: '';
   position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
-  background-color: #0f172a;
-  color: white;
-  border: none;
-  border-radius: 10.5%;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.loading-title {
+  font-size: 1.3rem;
+  color: #475569;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.025em;
+}
+
+.processing-time {
+  display: block;
+  font-size: 1rem;
+  color: #6366f1;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.overtime-notice {
+  color: #f59e0b;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+.processing-status {
+  color: #6366f1;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+/* Barra de progreso infinita para tiempo real */
+.infinite-progress {
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+  animation: infiniteProgress 2s ease-in-out infinite;
+}
+
+@keyframes infiniteProgress {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Temporizador circular */
+.timer-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  background: transparent;
+}
+
+.timer-circle {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(0 8px 25px rgba(99, 102, 241, 0.15));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.08),
+    0 6px 20px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  animation: timerFloat 3s ease-in-out infinite;
+}
+
+@keyframes timerFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+.timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  background: transparent;
+}
+
+.timer-bg {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.15);
+  stroke-width: 8;
+}
+
+.timer-progress {
+  fill: none;
+  stroke: url(#gradient);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.2));
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: transparent;
+  padding: 0;
+}
+
+.timer-seconds {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1;
+  background: linear-gradient(135deg, #4c1d95 0%, #6366f1 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+  animation: numberPulse 1s ease-in-out infinite;
+}
+
+@keyframes numberPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.timer-label {
+  display: block;
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+/* Spinner tradicional */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.loading-spinner {
   width: 40px;
   height: 40px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+  border: 4px solid rgba(148, 163, 184, 0.2);
+  border-top: 4px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: transparent;
 }
-.back-button:hover {
-  background-color: #1e293b;
+
+.loading-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  font-style: italic;
+  margin-bottom: 2rem;
+  font-weight: 500;
 }
-.back-button::after {
+
+/* Barra de progreso */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+  border-radius: 8px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.progress-fill::after {
+  content: '';
   position: absolute;
-  top: 45px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  color: #334155;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: progress-shimmer 2s infinite;
+}
+
+@keyframes progress-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 🔄 SECCIÓN DE PROCESAMIENTO */
+.processing-section {
+  margin-top: 2rem;
+  padding: 4rem 3rem;
+  background: linear-gradient(135deg, 
+    rgba(248, 250, 255, 0.98) 0%, 
+    rgba(243, 246, 255, 0.96) 50%,
+    rgba(238, 242, 255, 0.94) 100%);
+  backdrop-filter: blur(25px) saturate(1.4);
+  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  border-radius: 24px;
+  border: 1px solid rgba(199, 210, 254, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 20px 50px rgba(99, 102, 241, 0.08),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+  animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.processing-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(199, 210, 254, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(165, 180, 252, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(224, 231, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.processing-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.processing-spinner {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-ring {
+  position: absolute;
+  border-radius: 50%;
+  animation: spinnerRotate 2s linear infinite;
+}
+
+.spinner-ring:nth-child(1) {
+  width: 80px;
+  height: 80px;
+  border: 3px solid transparent;
+  border-top: 3px solid #6366f1;
+  animation-delay: 0s;
+}
+
+.spinner-ring:nth-child(2) {
+  width: 60px;
+  height: 60px;
+  border: 2px solid transparent;
+  border-top: 2px solid #8b5cf6;
+  animation-delay: -0.5s;
+  animation-direction: reverse;
+}
+
+.spinner-ring:nth-child(3) {
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-top: 2px solid #06b6d4;
+  animation-delay: -1s;
+}
+
+@keyframes spinnerRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.processing-title {
+  font-size: 2.2rem;
+  color: #6366f1;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(99, 102, 241, 0.08);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.processing-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.9;
+  max-width: 400px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* 🟢 SECCIÓN DE ÉXITO */
+.success-section {
+  margin-top: 2rem;
+  padding: 4rem 3rem;
+  background: linear-gradient(135deg, 
+    rgba(248, 250, 255, 0.98) 0%, 
+    rgba(243, 246, 255, 0.96) 50%,
+    rgba(238, 242, 255, 0.94) 100%);
+  backdrop-filter: blur(25px) saturate(1.4);
+  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  border-radius: 24px;
+  border: 1px solid rgba(199, 210, 254, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 20px 50px rgba(99, 102, 241, 0.08),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+  animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(199, 210, 254, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(165, 180, 252, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(224, 231, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.success-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.success-icon {
+  font-size: 4rem;
+  animation: successBounce 1.5s ease-out;
+  filter: drop-shadow(0 6px 16px rgba(99, 102, 241, 0.25));
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+@keyframes successBounce {
+  0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+  50% { transform: scale(1.15) rotate(8deg); }
+  70% { transform: scale(0.95) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes fadeInScale {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95) translateY(20px);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1) translateY(0);
+  }
+}
+
+.success-title {
+  font-size: 2.2rem;
+  color: #6366f1;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.2px;
+  text-shadow: 0 2px 4px rgba(99, 102, 241, 0.08);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.1;
+}
+
+.success-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.9;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.success-redirect {
+  font-size: 0.95rem;
+  color: #8b5cf6;
+  font-style: italic;
+  margin: 0;
+  font-weight: 500;
   opacity: 0.8;
+  animation: pulse 2s infinite;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.success-timer .timer-progress {
+  stroke: url(#successGradient);
+  filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.4));
+  stroke-width: 6;
+}
+
+.success-timer .timer-seconds {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+}
+
+/* 🔴 SECCIÓN DE ERROR PERFECTA */
+.error-section {
+  margin-top: 2rem;
+  padding: 3.5rem 3rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 242, 242, 0.98) 0%, 
+    rgba(254, 235, 235, 0.96) 25%,
+    rgba(253, 228, 228, 0.94) 50%,
+    rgba(252, 220, 220, 0.92) 75%,
+    rgba(251, 215, 215, 0.9) 100%);
+  backdrop-filter: blur(25px) saturate(1.4);
+  -webkit-backdrop-filter: blur(25px) saturate(1.4);
+  border-radius: 24px;
+  border: 1px solid rgba(254, 215, 215, 0.3);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 20px 50px rgba(239, 68, 68, 0.08),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+  animation: errorSlideIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.error-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(254, 215, 215, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(252, 165, 165, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(254, 202, 202, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.error-icon {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 252, 252, 0.9) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 0 0 6px rgba(254, 215, 215, 0.25),
+    0 0 0 12px rgba(254, 215, 215, 0.12),
+    0 0 0 18px rgba(254, 215, 215, 0.06),
+    0 12px 35px rgba(239, 68, 68, 0.06),
+    0 4px 15px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  animation: errorIconPulse 3s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.error-icon svg {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2));
+}
+
+@keyframes errorIconPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      0 0 0 6px rgba(254, 215, 215, 0.25),
+      0 0 0 12px rgba(254, 215, 215, 0.12),
+      0 0 0 18px rgba(254, 215, 215, 0.06),
+      0 12px 35px rgba(239, 68, 68, 0.06),
+      0 4px 15px rgba(0, 0, 0, 0.02),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 
+      0 0 0 8px rgba(254, 215, 215, 0.35),
+      0 0 0 16px rgba(254, 215, 215, 0.18),
+      0 0 0 24px rgba(254, 215, 215, 0.08),
+      0 15px 40px rgba(239, 68, 68, 0.08),
+      0 6px 20px rgba(0, 0, 0, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+}
+
+.error-title {
+  font-size: 2.1rem;
+  color: #dc2626;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(220, 38, 38, 0.08);
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  z-index: 3;
+}
+
+.error-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.9;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  z-index: 3;
+}
+
+.error-redirect {
+  font-size: 0.95rem;
+  color: #f87171;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.8;
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  z-index: 3;
+}
+
+.error-timer .timer-progress {
+  stroke: #ef4444;
+  filter: drop-shadow(0 2px 8px rgba(239, 68, 68, 0.25));
+  stroke-width: 3;
+}
+
+.error-timer .timer-seconds {
+  color: #dc2626;
+  font-weight: 900;
+  font-size: 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  text-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.error-timer .timer-label {
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  font-family: 'Inter', system-ui, sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.error-timer .timer-circle {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 254, 254, 0.98) 100%);
+  border: 1px solid rgba(254, 215, 215, 0.3);
+  box-shadow: 
+    0 0 0 6px rgba(254, 215, 215, 0.15),
+    0 0 0 12px rgba(254, 215, 215, 0.08),
+    0 8px 25px rgba(239, 68, 68, 0.06),
+    0 3px 12px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  animation: timerFloat 3s ease-in-out infinite;
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-timer .timer-bg {
+  stroke: rgba(239, 68, 68, 0.15);
+  stroke-width: 3;
+}
+
+.error-timer .timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.timer-number {
+  color: #dc2626;
+  font-weight: 900;
+  font-size: 2.2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  text-shadow: 0 2px 4px rgba(220, 38, 38, 0.15);
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  margin: 0;
+}
+
+.timer-label {
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  font-family: 'Inter', system-ui, sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1;
+  margin: 0;
+  margin-top: 2px;
+}
+
+@keyframes timerFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.01);
+  }
+}
+
+/* Espaciado mejorado */
+.error-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Efecto de entrada suave */
+.error-section {
+  animation: errorSlideIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 🡐 BOTÓN VOLVER MEJORADO */
+.back-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.3),
+    0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.back-button:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 
+    0 15px 40px rgba(99, 102, 241, 0.4),
+    0 8px 20px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #5b5dd6 0%, #7c3aed 100%);
+}
+
+.back-button:active {
+  transform: translateY(-1px) scale(1.02);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 🧭 PROGRESO */
 .multi-step-progress {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.multi-step-progress::before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-radius: 2px;
+  z-index: 1;
 }
 
 .multi-step-item {
   flex: 1;
   text-align: center;
-  transition: opacity 0.3s ease;
-  opacity: 0.5;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.6;
+  position: relative;
+  z-index: 2;
 }
+
 .multi-step-item.active {
   opacity: 1;
+  transform: translateY(-2px);
 }
 
 .multi-step-circle {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  transition: background-color 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(255, 255, 255, 0.9);
 }
+
+.multi-step-item.active .multi-step-circle {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 
+    0 12px 35px rgba(99, 102, 241, 0.35),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 🫁 EFECTO DE RESPIRACIÓN SOLO PARA EL PASO ACTUAL */
+.multi-step-item.current .multi-step-circle {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+/* 🫁 ANIMACIÓN DE RESPIRACIÓN PARA CÍRCULO ACTIVO */
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      0 12px 35px rgba(99, 102, 241, 0.35),
+      0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  50% { 
+    transform: scale(1.1);
+    box-shadow: 
+      0 15px 45px rgba(99, 102, 241, 0.5),
+      0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .multi-step-label {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #334155;
+  letter-spacing: 0.025em;
 }
 
 /* 🧾 CONTENIDO */
@@ -92,44 +962,119 @@
 
 /* 📍 NAVEGACIÓN */
 .multi-step-navigation {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .multi-step-button {
-  padding: 0.75rem 1.6rem;
-  background-color: #2563eb;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.025em;
+  position: relative;
+  overflow: hidden;
+}
+
+.multi-step-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .multi-step-button:hover {
-  background-color: #1d4ed8;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 12px 35px rgba(99, 102, 241, 0.35),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #5b5bf5 0%, #8338ec 100%);
+}
+
+.multi-step-button:hover::before {
+  left: 100%;
 }
 
 .multi-step-button:active {
-  transform: scale(0.98);
+  transform: translateY(-1px) scale(0.98);
 }
 
 .multi-step-button.cancel {
-  background-color: #e2e8f0;
-  color: #1e293b;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #475569;
+  box-shadow: 
+    0 8px 25px rgba(148, 163, 184, 0.15),
+    0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.multi-step-button.cancel:hover {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  color: #334155;
 }
 
 .multi-step-confirmation {
   text-align: center;
-  font-size: 1.2rem;
-  color: #1e3a8a;
-  font-weight: 600;
+  font-size: 1.5rem;
+  color: #4f46e5;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 
+    0 20px 60px rgba(79, 70, 229, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 3rem 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.multi-step-confirmation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.multi-step-confirmation h2 {
+  color: #4f46e5;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.multi-step-confirmation p {
+  color: #475569;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 /* ✅ MODAL */
@@ -139,51 +1084,863 @@
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(4px);
-  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem 2.5rem;
-  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
   text-align: center;
-  max-width: 400px;
+  max-width: 450px;
   width: 90%;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
 }
 
 .modal-content p {
-  font-size: 1.05rem;
-  color: #1f2937;
+  font-size: 1.15rem;
+  color: #374151;
+  font-weight: 600;
+  line-height: 1.6;
 }
 
 .confirm-actions {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 1.8rem;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
 
 /* 📱 RESPONSIVE */
 @media (max-width: 640px) {
+  .multi-step-form {
+    margin: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
   .multi-step-progress {
-    flex-direction: column;
-    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .multi-step-progress::before {
+    left: 15%;
+    right: 15%;
+  }
+
+  .multi-step-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .multi-step-label {
+    font-size: 0.85rem;
   }
 
   .multi-step-navigation {
     flex-direction: column;
     align-items: stretch;
+    gap: 1rem;
+  }
+
+  .multi-step-button {
+    padding: 0.875rem 1.5rem;
   }
 
   .back-button {
-    top: 1rem;
-    left: 1rem;
+    top: 1.25rem;
+    left: 1.25rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+
+  /* Responsive para temporizador */
+  .timer-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .timer-seconds {
+    font-size: 1.8rem;
+  }
+
+  .timer-label {
+    font-size: 0.9rem;
+  }
+
+  .loading-section,
+  .success-section,
+  .error-section {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .loading-title,
+  .success-title,
+  .error-title {
+    font-size: 1.2rem;
+  }
+
+  .success-icon,
+  .error-icon {
+    font-size: 3rem;
+  }
+
+  .modal-content {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Gradientes SVG para progreso - solo stroke, sin fondo */
+.timer-circle * {
+  background: transparent !important;
+}
+
+/* 🩸 ESTILOS ESPECÍFICOS PARA ANÁLISIS DE SANGRE - NO AFECTAN OTROS FORMULARIOS */
+
+/* Contenedor específico */
+.blood-analysis-multi-step-form {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4rem 2rem 3rem 2rem; /* Más espacio arriba para el botón */
+  max-width: 840px;
+  margin: 3rem auto;
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    0 8px 25px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  overflow: visible; /* Permitir que el botón sea visible */
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blood-analysis-multi-step-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+}
+
+/* BOTÓN VOLVER CORREGIDO - DISEÑO LIMPIO Y FUNCIONAL */
+.blood-analysis-back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: auto;
+  min-width: 100px;
+  height: 40px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 12px rgba(99, 102, 241, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  outline: none;
+  user-select: none;
+  padding: 0 1rem;
+  letter-spacing: 0.025em;
+  z-index: 100;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+/* Asegurar que el área completa del botón tenga hover */
+.blood-analysis-back-button * {
+  pointer-events: none;
+}
+
+.blood-analysis-back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 20px rgba(99, 102, 241, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #5b5bf5 0%, #8338ec 100%);
+}
+
+.blood-analysis-back-button:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+.blood-analysis-back-button:focus {
+  outline: 2px solid rgba(99, 102, 241, 0.6);
+  outline-offset: 2px;
+}
+
+.back-icon {
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  line-height: 1;
+}
+
+.back-text {
+  font-weight: 600;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  line-height: 1;
+}
+
+.blood-analysis-back-button:hover .back-icon {
+  transform: translateX(-2px);
+}
+
+.blood-analysis-back-button:hover .back-text {
+  transform: translateX(1px);
+}
+
+/* Progreso específico */
+.blood-analysis-multi-step-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.blood-analysis-multi-step-progress::before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.blood-analysis-multi-step-item {
+  flex: 1;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.6;
+  position: relative;
+  z-index: 2;
+}
+
+.blood-analysis-multi-step-item.active {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.blood-analysis-multi-step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+.blood-analysis-multi-step-item.active .blood-analysis-multi-step-circle {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 
+    0 12px 35px rgba(99, 102, 241, 0.35),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+  animation: pulse 2s infinite;
+}
+
+.blood-analysis-multi-step-label {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: 0.025em;
+}
+
+/* Contenido específico */
+.blood-analysis-multi-step-content {
+  animation: fadeIn 0.4s ease;
+}
+
+/* Navegación específica */
+.blood-analysis-multi-step-navigation {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.blood-analysis-multi-step-button {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 25px rgba(99, 102, 241, 0.25),
+    0 3px 10px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.025em;
+  position: relative;
+  overflow: hidden;
+}
+
+.blood-analysis-multi-step-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.blood-analysis-multi-step-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 12px 35px rgba(99, 102, 241, 0.35),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #5b5bf5 0%, #8338ec 100%);
+}
+
+.blood-analysis-multi-step-button:hover::before {
+  left: 100%;
+}
+
+.blood-analysis-multi-step-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.blood-analysis-multi-step-button.cancel {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #475569;
+  box-shadow: 
+    0 8px 25px rgba(148, 163, 184, 0.15),
+    0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.blood-analysis-multi-step-button.cancel:hover {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  color: #334155;
+}
+
+/* Confirmación específica */
+.blood-analysis-multi-step-confirmation {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4f46e5;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 
+    0 20px 60px rgba(79, 70, 229, 0.05),
+    0 8px 25px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 3rem 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.blood-analysis-multi-step-confirmation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.blood-analysis-multi-step-confirmation h2 {
+  color: #4f46e5;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.blood-analysis-multi-step-confirmation p {
+  color: #475569;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Modal específico */
+.blood-analysis-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blood-analysis-modal-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.blood-analysis-modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+}
+
+.blood-analysis-modal-content p {
+  font-size: 1.15rem;
+  color: #374151;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.blood-analysis-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+/* Responsive específico */
+@media (max-width: 640px) {
+  .blood-analysis-multi-step-form {
+    margin: 1.5rem;
+    padding: 3rem 1.5rem 2rem 1.5rem; /* Más espacio arriba en móvil también */
+  }
+
+  .blood-analysis-multi-step-progress {
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .blood-analysis-multi-step-progress::before {
+    left: 15%;
+    right: 15%;
+  }
+
+  .blood-analysis-multi-step-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .blood-analysis-multi-step-label {
+    font-size: 0.85rem;
+  }
+
+  .blood-analysis-multi-step-navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .blood-analysis-multi-step-button {
+    padding: 0.875rem 1.5rem;
+  }
+
+  .blood-analysis-back-button {
+    top: 1.5rem;
+    left: 1.5rem;
+    min-width: 90px;
+    height: 36px;
+    font-size: 0.85rem;
+    padding: 0 0.75rem;
+  }
+
+  .back-icon {
+    font-size: 0.9rem;
+  }
+
+  .back-text {
+    font-size: 0.85rem;
+  }
+
+  .blood-analysis-modal-content {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .blood-analysis-confirm-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ESTILOS TEMPORIZADOR TRANSPARENTE - ANÁLISIS DE SANGRE */
+.blood-analysis-timer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(15px);
+  background: rgba(15, 23, 42, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease;
+}
+
+.blood-analysis-timer-container {
+  background: transparent;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+}
+
+.blood-analysis-timer-circle {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  position: relative;
+}
+
+.blood-analysis-timer-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.blood-analysis-timer-circle circle {
+  fill: none;
+  stroke-width: 8;
+  r: 90;
+  cx: 100;
+  cy: 100;
+}
+
+.blood-analysis-timer-circle .background {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+.blood-analysis-timer-circle .progress {
+  stroke: url(#blood-analysis-gradient);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+}
+
+.blood-analysis-timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.blood-analysis-timer-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 0.25rem;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.blood-analysis-timer-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.blood-analysis-processing-message {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite;
+}
+
+.blood-analysis-processing-submessage {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mensaje de éxito específico */
+.blood-analysis-success-message {
+  background: transparent;
+  color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  animation: slideUp 0.6s ease;
+}
+
+.blood-analysis-success-message h3 {
+  color: #22c55e;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+}
+
+.blood-analysis-success-message p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para mensaje de error mejorado */
+.error-detail {
+  color: rgba(239, 68, 68, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Responsive para temporizador */
+@media (max-width: 640px) {
+  .blood-analysis-timer-circle {
+    width: 160px;
+    height: 160px;
+  }
+
+/* 🌟 EFECTOS ADICIONALES PARA ÉXITO Y ERROR */
+
+/* Efecto de resplandor para sección de éxito */
+.success-section:hover {
+  box-shadow: 
+    0 30px 100px rgba(99, 102, 241, 0.2),
+    0 12px 35px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Efecto de resplandor para sección de error */
+.error-section:hover {
+  box-shadow: 
+    0 30px 100px rgba(248, 113, 113, 0.2),
+    0 12px 35px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Efecto de partículas flotantes */
+.success-section::after,
+.error-section::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+  }
+}
+
+/* Mejora del timer con efecto glow */
+.success-timer .timer-circle::before,
+.error-timer .timer-circle::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(99, 102, 241, 0.3), rgba(248, 113, 113, 0.3));
+  filter: blur(10px);
+  opacity: 0.8;
+  animation: pulse 2s infinite;
+  z-index: -1;
+}
+
+/* Animación de brillo para iconos */
+.success-icon,
+.error-icon {
+  position: relative;
+}
+
+.success-icon::before,
+.error-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: iconGlow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes iconGlow {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* 🚨 NOTIFICACIÓN ESTILO TOAST */
+.success-section,
+.error-section {
+  position: relative;
+  z-index: 10;
+}
+
+.success-section::after {
+  background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+.error-section::after {
+  background: radial-gradient(circle at 50% 50%, rgba(248, 113, 113, 0.15) 0%, transparent 70%);
+}
+
+/* Efecto de entrada para las secciones */
+.success-section {
+  animation: slideInFromTop 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+             fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.error-section {
+  animation: slideInFromTop 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+             fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+  .blood-analysis-timer-number {
+    font-size: 2rem;
+  }
+
+  .blood-analysis-timer-label {
+    font-size: 0.85rem;
+  }
+
+  .blood-analysis-processing-message {
+    font-size: 1.2rem;
+  }
+
+  .blood-analysis-processing-submessage {
+    font-size: 0.9rem;
   }
 }
