@@ -104,8 +104,11 @@
   text-align: left;
   font-size: 0.85rem;
   font-weight: 600;
-  display: block;
+  display: inline-block;
   margin-bottom: 0.25rem;
+  width: auto;
+  pointer-events: none;
+  cursor: default;
 }
 
 /* ========================== */
@@ -724,4 +727,39 @@ input:focus, .code-inputs input:focus {
 /* 🔘 Asegurar que fuera de los inputs no se pueda escribir ni seleccionar texto */
 * {
   user-select: none; /* Prevenir selección de texto fuera de los inputs */
+}
+
+/* ========================== */
+/* 👁️ Span personalizado para mostrar/ocultar contraseña */
+/* ========================== */
+.password-toggle-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  padding: 2px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.password-toggle-btn:hover {
+  color: #333;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.password-toggle-btn svg {
+  transition: all 0.2s ease;
+}
+
+/* Ocultar el ícono nativo del navegador Edge */
+input[type="password"]::-ms-reveal {
+  display: none;
 }

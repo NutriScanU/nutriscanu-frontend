@@ -17,7 +17,7 @@ function Register() {
   const [lastName, setLastName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [documentNumber, setDocumentNumber] = useState("");
-  const [showPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
   const [loading, setLoading] = useState(false);
@@ -191,18 +191,51 @@ function Register() {
                 {errors.email && <div className="error-message">{errors.email}</div>}
 
                 <label htmlFor="password">Contraseña</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  placeholder="Ingresa tu contraseña"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors.password) setErrors((prev) => ({ ...prev, password: "" }));
-                  }}
-                  className={errors.password ? "input-error" : ""}
-                  disabled={loading}
-                />
+                <div className="input-with-icon">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Ingresa tu contraseña"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      // Si el campo se vacía, resetear showPassword
+                      if (e.target.value.length === 0) {
+                        setShowPassword(false);
+                      }
+                      if (errors.password) setErrors((prev) => ({ ...prev, password: "" }));
+                    }}
+                    className={errors.password ? "input-error" : ""}
+                    disabled={loading}
+                  />
+                  {password.length > 0 && (
+                    <span
+                      className="password-toggle-btn"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{ 
+                        pointerEvents: loading ? 'none' : 'auto',
+                        opacity: loading ? 0.5 : 1 
+                      }}
+                    >
+                      {showPassword ? (
+                        // SVG ojo cerrado (ocultar)
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.12 14.12L9.88 9.88C8.73 8.73 8.73 6.87 9.88 5.72C11.03 4.57 12.89 4.57 14.04 5.72L14.12 14.12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M9.9 4.24L14.1 8.44C15.19 9.53 15.19 11.27 14.1 12.36L9.9 16.56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M2 2L22 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M10.73 5.08C11.15 5.03 11.57 5 12 5C17.52 5 22 12 22 12C21.27 13.18 20.43 14.24 19.5 15.17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M6.61 6.61C4.62 8.05 3.06 9.86 2 12C2 12 6.48 19 12 19C13.55 19 15.02 18.59 16.31 17.88" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      ) : (
+                        // SVG ojo abierto (mostrar)
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </span>
+                  )}
+                </div>
                 {errors.password && <div className="error-message">{errors.password}</div>}
 
                 {errors.general && <div className="error-message general-error">{errors.general}</div>}
