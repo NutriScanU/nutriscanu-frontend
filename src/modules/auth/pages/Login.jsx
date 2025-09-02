@@ -53,7 +53,7 @@ function Login() {
         if (sendResponse.ok) {
           setStep("success");
         } else {
-          setErrors({ ...errors, general: "Hubo un error al enviar el email. Intenta nuevamente." });
+          setErrors({ ...errors, general: "Ocurrió un problema temporal al enviar el correo. Intenta nuevamente en unos momentos." });
         }
       } else {
         setErrors(prev => ({
@@ -64,7 +64,8 @@ function Login() {
       }
 
     } catch (err) {
-      setErrors({ ...errors, general: "Error al verificar el correo. Intenta nuevamente." });
+      console.error("❌ Error en forgot password:", err);
+      setErrors({ ...errors, general: "Ocurrió un problema temporal al verificar tu correo. Intenta nuevamente en unos momentos." });
     } finally {
       setLoadingLogin(false);
     }
@@ -147,7 +148,7 @@ function Login() {
       }, 2000);
     } catch (error) {
       setTimeout(() => {
-        setErrors(prev => ({ ...prev, code: "Error en la red. Intenta de nuevo." }));
+        setErrors(prev => ({ ...prev, code: "Ocurrió un problema temporal. Intenta nuevamente en unos momentos." }));
         setLoading(false);
         setButtonLoading(prev => ({ ...prev, blockInputs: false }));
       }, 2000);
@@ -217,7 +218,11 @@ function Login() {
         alert("Tu cuenta no tiene permiso para acceder al perfil de estudiante.");
       }
     } catch (err) {
-      alert("Login fallido. Verifica tus datos o conexión.");
+      console.error("❌ Error de conexión en login:", err);
+      setErrors((prev) => ({ 
+        ...prev, 
+        general: "Ocurrió un problema temporal. Por favor, intenta nuevamente en unos momentos." 
+      }));
     } finally {
       setLoadingLogin(false);
     }
@@ -263,9 +268,10 @@ function Login() {
       }
 
     } catch (err) {
+      console.error("❌ Error en verificación de email:", err);
       setErrors(prev => ({
         ...prev,
-        general: "Servidor caido. Intenta más tarde.",
+        general: "Ocurrió un problema temporal al verificar tu correo. Intenta nuevamente en unos momentos.",
       }));
     } finally {
       setLoadingLogin(false);
@@ -304,7 +310,11 @@ function Login() {
         alert("No tienes permiso para acceder.");
       }
     } catch (err) {
-      alert("Error de red.");
+      console.error("❌ Error en validación de código:", err);
+      setErrors({ 
+        code: "", 
+        general: "Ocurrió un problema temporal al validar tu código. Intenta nuevamente en unos momentos." 
+      });
     }
   };
 
@@ -497,6 +507,7 @@ function Login() {
               className={`input ${errors.email ? "input-error" : ""} ${buttonLoading.blockInputs ? "opa-disabled" : ""}`}
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
+            {errors.general && <div className="error-message">{errors.general}</div>}
 
             <button
               type="submit"

@@ -6,6 +6,7 @@ import "../../../styles/authTheme.css";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
+  console.log("🔄 ForgotPassword component loaded"); // Debug para verificar carga
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [enviado, setEnviado] = useState(false);
@@ -41,17 +42,42 @@ function ForgotPassword() {
     e.preventDefault();
     setError("");
 
+    // Validaciones básicas
     if (!email.trim()) return setError("Campo requerido.");
     if (!validateEmail(email)) return setError("Por favor, ingresa un email válido.");
-    if (emailExists === false) return setError("El correo no está registrado.");
+    
+    // Solo bloquear si sabemos con certeza que el email NO existe
+    // Si emailExists es null (problema de conexión), permitir continuar
+    if (emailExists === false) {
+      return setError("El correo no está registrado.");
+    }
+
+    setLoading(true);
 
     try {
+      console.log("🔄 Enviando correo a:", email);
       const res = await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
+      console.log("✅ Correo enviado exitosamente:", res.data);
       setCorreoOculto(res.data.obfuscatedEmail);
       setEnviado(true);
     } catch (err) {
-      console.error("❌ Error al enviar el correo:", err);
-      setError("Hubo un error al enviar el correo.");
+      console.error("❌ Error completo:", err);
+      console.error("❌ Response status:", err.response?.status);
+      console.error("❌ Response data:", err.response?.data);
+      
+      // Mostrar mensaje de error específico según el tipo de error
+      if (err.response?.status === 404) {
+        setError("El correo no está registrado en nuestro sistema.");
+      } else if (err.response?.status >= 500) {
+        setError("Ocurrió un problema temporal en nuestros servidores. Intenta nuevamente en unos momentos.");
+      } else if (!err.response) {
+        // Error de red/conexión
+        setError("Ocurrió un problema temporal de conexión. Intenta nuevamente en unos momentos.");
+      } else {
+        setError("Ocurrió un problema temporal al enviar el correo. Intenta nuevamente en unos momentos.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,9 +116,12 @@ function ForgotPassword() {
                 {loading && <div className="loader" />}
                 {emailExists && !loading && <span className="checkmark">✔</span>}
               </div>
+              
               {error && <div className="error-message">{error}</div>}
 
-              <button type="submit">Enviar</button>
+              <button type="submit" disabled={loading}>
+                {loading ? "Enviando..." : "Enviar instrucciones"}
+              </button>
             </form>
           </>
         ) : (

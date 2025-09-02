@@ -20,6 +20,7 @@ function Register() {
   const [showPassword] = useState(false);
 
   const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validateDNI = (dni) => /^\d{8}$/.test(dni);
@@ -28,30 +29,13 @@ function Register() {
     const newErrors = { email: "", password: "", general: "" };
     let isValid = true;
 
+    // ✅ PASO 1: Validaciones locales primero (sin backend)
     if (!email.trim()) {
       newErrors.email = "Campo requerido";
       isValid = false;
     } else if (!validateEmail(email)) {
       newErrors.email = "Por favor, ingresa un email válido.";
       isValid = false;
-    } else {
-      try {
-        const response = await axios.post(`${API_URL}/api/auth/check-email`, { email });
-
-        // ✅ Si el correo ya está registrado
-        if (response.data.exists === true) {
-          newErrors.email = "El email ingresado ya se encuentra en uso";
-          isValid = false;
-        }
-      } catch (err) {
-
-        if (err.response?.status === 404) {
-          // Nada que hacer, el correo está libre
-        } else {
-          newErrors.general = "No se pudo verificar el correo. Intenta más tarde.";
-          isValid = false;
-        }
-      }
     }
 
     if (!password.trim()) {
@@ -62,12 +46,45 @@ function Register() {
       isValid = false;
     }
 
+    // ❌ Si hay errores de validación local, NO continuar con backend
     if (!isValid) {
       setErrors(newErrors);
       return;
     }
 
-    // ✅ Todo válido: avanzar a paso 2
+    // ✅ PASO 2: Activar loading y deshabilitar todo
+    setLoading(true);
+
+    // ✅ PASO 3: Solo si todo está válido, verificar con backend
+    try {
+      const response = await axios.post(`${API_URL}/api/auth/check-email`, { email });
+
+      // Si el correo ya está registrado
+      if (response.data.exists === true) {
+        newErrors.email = "El email ingresado ya se encuentra en uso";
+        setErrors(newErrors);
+        setLoading(false);
+        return;
+      }
+    } catch (err) {
+      // Solo mostrar error de sistema si es un error grave
+      if (err.response?.status >= 500 || !err.response) {
+        newErrors.general = "Ocurrió un problema temporal al verificar tu correo. Intenta nuevamente en unos momentos.";
+        setErrors(newErrors);
+        setLoading(false);
+        return;
+      }
+      // Para otros errores (404, etc.), simplemente continuar
+    }
+
+    // ✅ PASO 4: Todo válido, simular procesamiento antes de avanzar
+    setErrors({ email: "", password: "", general: "" });
+    
+    // Simular tiempo de procesamiento (4 segundos)
+    await new Promise(resolve => setTimeout(resolve, 4000));
+    
+    setStep(2);
+    setLoading(false);
     setErrors({ email: "", password: "", general: "" });
     setStep(2);
   };
@@ -95,7 +112,7 @@ function Register() {
           isValid = false;
         }
       } catch (err) {
-        newErrors.general = "Error al verificar el DNI. Intenta más tarde."; // Error en caso de fallo de la consulta
+        newErrors.general = "Ocurrió un problema temporal al verificar tu DNI. Intenta nuevamente en unos momentos."; // Error en caso de fallo de la consulta
         isValid = false;
       }
     }
@@ -105,6 +122,9 @@ function Register() {
       setErrors((prev) => ({ ...prev, ...newErrors }));
       return;
     }
+
+    // ✅ Activar loading para el registro final
+    setLoading(true);
 
     // Si todo es válido, se procede al registro del usuario
     const userData = {
@@ -118,12 +138,19 @@ function Register() {
 
     try {
       await registerUsuario(userData); // Aquí se registra al usuario
+      
+      // ✅ Simular tiempo de procesamiento adicional (4 segundos)
+      await new Promise(resolve => setTimeout(resolve, 4000));
+      
       setSuccess(true); // Si el registro es exitoso, mostramos el mensaje de éxito
     } catch (err) {
+      console.error("❌ Error al registrar usuario:", err);
       setErrors((prev) => ({
         ...prev,
-        general: "Error al registrar. Verifica los campos.",
+        general: "Ocurrió un problema temporal al completar tu registro. Intenta nuevamente en unos momentos.",
       }));
+    } finally {
+      setLoading(false); // Quitar loading al final
     }
   };
 
@@ -159,6 +186,7 @@ function Register() {
                     if (errors.email) setErrors((prev) => ({ ...prev, email: "" }));
                   }}
                   className={errors.email ? "input-error" : ""}
+                  disabled={loading}
                 />
                 {errors.email && <div className="error-message">{errors.email}</div>}
 
@@ -173,17 +201,32 @@ function Register() {
                     if (errors.password) setErrors((prev) => ({ ...prev, password: "" }));
                   }}
                   className={errors.password ? "input-error" : ""}
+                  disabled={loading}
                 />
                 {errors.password && <div className="error-message">{errors.password}</div>}
 
                 {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
-                <button type="button" onClick={handleNextStep}>
-                  Siguiente
+                <button type="button" onClick={handleNextStep} disabled={loading}>
+                  {loading ? (
+                    <div className="loader-spinner small"></div>
+                  ) : (
+                    "Siguiente"
+                  )}
                 </button>
 
                 <div className="auth-footer">
-                  ¿Ya tienes una cuenta? <span onClick={() => navigate("/login")}>Inicia sesión</span>
+                  ¿Ya tienes una cuenta? 
+                  <span 
+                    onClick={() => !loading && navigate("/login")} 
+                    style={{ 
+                      opacity: loading ? 0.5 : 1, 
+                      cursor: loading ? "not-allowed" : "pointer",
+                      pointerEvents: loading ? "none" : "auto"
+                    }}
+                  >
+                    Inicia sesión
+                  </span>
                 </div>
               </form>
             )}
@@ -194,8 +237,16 @@ function Register() {
                 <button
                   className="back-button"
                   onClick={() => {
-                    setEmail(""); // Limpiar el correo
-                    setPassword(""); // Limpiar la contraseña
+                    if (!loading) {
+                      setStep(1);
+                      setEmail(""); // Limpiar el correo
+                      setPassword(""); // Limpiar la contraseña
+                    }
+                  }}
+                  disabled={loading}
+                  style={{
+                    opacity: loading ? 0.5 : 1,
+                    cursor: loading ? "not-allowed" : "pointer"
                   }}
                 >
                   ←
@@ -212,6 +263,7 @@ function Register() {
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
+                  disabled={loading}
                 />
 
                 <label>Apellido paterno</label>
@@ -225,6 +277,7 @@ function Register() {
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
+                  disabled={loading}
                 />
 
                 <label>Apellido materno</label>
@@ -238,6 +291,7 @@ function Register() {
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
+                  disabled={loading}
                 />
 
                 <label>DNI</label>
@@ -254,12 +308,17 @@ function Register() {
                     }
                   }}
                   className={errors.dni ? "input-error" : ""}
+                  disabled={loading}
                 />
                 {errors.dni && <div className="error-message">{errors.dni}</div>}
                 {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
-                <button type="button" onClick={handleSubmit}>
-                  Confirmar Registro
+                <button type="button" onClick={handleSubmit} disabled={loading}>
+                  {loading ? (
+                    <div className="loader-spinner small"></div>
+                  ) : (
+                    "Confirmar Registro"
+                  )}
                 </button>
               </form>
             )}

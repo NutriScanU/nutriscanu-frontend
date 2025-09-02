@@ -102,14 +102,14 @@ function ResetPassword() {
         if (err.response.status === 400 || err.response.status === 404) {
           setServerError("Token inválido o expirado");
         } else if (err.response.status === 500) {
-          setServerError("Error del servidor. Intenta más tarde.");
+          setServerError("Ocurrió un problema temporal. Intenta nuevamente en unos momentos.");
         } else {
-          setServerError(err.response.data?.error || err.response.data?.message || "Error del servidor.");
+          setServerError(err.response.data?.error || err.response.data?.message || "Ocurrió un problema temporal.");
         }
       } else if (err.request) {
-        setServerError("No se pudo conectar con el servidor.");
+        setServerError("Ocurrió un problema temporal de conexión. Intenta nuevamente en unos momentos.");
       } else {
-        setServerError("Error inesperado: " + err.message);
+        setServerError("Ocurrió un problema inesperado. Intenta nuevamente en unos momentos.");
       }
     } finally {
       setLoading(false);
