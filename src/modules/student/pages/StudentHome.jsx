@@ -72,25 +72,40 @@ function StudentHome() {
 
       <div className="student-home-cards">
         {/* Botón registrar análisis (siempre disponible) */}
-        <div className="student-card" onClick={() => navigate('/student/complete-analysis')}>
+        <div className="student-card analysis-card" onClick={() => navigate('/student/complete-analysis')}>
           <h2>📝 Registrar análisis</h2>
-          <p>Completa tu análisis clínico y hábitos para obtener recomendaciones.</p>
+          <p>Completa tu análisis clínico y hábitos alimentarios para obtener recomendaciones personalizadas y precisas.</p>
         </div>
 
         {/* Botón ver plan (disponible sólo si tiene recomendación) */}
         <div
-          className="student-card"
+          className={`student-card nutrition-plan-card ${!recommendation ? 'disabled' : ''}`}
           onClick={handleClickPlanAlimentacion}
-          style={{ opacity: recommendation ? 1 : 0.6, cursor: recommendation ? "pointer" : "not-allowed" }}
+          style={{ 
+            cursor: recommendation ? "pointer" : "not-allowed"
+          }}
         >
           <h2>🥗 Ver plan de alimentación</h2>
-          <p>Consulta tus recomendaciones alimenticias según tu condición actual.</p>
+          <p>Consulta tus recomendaciones alimenticias personalizadas según tu condición actual y objetivos nutricionales.</p>
+          {!recommendation && (
+            <div style={{
+              position: 'absolute',
+              bottom: '1rem',
+              left: '2rem',
+              fontSize: '0.85rem',
+              color: '#cbd5e1',
+              fontStyle: 'italic',
+              textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+            }}>
+              * Completa tu análisis primero
+            </div>
+          )}
         </div>
 
         {/* Botón perfil */}
-        <div className="student-card" onClick={() => navigate('/student/profile')}>
+        <div className="student-card profile-card" onClick={() => navigate('/student/profile')}>
           <h2>👤 Perfil</h2>
-          <p>Consulta o edita tu información personal registrada.</p>
+          <p>Consulta, edita y actualiza tu información personal, datos médicos y preferencias nutricionales.</p>
         </div>
       </div>
     </div>

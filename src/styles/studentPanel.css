@@ -12,10 +12,76 @@
     color: #ffffff;
     text-align: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom right, #1e3a8a, #3b82f6);
+    background: linear-gradient(135deg, 
+      #059669 0%,     /* Verde bosque profundo */
+      #10b981 25%,    /* Verde esmeralda */
+      #06b6d4 50%,    /* Azul cyan saludable */
+      #3b82f6 75%,    /* Azul médico */
+      #1e40af 100%    /* Azul profundo confiable */
+    );
+    background-size: 400% 400%;
+    animation: health-gradient-flow 12s ease infinite;
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
+  }
+
+  /* Animación específica para salud */
+  @keyframes health-gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Overlay con patrón orgánico/natural */
+  .student-home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Asegurar que el contenido esté por encima del overlay */
+  .student-home > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Partículas flotantes tipo moléculas/vitaminas */
+  .student-home::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(3px 3px at 20px 30px, rgba(16, 185, 129, 0.4), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(59, 130, 246, 0.3), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(6, 182, 212, 0.5), transparent),
+      radial-gradient(2px 2px at 130px 80px, rgba(16, 185, 129, 0.3), transparent),
+      radial-gradient(1px 1px at 160px 30px, rgba(59, 130, 246, 0.4), transparent),
+      radial-gradient(3px 3px at 200px 60px, rgba(5, 150, 105, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 250px 120px;
+    animation: health-particles-float 18s linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 0;
+  }
+
+  @keyframes health-particles-float {
+    0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    33% { transform: translateY(-15px) translateX(8px) rotate(120deg); }
+    66% { transform: translateY(-8px) translateX(-4px) rotate(240deg); }
+    100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
   }
   
   
@@ -36,33 +102,353 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Efecto de resplandor para el container */
+.student-home-cards::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .student-card {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  width: 260px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 280px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.student-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #34d399, #fbbf24);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.student-card:hover::before {
+  opacity: 1;
 }
 
 .student-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-8px) scale(1.02);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-.student-card h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+/* Estilo específico para el card de REGISTRAR ANÁLISIS */
+.analysis-card {
+  background: linear-gradient(145deg, 
+    rgba(59, 130, 246, 0.3), 
+    rgba(37, 99, 235, 0.2),
+    rgba(29, 78, 216, 0.15)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.5);
   color: #ffffff;
 }
 
+.analysis-card::before {
+  background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+}
+
+.analysis-card:hover {
+  background: linear-gradient(145deg, 
+    rgba(59, 130, 246, 0.45), 
+    rgba(37, 99, 235, 0.35),
+    rgba(29, 78, 216, 0.25)
+  );
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 
+    0 20px 50px rgba(59, 130, 246, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo especial para el card de PLAN DE ALIMENTACIÓN */
+.nutrition-plan-card {
+  background: linear-gradient(145deg, 
+    rgba(16, 185, 129, 0.3), 
+    rgba(5, 150, 105, 0.25),
+    rgba(6, 78, 59, 0.2)
+  );
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #ffffff;
+  position: relative;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.nutrition-plan-card::before {
+  background: linear-gradient(90deg, #10b981, #059669, #047857);
+}
+
+.nutrition-plan-card:hover {
+  background: linear-gradient(145deg, 
+    rgba(16, 185, 129, 0.45), 
+    rgba(5, 150, 105, 0.4),
+    rgba(6, 78, 59, 0.3)
+  );
+  border-color: rgba(16, 185, 129, 0.7);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo específico para el card de PERFIL */
+.profile-card {
+  background: linear-gradient(145deg, 
+    rgba(168, 85, 247, 0.3), 
+    rgba(147, 51, 234, 0.25),
+    rgba(126, 34, 206, 0.2)
+  );
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #ffffff;
+}
+
+.profile-card::before {
+  background: linear-gradient(90deg, #a855f7, #9333ea, #7e22ce);
+}
+
+.profile-card:hover {
+  background: linear-gradient(145deg, 
+    rgba(168, 85, 247, 0.45), 
+    rgba(147, 51, 234, 0.4),
+    rgba(126, 34, 206, 0.3)
+  );
+  border-color: rgba(168, 85, 247, 0.7);
+  box-shadow: 
+    0 20px 50px rgba(168, 85, 247, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Efectos especiales para cada card */
+.analysis-card::after {
+  content: '💡';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: pulse-analysis 2.5s infinite;
+}
+
+.analysis-card:hover::after {
+  opacity: 1;
+}
+
+.nutrition-plan-card::after {
+  content: '🌟';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: sparkle-nutrition 2s infinite;
+}
+
+.nutrition-plan-card:hover::after {
+  opacity: 1;
+}
+
+.profile-card::after {
+  content: '⚡';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: pulse-profile 2.2s infinite;
+}
+
+.profile-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes pulse-analysis {
+  0%, 100% { 
+    opacity: 0; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1);
+  }
+}
+
+@keyframes sparkle-nutrition {
+  0%, 100% { 
+    opacity: 0; 
+    transform: scale(1) rotate(0deg);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+@keyframes pulse-profile {
+  0%, 100% { 
+    opacity: 0; 
+    transform: scale(1) rotate(-5deg);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.15) rotate(5deg);
+  }
+}
+
+.nutrition-plan-card:hover {
+  background: linear-gradient(145deg, 
+    rgba(16, 185, 129, 0.4), 
+    rgba(5, 150, 105, 0.35),
+    rgba(6, 182, 212, 0.25)
+  );
+  border-color: rgba(16, 185, 129, 0.6);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 
+    0 20px 50px rgba(16, 185, 129, 0.4),
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Card deshabilitado */
+.student-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(30%) brightness(0.8);
+  transform: none !important;
+  background: linear-gradient(145deg, rgba(100, 116, 139, 0.3), rgba(71, 85, 105, 0.2)) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
+}
+
+.student-card.disabled:hover {
+  transform: none !important;
+  background: linear-gradient(145deg, rgba(100, 116, 139, 0.3), rgba(71, 85, 105, 0.2)) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+.student-card.disabled h2 {
+  color: #cbd5e1 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+.student-card.disabled p {
+  color: #94a3b8 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+.student-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  line-height: 1.2;
+}
+
+.student-card:hover h2 {
+  transform: translateX(4px);
+  text-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
 .student-card p {
-  font-size: 0.95rem;
-  color: #e0e7ff;
+  font-size: 1rem;
+  color: #f8fafc;
+  line-height: 1.6;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.student-card:hover p {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Tipografía específica para cada card */
+.analysis-card h2 {
+  color: #ffffff;
+  text-shadow: 
+    0 2px 4px rgba(29, 78, 216, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.nutrition-plan-card h2 {
+  color: #ffffff;
+  text-shadow: 
+    0 2px 4px rgba(5, 150, 105, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.profile-card h2 {
+  color: #ffffff;
+  text-shadow: 
+    0 2px 4px rgba(126, 34, 206, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { 
+    transform: scale(1);
+  }
+  50% { 
+    transform: scale(1.1);
+  }
+}
+
+@keyframes health-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .student-card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .student-home-cards {
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
 }
