@@ -21,6 +21,7 @@ const MultiStepForm = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [errorStartTime, setErrorStartTime] = useState(null);
   const [successStartTime, setSuccessStartTime] = useState(null);
+  const [isExistingUser, setIsExistingUser] = useState(false); // 🆕 Para detectar usuarios existentes
   
   const navigate = useNavigate();
 
@@ -31,7 +32,37 @@ const MultiStepForm = () => {
     setShowError(false);
     setIsProcessing(false);
     localStorage.removeItem("recommendationFormData");
+    
+    // 🔍 Verificar si ya tiene datos clínicos (para mejorar el flujo)
+    checkExistingClinicalData();
   }, []);
+
+  // 🔍 VERIFICAR DATOS CLÍNICOS EXISTENTES (SOLO PARA OPTIMIZAR FLUJO)
+  const checkExistingClinicalData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/students/clinical-profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.clinical_profile) {
+          setIsExistingUser(true); // 🆕 Marcar como usuario existente
+          console.log("Usuario con datos clínicos existentes detectado - flujo optimizado");
+        }
+      }
+    } catch (error) {
+      // Silenciar error - no es crítico para el flujo
+      console.log("Verificación de datos clínicos no disponible");
+    }
+  };
 
   // ⏱️ EFECTO PARA TIMER EN TIEMPO REAL
   useEffect(() => {
@@ -186,8 +217,18 @@ const MultiStepForm = () => {
         15000
       );
 
+      // 🔄 MANEJAR CASO DE DATOS CLÍNICOS YA EXISTENTES
       if (!clinicResponse.ok) {
-        throw new Error(`Error guardando datos clínicos: ${clinicResponse.status}`);
+        if (clinicResponse.status === 400 || clinicResponse.status === 409 || clinicResponse.status === 422) {
+          // Usuario ya tiene datos clínicos registrados - continuar con recomendaciones
+          setIsExistingUser(true); // 🆕 Marcar como usuario existente
+          console.log("✅ Usuario ya tiene datos clínicos registrados, continuando con recomendaciones...");
+          // No lanzar error, continuar el flujo normalmente
+        } else {
+          // Error real del servidor
+          const errorData = await clinicResponse.json().catch(() => ({}));
+          throw new Error(`Error del servidor: ${clinicResponse.status} - ${errorData.message || 'Error desconocido'}`);
+        }
       }
 
       const inputForRecommend = [
@@ -275,7 +316,25 @@ const MultiStepForm = () => {
     } catch (error) {
       console.error("Error:", error);
       
-      // ❌ ERROR
+      // 🔍 VERIFICAR SI ES USUARIO EXISTENTE CON ERROR DE DATOS DUPLICADOS
+      if (isExistingUser && error.message.includes("Error del servidor: 400")) {
+        // 🎉 PARA USUARIOS EXISTENTES: MOSTRAR COMO ÉXITO
+        setIsProcessing(false);
+        setShowSuccess(true);
+        setSuccessStartTime(Date.now());
+        setElapsedTime(0);
+        
+        // 🚀 REDIRECCIÓN DESPUÉS DE 5 SEGUNDOS
+        setTimeout(() => {
+          setIsRedirecting(true);
+          setTimeout(() => {
+            navigate("/student/home", { replace: true });
+          }, 1000);
+        }, 5000);
+        return;
+      }
+      
+      // ❌ ERROR REAL (solo para errores de backend, ML o peticiones externas)
       setIsProcessing(false);
       setShowError(true);
       setErrorStartTime(Date.now());
@@ -290,6 +349,8 @@ const MultiStepForm = () => {
         setErrorMessage("Error en el análisis de datos");
       } else if (error.message.includes("recomendaciones")) {
         setErrorMessage("Error generando recomendaciones");
+      } else if (error.message.includes("Error del servidor")) {
+        setErrorMessage("Error del servidor");
       } else {
         setErrorMessage("¡Ups! El sistema se cayó");
       }
@@ -418,7 +479,7 @@ const MultiStepForm = () => {
 
         {/* ❌ ESTADO DE ERROR */}
         {showError && (
-          <div className="error-section">
+          <div className={`error-section ${isExistingUser ? 'existing-user-success' : ''}`}>
             <div className="error-icon">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -428,8 +489,17 @@ const MultiStepForm = () => {
             <p className="error-subtitle">Tenemos problemas técnicos. Vuelve a intentar más tarde.</p>
             
             {!isRedirecting && (
-              <div className="error-timer timer-circle">
+              <div className={`error-timer timer-circle ${isExistingUser ? 'success-timer' : ''}`}>
                 <svg className="timer-svg" viewBox="0 0 100 100">
+                  {isExistingUser && (
+                    <defs>
+                      <linearGradient id="existingUserGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#6366f1" />
+                        <stop offset="50%" stopColor="#8b5cf6" />
+                        <stop offset="100%" stopColor="#a855f7" />
+                      </linearGradient>
+                    </defs>
+                  )}
                   <circle 
                     className="timer-bg" 
                     cx="50" 
@@ -443,10 +513,11 @@ const MultiStepForm = () => {
                     r="45"
                     strokeDasharray={`${2 * Math.PI * 45}`}
                     strokeDashoffset={`${2 * Math.PI * 45 * Math.max(0, (5 - elapsedTime) / 5)}`}
+                    stroke={isExistingUser ? "url(#existingUserGradient)" : "#ef4444"}
                   />
                 </svg>
                 <div className="timer-text">
-                  <div className="timer-number">{Math.max(0, 5 - elapsedTime)}</div>
+                  <div className={`timer-number ${isExistingUser ? 'success-number' : ''}`}>{Math.max(0, 5 - elapsedTime)}</div>
                   <div className="timer-label">SEG</div>
                 </div>
               </div>
