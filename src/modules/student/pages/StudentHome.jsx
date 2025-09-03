@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StudentHeader from "../components/StudentHeader";
-import "../../../styles/studentPanel.css";
+import "../../../styles/luxuryStudentPanel.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -9,12 +9,57 @@ function StudentHome() {
   const navigate = useNavigate();
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const getUserDisplayName = (userData) => {
+    if (!userData) return 'Usuario';
+    
+    const user = userData.profile || userData;
+    
+    if (user.first_name) {
+      return user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1).toLowerCase();
+    }
+    
+    if (user.email) {
+      const emailName = user.email.split('@')[0];
+      return emailName.charAt(0).toUpperCase() + emailName.slice(1);
+    }
+    
+    return 'Usuario';
+  };
 
   useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    setUser(userData);
+
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+
+        const profileResponse = await fetch(`${API_URL}/api/students/profile`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          setUser(profileData);
+        }
+      } catch (error) {
+        console.error("Error al obtener perfil actualizado:", error);
+      }
+    };
+
     const fetchRecommendation = async () => {
       try {
         const token = localStorage.getItem("token");
-
         if (!token) {
           navigate("/login");
           return;
@@ -22,90 +67,183 @@ function StudentHome() {
 
         const response = await fetch(`${API_URL}/api/students/recommendations`, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         if (!response.ok) {
-          // No lanzamos error si no tiene recomendaciones (usuario nuevo)
           setLoading(false);
           return;
         }
 
         const data = await response.json();
-
+        
         if (data.recommendations && data.recommendations.length > 0) {
-          setRecommendation(data.recommendations[0]);
+          const rec = data.recommendations[0];
+          
+          if (rec && rec.trim().length > 0) {
+            setRecommendation(rec);
+          }
         }
-
       } catch (err) {
-        console.error("❌ Error al cargar recomendación:", err);
+        console.error("Error al cargar recomendación:", err);
       } finally {
         setLoading(false);
       }
     };
 
+    fetchUserProfile();
     fetchRecommendation();
   }, [navigate]);
 
+  const showLuxuryNotification = (message) => {
+    setNotificationMessage(message);
+    setShowNotification(true);
+    const wordCount = message.split(' ').length;
+    const calculatedTime = Math.max(3000, Math.min(12000, wordCount * 875));
+    setTimeout(() => setShowNotification(false), calculatedTime);
+  };
+
   const handleClickPlanAlimentacion = () => {
+    if (isNavigating) return;
     if (!recommendation) {
-      alert("Debes registrar tu análisis clínico primero.");
+      showLuxuryNotification("Para acceder a tu plan personalizado, primero necesitas completar tu análisis integral. ¡Es rápido y fácil!");
       return;
     }
-
+    setIsNavigating(true);
     localStorage.setItem('categoriaNutricional', recommendation);
     navigate('/student/nutrition-plan');
   };
 
+  const handleClickAnalysis = () => {
+    if (isNavigating) return;
+    setIsNavigating(true);
+    if (recommendation) {
+      showLuxuryNotification("Ya tienes análisis registrado. Actualizando datos...");
+    }
+    setTimeout(() => {
+      navigate('/student/complete-analysis');
+    }, recommendation ? 1500 : 0);
+  };
+
+  const handleClickProfile = () => {
+    if (isNavigating) return;
+    setIsNavigating(true);
+    showLuxuryNotification("Abriendo tu perfil...");
+    setTimeout(() => navigate('/student/profile'), 800);
+  };
+
   if (loading) {
-    return <div className="loading">Cargando tu información...</div>;
+    return (
+      <div className="luxury-loading">
+        <div className="loading-spinner"></div>
+        <p>Preparando tu experiencia personalizada...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="student-home">
+    <div className="luxury-student-panel">
       <StudentHeader />
-
-      <h1 className="student-home-title">Bienvenido a tu panel, estudiante 👋</h1>
-      <p className="student-home-sub">Aquí puedes revisar tu análisis y recomendaciones personalizadas.</p>
-
-      <div className="student-home-cards">
-        {/* Botón registrar análisis (siempre disponible) */}
-        <div className="student-card analysis-card" onClick={() => navigate('/student/complete-analysis')}>
-          <h2>📝 Registrar análisis</h2>
-          <p>Completa tu análisis clínico y hábitos alimentarios para obtener recomendaciones personalizadas y precisas.</p>
+      
+      {showNotification && (
+        <div className="luxury-notification luxury-notification-show">
+          <div className="luxury-notification-content">
+            <div className="luxury-notification-icon">✨</div>
+            <span className="luxury-notification-message">{notificationMessage}</span>
+          </div>
         </div>
+      )}
 
-        {/* Botón ver plan (disponible sólo si tiene recomendación) */}
-        <div
-          className={`student-card nutrition-plan-card ${!recommendation ? 'disabled' : ''}`}
-          onClick={handleClickPlanAlimentacion}
-          style={{ 
-            cursor: recommendation ? "pointer" : "not-allowed"
-          }}
-        >
-          <h2>🥗 Ver plan de alimentación</h2>
-          <p>Consulta tus recomendaciones alimenticias personalizadas según tu condición actual y objetivos nutricionales.</p>
-          {!recommendation && (
-            <div style={{
-              position: 'absolute',
-              bottom: '1rem',
-              left: '2rem',
-              fontSize: '0.85rem',
-              color: '#cbd5e1',
-              fontStyle: 'italic',
-              textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
-            }}>
-              * Completa tu análisis primero
+      <div className="luxury-header">
+        <div className="luxury-header-content">
+          <div className="luxury-greeting">
+            <h1 className="luxury-title">¡Hola, {getUserDisplayName(user)}! 👋</h1>
+            <p className="luxury-subtitle">Tu centro de control nutricional personalizado con inteligencia artificial</p>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div className="luxury-cards-section">
+        <div className="luxury-cards-container">
+          <div className={`luxury-card luxury-card-primary ${isNavigating ? 'luxury-card-disabled' : ''}`} onClick={handleClickAnalysis}>
+            <div className="luxury-card-header">
+              <div className="luxury-card-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div className="luxury-card-badge">{recommendation ? 'Actualizar' : 'Esencial'}</div>
             </div>
-          )}
-        </div>
+            <div className="luxury-card-content">
+              <h3>Análisis Integral</h3>
+              <p>Algoritmos de machine learning analizan tu perfil biológico y hábitos para crear recomendaciones precisas y personalizadas.</p>
+            </div>
+            <div className="luxury-card-footer">
+              <span className="luxury-card-action">{recommendation ? 'Actualizar Análisis' : 'Comenzar Análisis'}</span>
+              <div className="luxury-arrow">→</div>
+            </div>
+          </div>
 
-        {/* Botón perfil */}
-        <div className="student-card profile-card" onClick={() => navigate('/student/profile')}>
-          <h2>👤 Perfil</h2>
-          <p>Consulta, edita y actualiza tu información personal, datos médicos y preferencias nutricionales.</p>
+          <div className={`luxury-card luxury-card-secondary ${!recommendation ? 'luxury-card-disabled' : ''} ${isNavigating ? 'luxury-card-disabled' : ''}`} onClick={handleClickPlanAlimentacion}>
+            <div className="luxury-card-header">
+              <div className="luxury-card-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              {recommendation && <div className="luxury-card-badge luxury-badge-success">Disponible</div>}
+              {!recommendation && <div className="luxury-card-badge luxury-badge-pending">Bloqueado</div>}
+            </div>
+            <div className="luxury-card-content">
+              <h3>Plan Nutricional</h3>
+              <p>Accede a tu plan de alimentación personalizado, diseñado específicamente para tus objetivos y condiciones de salud.</p>
+            </div>
+            <div className="luxury-card-footer">
+              <span className="luxury-card-action">{recommendation ? 'Ver Mi Plan' : 'Requiere Análisis'}</span>
+              <div className="luxury-arrow">→</div>
+            </div>
+            {!recommendation && (
+              <div className="luxury-card-overlay">
+                <div className="luxury-lock-content">
+                  <div className="luxury-lock-icon">🔒</div>
+                  <p className="luxury-lock-text">Completa tu análisis primero</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className={`luxury-card luxury-card-tertiary ${isNavigating ? 'luxury-card-disabled' : ''}`} onClick={handleClickProfile}>
+            <div className="luxury-card-header">
+              <div className="luxury-card-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+              </div>
+            </div>
+            <div className="luxury-card-content">
+              <h3>Perfil Personal</h3>
+              <p>Gestiona tu información personal, preferencias alimentarias y datos médicos de forma segura y privada.</p>
+            </div>
+            <div className="luxury-card-footer">
+              <span className="luxury-card-action">Gestionar Perfil</span>
+              <div className="luxury-arrow">→</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="luxury-footer">
+        <div className="luxury-footer-content">
+          <div className="luxury-ai-badge">
+            <div className="ai-icon">🤖</div>
+            <span>Potenciado por IA</span>
+          </div>
+          <p className="luxury-footer-text">
+            Sistema de análisis nutricional avanzado con tecnología de machine learning
+          </p>
         </div>
       </div>
     </div>

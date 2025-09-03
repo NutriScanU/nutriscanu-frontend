@@ -1,0 +1,675 @@
+/* ================================================== */
+/* 🏆 LUXURY DESIGN - STUDENT PANEL                  */
+/* Inspirado en Apple, Tesla, Hermès y Louis Vuitton */
+/* ================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+/* ===== VARIABLES DE LUJO ===== */
+:root {
+  /* Paleta de Colores Premium */
+  --luxury-black: #0a0a0a;
+  --luxury-charcoal: #1a1a1a;
+  --luxury-dark-gray: #2a2a2a;
+  --luxury-silver: #e5e7eb;
+  --luxury-platinum: #f8fafc;
+  --luxury-white: #ffffff;
+  
+  /* Acentos Premium */
+  --luxury-gold: #d4af37;
+  --luxury-rose-gold: #e8b4b8;
+  --luxury-champagne: #f2e6d0;
+  --luxury-emerald: #50c878;
+  --luxury-sapphire: #0f52ba;
+  
+  /* Sombras de Lujo */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-luxury: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.15);
+  
+  /* Transiciones Suaves */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-luxury: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* Tipografía Premium */
+  --font-luxury: 'Playfair Display', serif;
+  --font-modern: 'Inter', sans-serif;
+}
+
+/* ===== NOTIFICACIÓN ELEGANTE ===== */
+.luxury-notification {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 1000;
+  animation: luxury-slide-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.luxury-notification-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-luxury);
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.luxury-notification-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.luxury-notification-content p {
+  margin: 0;
+  color: var(--luxury-charcoal);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+  flex: 1;
+}
+
+.luxury-notification-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--luxury-dark-gray);
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.luxury-notification-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--luxury-black);
+}
+
+@keyframes luxury-slide-in {
+  from {
+    transform: translateX(100%) translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== BADGE ADICIONALES ===== */
+.luxury-badge-pending {
+  background: var(--luxury-dark-gray);
+  color: white;
+}
+
+/* ===== MEJORA DEL OVERLAY BLOQUEADO ===== */
+.luxury-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.luxury-lock-content {
+  text-align: center;
+  color: var(--luxury-dark-gray);
+}
+
+.luxury-lock-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.7;
+}
+
+.luxury-lock-text {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.luxury-student-panel {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--luxury-platinum) 0%, var(--luxury-white) 100%);
+  font-family: var(--font-modern);
+  color: var(--luxury-charcoal);
+  position: relative;
+  overflow-x: hidden;
+  padding-top: 100px; /* Espacio para el nuevo navbar luxury de 80px + margin */
+}
+
+.luxury-student-home {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--luxury-platinum) 0%, var(--luxury-white) 100%);
+  font-family: var(--font-modern);
+  color: var(--luxury-charcoal);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Sutil patrón de textura de lujo */
+.luxury-student-panel::before,
+.luxury-student-home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(80, 200, 120, 0.01) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== LOADING DE LUJO ===== */
+.luxury-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--luxury-white);
+  font-family: var(--font-modern);
+  color: var(--luxury-charcoal);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--luxury-silver);
+  border-top: 2px solid var(--luxury-gold);
+  border-radius: 50%;
+  animation: luxury-spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  margin-bottom: 24px;
+}
+
+@keyframes luxury-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.luxury-loading p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--luxury-dark-gray);
+  letter-spacing: 0.5px;
+}
+
+/* ===== HERO SECTION ===== */
+.luxury-hero {
+  padding: 80px 40px 60px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.luxury-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.luxury-greeting {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.luxury-title {
+  font-family: var(--font-luxury);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--luxury-black);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.luxury-name {
+  color: var(--luxury-gold);
+  position: relative;
+}
+
+.luxury-name::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--luxury-gold), transparent);
+  animation: luxury-underline 2s ease-in-out infinite;
+}
+
+@keyframes luxury-underline {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+.luxury-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--luxury-dark-gray);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  letter-spacing: 0.3px;
+}
+
+/* ===== STATUS INDICATOR ===== */
+.luxury-status {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  backdrop-filter: blur(20px);
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--luxury-dark-gray);
+  animation: luxury-pulse 2s ease-in-out infinite;
+}
+
+.status-indicator.active .status-dot {
+  background: var(--luxury-emerald);
+}
+
+.status-indicator.pending .status-dot {
+  background: var(--luxury-gold);
+}
+
+@keyframes luxury-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* ===== CARDS SECTION ===== */
+.luxury-cards-section {
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.luxury-cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+/* ===== LUXURY CARDS ===== */
+.luxury-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 24px;
+  padding: 32px;
+  cursor: pointer;
+  transition: var(--transition-luxury);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-medium);
+}
+
+.luxury-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--luxury-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition-smooth);
+}
+
+.luxury-card:hover::before {
+  transform: scaleX(1);
+}
+
+.luxury-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-luxury);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* ===== CARD VARIANTS ===== */
+.luxury-card-primary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+}
+
+.luxury-card-primary::before {
+  background: linear-gradient(90deg, var(--luxury-sapphire), var(--luxury-emerald));
+}
+
+.luxury-card-secondary::before {
+  background: linear-gradient(90deg, var(--luxury-emerald), var(--luxury-gold));
+}
+
+.luxury-card-tertiary::before {
+  background: linear-gradient(90deg, var(--luxury-rose-gold), var(--luxury-champagne));
+}
+
+/* ===== CARD DISABLED STATE ===== */
+.luxury-card-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.luxury-card-disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow-medium);
+}
+
+.luxury-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+}
+
+.luxury-lock-icon {
+  font-size: 32px;
+  opacity: 0.5;
+}
+
+/* ===== CARD COMPONENTS ===== */
+.luxury-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.luxury-card-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--luxury-gold), var(--luxury-champagne));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: var(--shadow-subtle);
+}
+
+.luxury-card-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.luxury-card-badge {
+  padding: 4px 12px;
+  background: var(--luxury-charcoal);
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.luxury-badge-success {
+  background: var(--luxury-emerald);
+}
+
+.luxury-card-content {
+  margin-bottom: 24px;
+}
+
+.luxury-card-content h3 {
+  font-family: var(--font-luxury);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--luxury-black);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.luxury-card-content p {
+  font-size: 16px;
+  color: var(--luxury-dark-gray);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.luxury-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.luxury-card-action {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--luxury-gold);
+  letter-spacing: 0.3px;
+}
+
+.luxury-arrow {
+  font-size: 20px;
+  color: var(--luxury-gold);
+  transition: var(--transition-smooth);
+}
+
+.luxury-card:hover .luxury-arrow {
+  transform: translateX(4px);
+}
+
+/* ===== FOOTER SECTION ===== */
+.luxury-footer {
+  padding: 60px 40px 40px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.luxury-footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.luxury-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--luxury-charcoal);
+  color: white;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-medium);
+}
+
+.ai-icon {
+  font-size: 16px;
+}
+
+.luxury-footer-text {
+  font-size: 16px;
+  color: var(--luxury-dark-gray);
+  font-weight: 400;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .luxury-hero {
+    padding: 60px 24px 40px 24px;
+  }
+  
+  .luxury-title {
+    font-size: 2.5rem;
+  }
+  
+  .luxury-subtitle {
+    font-size: 16px;
+  }
+  
+  .luxury-cards-section {
+    padding: 24px;
+  }
+  
+  .luxury-cards-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .luxury-card {
+    padding: 24px;
+  }
+  
+  .luxury-footer {
+    padding: 40px 24px 24px 24px;
+  }
+
+  /* Notificación móvil */
+  .luxury-notification {
+    top: 20px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .luxury-notification-content {
+    max-width: none;
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-hero {
+    padding: 40px 16px 24px 16px;
+  }
+  
+  .luxury-title {
+    font-size: 2rem;
+  }
+  
+  .luxury-cards-section {
+    padding: 16px;
+  }
+  
+  .luxury-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  /* Notificación muy pequeña */
+  .luxury-notification {
+    top: 16px;
+    right: 12px;
+    left: 12px;
+  }
+
+  .luxury-notification-content {
+    padding: 14px 16px;
+  }
+
+  .luxury-notification-content p {
+    font-size: 13px;
+  }
+}
+
+/* ===== MICRO-ANIMACIONES ===== */
+@keyframes luxury-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.luxury-card {
+  animation: luxury-fade-in 0.6s ease-out;
+}
+
+.luxury-card:nth-child(1) { animation-delay: 0.1s; }
+.luxury-card:nth-child(2) { animation-delay: 0.2s; }
+.luxury-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* ===== SCROLL SUAVE ===== */
+.luxury-student-home {
+  scroll-behavior: smooth;
+}
+
+/* ===== ACCESIBILIDAD ===== */
+.luxury-card:focus {
+  outline: 2px solid var(--luxury-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .luxury-student-home {
+    background: white;
+    color: black;
+  }
+  
+  .luxury-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}

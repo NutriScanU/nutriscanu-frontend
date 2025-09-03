@@ -56,3 +56,46 @@ export async function checkDni(document_number) {
 
   return handleResponse(response);
 }
+
+export async function getUserProfile(token) {
+  // Intentar primero el endpoint de auth
+  try {
+    const response = await fetch(`${API_BASE}/api/auth/profile`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (response.ok) {
+      return handleResponse(response);
+    }
+  } catch (error) {
+    console.log("Auth profile endpoint not available, trying student endpoint...");
+  }
+
+  // Si no funciona, intentar con el endpoint de estudiantes
+  try {
+    const response = await fetch(`${API_BASE}/api/students/profile`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    return handleResponse(response);
+  } catch (error) {
+    // Si tampoco funciona, intentar obtener datos básicos del usuario
+    const response = await fetch(`${API_BASE}/api/auth/me`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    return handleResponse(response);
+  }
+}

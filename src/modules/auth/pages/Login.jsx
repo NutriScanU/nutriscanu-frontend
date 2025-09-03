@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { getUserProfile } from "../services/authService";
 import "../../../styles/authTheme.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -130,11 +131,41 @@ function Login() {
 
       const data = await response.json();
 
-      setTimeout(() => {
+      setTimeout(async () => {
         if (response.ok) {
           const decoded = jwtDecode(data.token);
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", decoded.userId);
+
+          // 🔥 OBTENER DATOS COMPLETOS DEL USUARIO
+          try {
+            const userProfile = await getUserProfile(data.token);
+            
+            // Debug solo si hay problemas (comentar para producción limpia)
+            // console.log("👤 User profile from API:", userProfile);
+            
+            localStorage.setItem("user", JSON.stringify(userProfile));
+          } catch (profileError) {
+            // Debug solo si hay problemas (comentar para producción limpia)
+            // console.error("❌ Error getting user profile:", profileError);
+            // console.log("🔍 Token decoded data:", decoded);
+            
+            // Fallback mejorado: usar todos los datos disponibles del token
+            const fallbackUser = {
+              id: decoded.userId || decoded.id,
+              email: decoded.email || "",
+              username: decoded.username || decoded.user || "",
+              name: decoded.name || decoded.fullName || decoded.firstName || "",
+              firstName: decoded.firstName || "",
+              lastName: decoded.lastName || "",
+              role: decoded.role || "student"
+            };
+            
+            // Debug solo si hay problemas (comentar para producción limpia)
+            // console.log("🔄 Using fallback user data:", fallbackUser);
+            
+            localStorage.setItem("user", JSON.stringify(fallbackUser));
+          }
 
           if (decoded.role === "student") {
             navigate("/student/home");
@@ -212,6 +243,36 @@ function Login() {
       const decoded = jwtDecode(data.token);
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", decoded.userId);
+
+      // 🔥 OBTENER DATOS COMPLETOS DEL USUARIO
+      try {
+        const userProfile = await getUserProfile(data.token);
+        
+        // Debug solo si hay problemas (comentar para producción limpia)
+        // console.log("👤 User profile from API:", userProfile);
+        
+        localStorage.setItem("user", JSON.stringify(userProfile));
+      } catch (profileError) {
+        // Debug solo si hay problemas (comentar para producción limpia)
+        // console.error("❌ Error getting user profile:", profileError);
+        // console.log("🔍 Token decoded data:", decoded);
+        
+        // Fallback mejorado: usar todos los datos disponibles del token
+        const fallbackUser = {
+          id: decoded.userId || decoded.id,
+          email: decoded.email || "",
+          username: decoded.username || decoded.user || "",
+          name: decoded.name || decoded.fullName || decoded.firstName || "",
+          firstName: decoded.firstName || "",
+          lastName: decoded.lastName || "",
+          role: decoded.role || "student"
+        };
+        
+        // Debug solo si hay problemas (comentar para producción limpia)
+        // console.log("🔄 Using fallback user data:", fallbackUser);
+        
+        localStorage.setItem("user", JSON.stringify(fallbackUser));
+      }
 
       if (decoded.role === "student") {
         navigate("/student/home");

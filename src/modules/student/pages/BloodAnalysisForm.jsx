@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./BloodAnalysisForm.css";
 
-const BloodAnalysisForm = ({ onSubmit, initialData }) => {
+const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
   const [formData, setFormData] = useState({
     age: "",
-
+    gender: "",
     smoking_history: "",
     bmi: "",
     hbA1c: "",
@@ -120,12 +120,15 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
     }
 
     Object.entries(data).forEach(([key, value]) => {
-      if (!value.trim()) {
+      // 🔧 Convertir a string para evitar errores con números
+      const stringValue = String(value || "");
+      
+      if (!stringValue.trim()) {
         newErrors[key] = "Falta llenar este campo";
-      } else if (numericFields.includes(key) && !validNumber.test(value)) {
+      } else if (numericFields.includes(key) && !validNumber.test(stringValue)) {
         newErrors[key] = "Debe ingresar solo números válidos, sin letras ni espacios";
       } else if (key === "age") {
-        const ageNum = parseInt(value);
+        const ageNum = parseInt(stringValue);
         if (ageNum < 16 || ageNum > 35) {
           newErrors[key] = "Debe estar entre 16 y 35";
         }
@@ -139,6 +142,15 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // 🚫 NO validar si está en modo de solo lectura
+    if (isReadOnly) {
+      // En modo solo lectura, simplemente pasamos los datos sin validar
+      onSubmit(formData);
+      return;
+    }
+    
+    // ✅ Validación normal solo si NO está en modo de solo lectura
     setSubmitted(true);
     const newErrors = validateAllFields(formData);
     if (Object.keys(newErrors).length === 0) {
@@ -148,95 +160,115 @@ const BloodAnalysisForm = ({ onSubmit, initialData }) => {
 
 
   return (
-    <form className="blood-form" onSubmit={handleSubmit}>
-      <h3 className="blood-title">Formulario de Análisis de Sangre</h3>
+    <div className={`blood-form-container ${isReadOnly ? 'readonly-mode' : ''}`}>
+      {isReadOnly && (
+        <div className="readonly-header">
+          <div className="readonly-icon">👁️</div>
+          <div className="readonly-content">
+            <h3>Análisis Registrado (Solo Lectura)</h3>
+            <p>Estos son los datos de tu análisis de sangre ya registrado. No pueden ser modificados.</p>
+          </div>
+        </div>
+      )}
+      
+      <form className="blood-form" onSubmit={handleSubmit}>
+        <h3 className="blood-title">
+          {isReadOnly ? "Datos de tu Análisis" : "Formulario de Análisis de Sangre"}
+        </h3>
 
-      <div className="blood-form-group">
-        <label className="blood-label">
-          Edad:
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            onWheel={(e) => e.target.blur()}
-            className={`blood-input ${errors.age ? "error-input" : ""}`}
-          />
-          {errors.age ? (
-            <span className="blood-error-text">⚠️ {errors.age}</span>
-          ) : (
-            getHint("age") && <span className="blood-hint-text">{getHint("age")}</span>
-          )}
-        </label>
-      </div>
+        <div className="blood-form-group">
+          <label className="blood-label">
+            Edad:
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              onWheel={(e) => e.target.blur()}
+              className={`blood-input ${errors.age ? "error-input" : ""} ${isReadOnly ? "readonly-input" : ""}`}
+              readOnly={isReadOnly}
+              disabled={isReadOnly}
+            />
+            {!isReadOnly && errors.age ? (
+              <span className="blood-error-text">⚠️ {errors.age}</span>
+            ) : (
+              !isReadOnly && getHint("age") && <span className="blood-hint-text">{getHint("age")}</span>
+            )}
+          </label>
+        </div>
 
-      <div className="blood-form-row-vertical">
-        <label className="blood-inline-label">Género:</label>
-        <div className="blood-radio-column">
-          {["Male", "Female"].map((option) => (
-            <label key={option} className="blood-radio-option">
+        <div className="blood-form-row-vertical">
+          <label className="blood-inline-label">Género:</label>
+          <div className="blood-radio-column">
+            {["Male", "Female"].map((option) => (
+              <label key={option} className={`blood-radio-option ${isReadOnly ? 'readonly-radio' : ''}`}>
+                <input
+                  type="radio"
+                  name="gender"
+                  value={option}
+                  checked={formData.gender === option}
+                  onChange={handleChange}
+                  disabled={isReadOnly}
+                />
+                <span className="blood-radio-filled"></span>
+                <span className="blood-radio-label">
+                  {option === "Male" ? "Masculino" : "Femenino"}
+                </span>
+              </label>
+            ))}
+          </div>
+          {!isReadOnly && errors.gender && <span className="blood-error-text">⚠️ {errors.gender}</span>}
+        </div>
+
+        <div className="blood-form-group">
+          <label className="blood-label">
+            Historial de tabaquismo:
+            <select
+              name="smoking_history"
+              value={formData.smoking_history}
+              onChange={handleChange}
+              className={`blood-input ${errors.smoking_history ? "error-input" : ""} ${isReadOnly ? "readonly-input" : ""}`}
+              disabled={isReadOnly}
+            >
+              <option value="">-- Selecciona --</option>
+              <option value="Never">Nunca</option>
+              <option value="Current">Actualmente</option>
+              <option value="Former">Anteriormente</option>
+              <option value="Ever">Alguna vez</option>
+              <option value="Not Current">No actualmente</option>
+              <option value="No Info">Prefiero no decirlo</option>
+            </select>
+            {!isReadOnly && errors.smoking_history && (
+              <span className="blood-error-text">⚠️ {errors.smoking_history}</span>
+            )}
+          </label>
+        </div>
+
+        <div className="blood-form-grid">
+          {Object.keys(fieldLabels).map((field) => (
+            <label key={field} className="blood-label">
+              {fieldLabels[field]}:
               <input
-                type="radio"
-                name="gender"
-                value={option}
-                checked={formData.gender === option}
+                type="number"
+                name={field}
+                step="0.1"
+                value={formData[field]}
                 onChange={handleChange}
+                onWheel={(e) => e.target.blur()}
+                className={`blood-input ${errors[field] ? "error-input" : ""} ${isReadOnly ? "readonly-input" : ""}`}
+                readOnly={isReadOnly}
+                disabled={isReadOnly}
               />
-              <span className="blood-radio-filled"></span>
-              <span className="blood-radio-label">
-                {option === "Male" ? "Masculino" : "Femenino"}
-              </span>
+              {!isReadOnly && errors[field] ? (
+                <span className="blood-error-text">⚠️ {errors[field]}</span>
+              ) : (
+                !isReadOnly && getHint(field) && <span className="blood-hint-text">{getHint(field)}</span>
+              )}
             </label>
           ))}
         </div>
-        {errors.gender && <span className="blood-error-text">⚠️ {errors.gender}</span>}
-      </div>
-
-      <div className="blood-form-group">
-        <label className="blood-label">
-          Historial de tabaquismo:
-          <select
-            name="smoking_history"
-            value={formData.smoking_history}
-            onChange={handleChange}
-            className={`blood-input ${errors.smoking_history ? "error-input" : ""}`}
-          >
-            <option value="">-- Selecciona --</option>
-            <option value="Never">Nunca</option>
-            <option value="Current">Actualmente</option>
-            <option value="Former">Anteriormente</option>
-            <option value="Ever">Alguna vez</option>
-            <option value="Not Current">No actualmente</option>
-            <option value="No Info">Prefiero no decirlo</option>
-          </select>
-          {errors.smoking_history && (
-            <span className="blood-error-text">⚠️ {errors.smoking_history}</span>
-          )}
-        </label>
-      </div>
-
-      <div className="blood-form-grid">
-        {Object.keys(fieldLabels).map((field) => (
-          <label key={field} className="blood-label">
-            {fieldLabels[field]}:
-            <input
-              type="number"
-              name={field}
-              step="0.1"
-              value={formData[field]}
-              onChange={handleChange}
-              onWheel={(e) => e.target.blur()}
-              className={`blood-input ${errors[field] ? "error-input" : ""}`}
-            />
-            {errors[field] ? (
-              <span className="blood-error-text">⚠️ {errors[field]}</span>
-            ) : (
-              getHint(field) && <span className="blood-hint-text">{getHint(field)}</span>
-            )}
-          </label>
-        ))}
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

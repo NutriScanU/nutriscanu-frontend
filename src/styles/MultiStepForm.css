@@ -988,6 +988,145 @@
   animation: breathe 3s ease-in-out infinite;
 }
 
+/* ✅ ESTILO PARA PASO COMPLETADO (ANÁLISIS PREVIOS) */
+.multi-step-item.completed {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.multi-step-item.completed .multi-step-circle {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 
+    0 12px 35px rgba(16, 185, 129, 0.35),
+    0 5px 15px rgba(0, 0, 0, 0.15);
+  animation: completedPulse 2s ease-in-out infinite;
+}
+
+.multi-step-item.completed .multi-step-label {
+  color: #065f46;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Animación para paso completado */
+@keyframes completedPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      0 12px 35px rgba(16, 185, 129, 0.35),
+      0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 
+      0 15px 40px rgba(16, 185, 129, 0.45),
+      0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* 🔔 NOTIFICACIÓN PARA ANÁLISIS EXISTENTE */
+.existing-analysis-notice {
+  background: linear-gradient(135deg, 
+    rgba(236, 253, 245, 0.95) 0%, 
+    rgba(220, 252, 231, 0.92) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 8px 25px rgba(16, 185, 129, 0.1),
+    0 3px 10px rgba(0, 0, 0, 0.05);
+  animation: slideInNotice 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.notice-icon {
+  font-size: 1.5rem;
+  margin-top: 0.2rem;
+  animation: bounce 1s ease-in-out;
+}
+
+.notice-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: #065f46;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.notice-content p {
+  margin: 0 0 1rem 0;
+  color: #047857;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.skip-to-habits-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.skip-to-habits-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+/* 📝 BANNER INFORMATIVO PARA PASO 2 */
+.step-info-banner {
+  background: linear-gradient(135deg, 
+    rgba(239, 246, 255, 0.9) 0%, 
+    rgba(219, 234, 254, 0.85) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #1e40af;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(5px);
+}
+
+.info-icon {
+  font-size: 1.2rem;
+}
+
+/* Animaciones */
+@keyframes slideInNotice {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
 /* 🫁 ANIMACIÓN DE RESPIRACIÓN PARA CÍRCULO ACTIVO */
 @keyframes breathe {
   0%, 100% { 

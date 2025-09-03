@@ -1,17 +1,59 @@
-/* src/components/student/Header/StudentHeader.css */
+/* ================================================== */
+/* 🏆 LUXURY NAVBAR - STUDENT HEADER                  */
+/* Glassmorphism design matching luxury theme         */
+/* ================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+/* ===== LUXURY VARIABLES ===== */
+:root {
+  --luxury-black: #0a0a0a;
+  --luxury-charcoal: #1a1a1a;
+  --luxury-dark-gray: #2a2a2a;
+  --luxury-gold: #d4af37;
+  --luxury-white: #ffffff;
+  --luxury-platinum: #f8fafc;
+  --shadow-luxury: 0 25px 50px rgba(0, 0, 0, 0.25), 0 12px 24px rgba(0, 0, 0, 0.15);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-luxury: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  --font-luxury: 'Playfair Display', serif;
+  --font-modern: 'Inter', sans-serif;
+}
+
+/* ===== LUXURY NAVBAR ===== */
 .student-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: #1e40af;
-  color: white;
+  height: 80px;
   z-index: 1000;
-  height: 64px;
+  
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-medium);
+  
   display: flex;
   align-items: center;
+  transition: var(--transition-smooth);
+}
+
+.student-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(80, 200, 120, 0.02) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .student-header-container {
@@ -19,37 +61,140 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 1rem; /* solo un pequeño espacio interno horizontal */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
 }
 
+/* ===== LUXURY LOGO ===== */
 .student-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0; /* asegura que no haya márgenes */
+  font-family: var(--font-luxury);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--luxury-charcoal);
+  margin: 0;
+  letter-spacing: -0.02em;
+  position: relative;
+  transition: var(--transition-smooth);
 }
 
+.student-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--luxury-gold), transparent);
+  transition: var(--transition-luxury);
+}
+
+.student-logo:hover::after {
+  width: 100%;
+}
+
+.student-logo:hover {
+  color: var(--luxury-gold);
+  transform: translateY(-1px);
+}
+
+/* ===== LUXURY LOGOUT BUTTON ===== */
 .logout-button {
-  background-color: #fbbf24;
+  background: linear-gradient(135deg, var(--luxury-gold) 0%, #b8860b 100%);
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: 50px;
   cursor: pointer;
-  font-weight: bold;
-  color: black;
-  transition: background-color 0.2s ease;
+  font-family: var(--font-modern);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--luxury-white);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logout-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-luxury);
+}
+
+.logout-button:hover::before {
+  left: 100%;
 }
 
 .logout-button:hover {
-  background-color: #facc15;
+  background: linear-gradient(135deg, #f4d03f 0%, var(--luxury-gold) 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(212, 175, 55, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-@media (max-width: 768px) {
-  .student-header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.logout-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 4px 15px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
 
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .student-header {
+    height: 70px;
+  }
+  
+  .student-header-container {
+    padding: 0 1rem;
+  }
+  
+  .student-logo {
+    font-size: 1.5rem;
+  }
+  
   .logout-button {
-    width: 100%;
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-header {
+    height: 65px;
+  }
+  
+  .student-header-container {
+    padding: 0 1rem;
+  }
+  
+  .student-logo {
+    font-size: 1.3rem;
+  }
+  
+  .logout-button {
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 25px;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+@media (hover: hover) {
+  .student-header:hover {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
   }
 }

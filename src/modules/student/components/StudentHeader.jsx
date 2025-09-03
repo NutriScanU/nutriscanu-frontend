@@ -17,7 +17,8 @@ const StudentHeader = () => {
 
         <nav className="nav">
           <button onClick={handleLogout} className="logout-button">
-            Cerrar sesión
+            <span style={{ marginRight: '8px' }}>✨</span>
+            Cerrar Sesión
           </button>
         </nav>
       </div>

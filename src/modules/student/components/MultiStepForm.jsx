@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BloodAnalysisForm from "../pages/BloodAnalysisForm";
 import RecommendationForm from "../pages/RecommendationForm";
-import "../../../styles/MultiStepForm.css"; // Estilos exclusivos
+import "../../../styles/MultiStepForm.css";
 
 const MultiStepForm = () => {
   const [step, setStep] = useState(1);
@@ -10,8 +10,6 @@ const MultiStepForm = () => {
   const [habitsData, setHabitsData] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [setMensajeIncompleto] = useState("");
-  
-  // 🔥 NUEVOS ESTADOS PARA DISEÑO MEJORADO
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStartTime, setProcessingStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -21,50 +19,61 @@ const MultiStepForm = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [errorStartTime, setErrorStartTime] = useState(null);
   const [successStartTime, setSuccessStartTime] = useState(null);
-  const [isExistingUser, setIsExistingUser] = useState(false); // 🆕 Para detectar usuarios existentes
+  const [isExistingUser, setIsExistingUser] = useState(false);
+  const [hasExistingAnalysis, setHasExistingAnalysis] = useState(false);
   
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 🔁 Limpiar algunos estados al montar el componente
     setHabitsData(null);
     setShowSuccess(false);
     setShowError(false);
     setIsProcessing(false);
     localStorage.removeItem("recommendationFormData");
-    
-    // 🔍 Verificar si ya tiene datos clínicos (para mejorar el flujo)
     checkExistingClinicalData();
   }, []);
 
-  // 🔍 VERIFICAR DATOS CLÍNICOS EXISTENTES (SOLO PARA OPTIMIZAR FLUJO)
   const checkExistingClinicalData = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
-
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/students/clinical-profile`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/students/blood-analysis`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-
+      
       if (response.ok) {
         const data = await response.json();
-        if (data && data.clinical_profile) {
-          setIsExistingUser(true); // 🆕 Marcar como usuario existente
-          console.log("Usuario con datos clínicos existentes detectado - flujo optimizado");
+        
+        if (data.success && data.bloodAnalysis) {
+          const analysis = data.bloodAnalysis;
+          setIsExistingUser(true);
+          setHasExistingAnalysis(true);
+          setStep(2);
+          
+          setClinicData({
+            age: analysis.age,
+            gender: analysis.gender,
+            smoking_history: analysis.smoking_history,
+            bmi: analysis.bmi,
+            hbA1c: analysis.hbA1c,
+            blood_glucose_level: analysis.blood_glucose_level,
+            hemoglobin: analysis.hemoglobin,
+            insulin: analysis.insulin,
+            triglycerides: analysis.triglycerides,
+            hematocrit: analysis.hematocrit,
+            red_blood_cells: analysis.red_blood_cells
+          });
         }
       }
     } catch (error) {
-      // Silenciar error - no es crítico para el flujo
-      console.log("Verificación de datos clínicos no disponible");
+      console.error("Error verificando datos clínicos:", error);
     }
   };
 
-  // ⏱️ EFECTO PARA TIMER EN TIEMPO REAL
   useEffect(() => {
     let interval;
     if (isProcessing && processingStartTime) {
@@ -91,7 +100,6 @@ const MultiStepForm = () => {
     };
   }, [isProcessing, processingStartTime, showError, errorStartTime, showSuccess, successStartTime]);
 
-  // 🚀 FUNCIÓN HELPER PARA TIMEOUT
   const fetchWithTimeout = async (url, options, timeoutMs = 30000) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -222,7 +230,10 @@ const MultiStepForm = () => {
         if (clinicResponse.status === 400 || clinicResponse.status === 409 || clinicResponse.status === 422) {
           // Usuario ya tiene datos clínicos registrados - continuar con recomendaciones
           setIsExistingUser(true); // 🆕 Marcar como usuario existente
-          console.log("✅ Usuario ya tiene datos clínicos registrados, continuando con recomendaciones...");
+          
+          // Debug solo si hay problemas (comentar para producción limpia)
+          // console.log("✅ Usuario ya tiene datos clínicos registrados, continuando con recomendaciones...");
+          
           // No lanzar error, continuar el flujo normalmente
         } else {
           // Error real del servidor
@@ -314,7 +325,8 @@ const MultiStepForm = () => {
       }, 5000);
 
     } catch (error) {
-      console.error("Error:", error);
+      // Debug solo si hay problemas (comentar para producción limpia)
+      // console.error("Error:", error);
       
       // 🔍 VERIFICAR SI ES USUARIO EXISTENTE CON ERROR DE DATOS DUPLICADOS
       if (isExistingUser && error.message.includes("Error del servidor: 400")) {
@@ -383,10 +395,10 @@ const MultiStepForm = () => {
         {[1, 2, 3].map((n) => (
           <div 
             key={n} 
-            className={`multi-step-item ${step >= n ? "active" : ""} ${step === n ? "current" : ""}`}
+            className={`multi-step-item ${step >= n ? "active" : ""} ${step === n ? "current" : ""} ${n === 1 && hasExistingAnalysis ? "completed" : ""}`}
           >
             <div className="multi-step-circle">
-              {n}
+              {n === 1 && hasExistingAnalysis ? "✓" : n}
             </div>
             <p className="multi-step-label">
               {n === 1 ? "Datos clínicos" : n === 2 ? "Hábitos" : "Confirmar"}
@@ -399,7 +411,11 @@ const MultiStepForm = () => {
       <div className="multi-step-content">
         {/* PASO 1: Datos Clínicos */}
         {step === 1 && !isProcessing && !showSuccess && !showError && (
-          <BloodAnalysisForm onSubmit={handleClinicSubmit} initialData={clinicData} />
+          <BloodAnalysisForm 
+            onSubmit={handleClinicSubmit} 
+            initialData={clinicData} 
+            isReadOnly={hasExistingAnalysis}
+          />
         )}
         
         {/* PASO 2: Hábitos */}
