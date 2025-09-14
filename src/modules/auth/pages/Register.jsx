@@ -90,12 +90,27 @@ function Register() {
   };
 
   const handleSubmit = async () => {
+
     const newErrors = { dni: "", general: "" };
     let isValid = true;
 
     // Validación de campos obligatorios (nombres, apellidos, etc.)
     if (!firstName.trim() || !lastName.trim() || !middleName.trim()) {
       newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    }
+
+    // Validación de longitud mínima para nombres y apellidos
+    if (firstName.trim().length < 2) {
+      newErrors.firstName = "Este campo debe tener al menos 2 caracteres";
+      isValid = false;
+    }
+    if (lastName.trim().length < 2) {
+      newErrors.lastName = "Este campo debe tener al menos 2 caracteres";
+      isValid = false;
+    }
+    if (middleName.trim().length < 2) {
+      newErrors.middleName = "Este campo debe tener al menos 2 caracteres";
       isValid = false;
     }
 
@@ -293,11 +308,13 @@ function Register() {
                   onChange={(e) => {
                     if (onlyLetters(e.target.value)) {
                       setFirstName(e.target.value);
+                      if (errors.firstName) setErrors(prev => ({ ...prev, firstName: "" }));
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
                   disabled={loading}
                 />
+                {errors.firstName && <div className="error-message">{errors.firstName}</div>}
 
                 <label>Apellido paterno</label>
                 <input
@@ -307,11 +324,13 @@ function Register() {
                   onChange={(e) => {
                     if (onlyLetters(e.target.value)) {
                       setLastName(e.target.value);
+                      if (errors.lastName) setErrors(prev => ({ ...prev, lastName: "" }));
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
                   disabled={loading}
                 />
+                {errors.lastName && <div className="error-message">{errors.lastName}</div>}
 
                 <label>Apellido materno</label>
                 <input
@@ -321,11 +340,13 @@ function Register() {
                   onChange={(e) => {
                     if (onlyLetters(e.target.value)) {
                       setMiddleName(e.target.value);
+                      if (errors.middleName) setErrors(prev => ({ ...prev, middleName: "" }));
                       if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
                     }
                   }}
                   disabled={loading}
                 />
+                {errors.middleName && <div className="error-message">{errors.middleName}</div>}
 
                 <label>DNI</label>
                 <input

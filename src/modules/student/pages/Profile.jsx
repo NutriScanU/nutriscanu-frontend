@@ -1,9 +1,19 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import './Profile.css';
+
+// Capitaliza cada palabra de un string
+const capitalizeWords = (str) => {
+  if (!str) return '';
+  return str
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
 
 const Profile = () => {
   // Estados del componente
@@ -113,9 +123,9 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(`${apiBase}/api/students/update-name`, {
-        first_name: tempFirstName,
-        middle_name: tempMiddleName,
-        last_name: tempLastName
+        first_name: capitalizeWords(tempFirstName),
+        middle_name: capitalizeWords(tempMiddleName),
+        last_name: capitalizeWords(tempLastName)
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -124,9 +134,9 @@ const Profile = () => {
         ...prev,
         profile: {
           ...prev.profile,
-          first_name: tempFirstName,
-          middle_name: tempMiddleName,
-          last_name: tempLastName
+          first_name: capitalizeWords(tempFirstName),
+          middle_name: capitalizeWords(tempMiddleName),
+          last_name: capitalizeWords(tempLastName)
         }
       }));
 

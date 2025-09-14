@@ -52,35 +52,56 @@ const CalendarioNutricional = () => {
   return (
     <div className="calendario-nutricional-wrapper">
       <button className="btn-regresar" onClick={() => navigate("/student/home")}>← Volver</button>
-
       <h1 className="calendario-nutricional-title">Plan Semanal de Comidas 🥗</h1>
-
-      <table className="calendario-nutricional-table">
-        <thead>
-          <tr>
-            <th></th>
-            {diasSemana.map((dia) => (
-              <th key={dia}>{dia.charAt(0).toUpperCase() + dia.slice(1)}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {categorias.map((categoria) => (
-            <tr key={categoria}>
-              <td className="calendario-nutricional-category">
-                {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
-              </td>
+      {/* Vista vertical para móvil */}
+      <div className="calendario-nutricional-cards">
+        {diasSemana.map((dia) => (
+          <div className="calendario-dia-card" key={dia}>
+            <h2 className="calendario-dia-titulo">{dia.charAt(0).toUpperCase() + dia.slice(1)}</h2>
+            <ul className="calendario-categorias-lista">
+              {categorias.map((categoria) => (
+                <li className="calendario-categoria-item" key={categoria}>
+                  <span className="calendario-categoria-nombre">{categoria.charAt(0).toUpperCase() + categoria.slice(1)}:</span>
+                  <span className="calendario-categoria-comida">
+                    {menu[dia]?.[categoria]?.split("\n").map((linea, i) => (
+                      <span key={i}>{linea}</span>
+                    )) || "-"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      {/* Vista tabla para desktop */}
+      <div className="calendario-nutricional-table-wrapper">
+        <table className="calendario-nutricional-table">
+          <thead>
+            <tr>
+              <th></th>
               {diasSemana.map((dia) => (
-                <td key={`${dia}-${categoria}`}>
-                  {menu[dia]?.[categoria]?.split("\n").map((linea, i) => (
-                    <div key={i}>{linea}</div>
-                  )) || "-"}
-                </td>
+                <th key={dia}>{dia.charAt(0).toUpperCase() + dia.slice(1)}</th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {categorias.map((categoria) => (
+              <tr key={categoria}>
+                <td className="calendario-nutricional-category">
+                  {categoria.charAt(0).toUpperCase() + categoria.slice(1)}
+                </td>
+                {diasSemana.map((dia) => (
+                  <td key={`${dia}-${categoria}`}>
+                    {menu[dia]?.[categoria]?.split("\n").map((linea, i) => (
+                      <div key={i}>{linea}</div>
+                    )) || "-"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

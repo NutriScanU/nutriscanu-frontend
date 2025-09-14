@@ -16,13 +16,17 @@ function StudentHome() {
 
   const getUserDisplayName = (userData) => {
     if (!userData) return 'Usuario';
-    
+
     const user = userData.profile || userData;
-    
+
     if (user.first_name) {
-      return user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1).toLowerCase();
+      // Capitalizar cada palabra del nombre
+      return user.first_name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
     }
-    
+
     if (user.email) {
       const emailName = user.email.split('@')[0];
       return emailName.charAt(0).toUpperCase() + emailName.slice(1);
