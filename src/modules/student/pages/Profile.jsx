@@ -168,6 +168,8 @@ const Profile = () => {
     const onlyLetters = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/;
     if (!value.trim()) {
       setErrors(prev => ({ ...prev, [fieldName]: 'Falta llenar este campo.' }));
+    } else if (value.trim().length === 1) {
+      setErrors(prev => ({ ...prev, [fieldName]: 'Este campo debe tener al menos 2 caracteres' }));
     } else if (!onlyLetters.test(value)) {
       setErrors(prev => ({ ...prev, [fieldName]: 'Solo se permiten letras.' }));
     } else {
