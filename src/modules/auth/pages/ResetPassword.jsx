@@ -70,7 +70,6 @@ function ResetPassword() {
     // ✅ PRIORIDAD 4: Envío al servidor (solo si todo es válido)
     try {
       // Ya está en loading desde el inicio
-
       const url = `${process.env.REACT_APP_API_URL}/api/auth/reset-password/${token}`;
       console.log("📦 Enviando solicitud a:", url);
 
@@ -80,7 +79,6 @@ function ResetPassword() {
       });
 
       setSuccess("Tu contraseña ha sido actualizada correctamente");
-      
       // Iniciar cuenta regresiva de 5 segundos
       setCountdown(5);
       const countdownInterval = setInterval(() => {
@@ -95,11 +93,16 @@ function ResetPassword() {
       }, 1000);
     } catch (err) {
       console.error("❌ Error al resetear:", err);
-
       if (err.response) {
         console.error("🔍 Respuesta del backend:", err.response.data);
-        // Manejo específico para diferentes tipos de errores del servidor
-        if (err.response.status === 400 || err.response.status === 404) {
+        // Mostrar mensaje específico si la nueva contraseña es igual a la anterior (409)
+        if (err.response.status === 422 && err.response.data?.error) {
+          setServerError(err.response.data.error);
+        } else if (
+          err.response.data?.error === "La nueva contraseña no debe ser igual a la que usaste anteriormente."
+        ) {
+          setServerError(err.response.data.error);
+        } else if (err.response.status === 400 || err.response.status === 404) {
           setServerError("Token inválido o expirado");
         } else if (err.response.status === 500) {
           setServerError("Ocurrió un problema temporal. Intenta nuevamente en unos momentos.");

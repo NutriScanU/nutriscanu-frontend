@@ -1,5 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./BloodAnalysisForm.css";
+
+// Función para validar números y sus rangos
+const validateNumericField = (name, value, range) => {
+  const validNumber = /^\d+(\.\d{1,2})?$/;
+  if (!value.trim()) return "Falta llenar este campo";
+  if (value.startsWith('.')) return "El valor debe tener un número antes del punto decimal (ejemplo: 0.22)";
+  if (value.includes(',')) return "No se permite el uso de comas, use solo punto (.)";
+  if ((value.match(/\./g) || []).length > 1) return "Solo se permite un punto decimal";
+  if (!validNumber.test(value)) return "Solo se permiten hasta 2 decimales";
+  if (!range) return ""; // Si no hay rango definido, no validar rango
+  const numValue = parseFloat(value);
+  if (numValue < range.min || numValue > range.max) return `Debe estar entre ${range.min} y ${range.max}`;
+  return "";
+};
 
 const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
   const [formData, setFormData] = useState({
@@ -15,30 +29,28 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
     hematocrit: "",
     red_blood_cells: ""
   });
-
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
   const numericFields = [
-    "age",
-    "bmi",
-    "hbA1c",
-    "blood_glucose_level",
-    "hemoglobin",
-    "insulin",
-    "triglycerides",
-    "hematocrit",
-    "red_blood_cells"
+    "age", "bmi", "hbA1c", "blood_glucose_level", "hemoglobin", "insulin", "triglycerides", "hematocrit", "red_blood_cells"
   ];
 
-  useEffect(() => {
-    if (initialData) setFormData(initialData);
-  }, [initialData]);
+  // Rango de valores para cada campo numérico
+  const ranges = useMemo(() => ({
+  age: { min: 16, max: 35 },
+  // bmi: { min: 10, max: 40 },
+  // hbA1c: { min: 3, max: 15 },
+  // blood_glucose_level: { min: 40, max: 300 },
+  // hemoglobin: { min: 8, max: 20 },
+  // insulin: { min: 1, max: 50 },
+  // triglycerides: { min: 30, max: 500 },
+  // hematocrit: { min: 20, max: 60 },
+  // red_blood_cells: { min: 3, max: 7 }
+  }), []);
 
-  const ranges = {
-    age: { min: 16, max: 35 },
-  };
-
-  const fieldLabels = {
+  // Etiquetas de los campos
+  const fieldLabels = useMemo(() => ({
     bmi: "Índice de Masa Corporal (IMC)",
     hbA1c: "Hemoglobina glicosilada (HbA1c %)",
     blood_glucose_level: "Glucosa en sangre (mg/dL)",
@@ -47,18 +59,16 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
     triglycerides: "Triglicéridos (mg/dL)",
     hematocrit: "Hematocrito (%)",
     red_blood_cells: "Glóbulos rojos (millones/μL)"
-  };
+  }), []);
+
+  // Usamos useEffect para inicializar los datos
+  useEffect(() => {
+    if (initialData) setFormData(initialData);
+  }, [initialData]);
 
   const getHint = (field) => {
     const range = ranges[field];
     if (!range) return "";
-
-    if (typeof range === "object" && range.Male) {
-      if (!formData.gender) return "";
-      const { min, max } = range[formData.gender];
-      return `Valor permitido: entre ${min} y ${max}`;
-    }
-
     return `Valor permitido: entre ${range.min} y ${range.max}`;
   };
 
@@ -68,72 +78,34 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
     setFormData(updated);
 
     if (numericFields.includes(name)) {
-      validateField(name, value);
+      const range = ranges[name];
+      // Solo validar si hay rango definido
+      const error = range ? validateNumericField(name, value, range) : "";
+      setErrors((prev) => ({ ...prev, [name]: error }));
     } else {
-      // Si ya se había intentado enviar, validamos todo de nuevo
-      if (submitted) {
+      if (submitted && value.trim() !== "") {
         const newErrors = { ...errors };
-        if (value.trim() !== "") {
-          delete newErrors[name];
-        }
+        delete newErrors[name];
         setErrors(newErrors);
       }
     }
   };
 
-  const validateField = (name, value) => {
-    if (!numericFields.includes(name)) return; // 👉 Evita validar género/tabaquismo como números
-
-    const validNumber = /^\d+(\.\d+)?$/;
-
-    if (!value.trim()) {
-      setErrors((prev) => ({ ...prev, [name]: "Falta llenar este campo" }));
-    } else if (!validNumber.test(value)) {
-      setErrors((prev) => ({ ...prev, [name]: "Debe ingresar solo números válidos, sin letras ni espacios" }));
-    } else {
-      if (name === "age") {
-        const ageNum = parseInt(value);
-        if (ageNum < 16 || ageNum > 35) {
-          setErrors((prev) => ({ ...prev, [name]: "Debe estar entre 16 y 35" }));
-          return;
-        }
-      }
-      setErrors((prev) => {
-        const copy = { ...prev };
-        delete copy[name];
-        return copy;
-      });
-    }
-  };
-
-
   const validateAllFields = (data) => {
     const newErrors = {};
-    const validNumber = /^\d+(\.\d+)?$/;
-
-    if (!data.gender) {
-      newErrors.gender = "Debe seleccionar un género";
-    }
-
-    if (!data.smoking_history || data.smoking_history === "") {
-      newErrors.smoking_history = "Debe seleccionar una opción";
-    }
+    if (!data.gender) newErrors.gender = "Debe seleccionar un género";
+    if (!data.smoking_history || data.smoking_history === "") newErrors.smoking_history = "Debe seleccionar una opción";
 
     Object.entries(data).forEach(([key, value]) => {
-      // 🔧 Convertir a string para evitar errores con números
       const stringValue = String(value || "");
-      
-      if (!stringValue.trim()) {
-        newErrors[key] = "Falta llenar este campo";
-      } else if (numericFields.includes(key) && !validNumber.test(stringValue)) {
-        newErrors[key] = "Debe ingresar solo números válidos, sin letras ni espacios";
-      } else if (key === "age") {
-        const ageNum = parseInt(stringValue);
-        if (ageNum < 16 || ageNum > 35) {
-          newErrors[key] = "Debe estar entre 16 y 35";
-        }
-      }
+      const range = ranges[key];
 
+      if (!stringValue.trim()) newErrors[key] = "Falta llenar este campo";
+      else if (key === "age" && !/^\d+$/.test(stringValue)) newErrors[key] = "Solo se permiten números enteros";
+      else if (numericFields.includes(key)) {
+        const error = validateNumericField(key, stringValue, range);
+        if (error) newErrors[key] = error;
+      }
     });
 
     setErrors(newErrors);
@@ -142,22 +114,16 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // 🚫 NO validar si está en modo de solo lectura
     if (isReadOnly) {
-      // En modo solo lectura, simplemente pasamos los datos sin validar
       onSubmit(formData);
       return;
     }
-    
-    // ✅ Validación normal solo si NO está en modo de solo lectura
     setSubmitted(true);
     const newErrors = validateAllFields(formData);
     if (Object.keys(newErrors).length === 0) {
       onSubmit(formData);
     }
   };
-
 
   return (
     <div className={`blood-form-container ${isReadOnly ? 'readonly-mode' : ''}`}>
@@ -170,7 +136,6 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
           </div>
         </div>
       )}
-      
       <form className="blood-form" onSubmit={handleSubmit}>
         <h3 className="blood-title">
           {isReadOnly ? "Datos de tu Análisis" : "Formulario de Análisis de Sangre"}
@@ -183,8 +148,15 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
               type="number"
               name="age"
               value={formData.age}
+              inputMode="numeric"
               onChange={handleChange}
               onWheel={(e) => e.target.blur()}
+              onKeyDown={(e) => {
+                const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+                if (!/^[0-9]$/.test(e.key) && !allowedKeys.includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
               className={`blood-input ${errors.age ? "error-input" : ""} ${isReadOnly ? "readonly-input" : ""}`}
               readOnly={isReadOnly}
               disabled={isReadOnly}
@@ -249,12 +221,27 @@ const BloodAnalysisForm = ({ onSubmit, initialData, isReadOnly = false }) => {
             <label key={field} className="blood-label">
               {fieldLabels[field]}:
               <input
-                type="number"
+                type="text"
                 name={field}
                 step="0.1"
                 value={formData[field]}
+                inputMode="decimal"
+                pattern="[0-9]*[.,]?[0-9]*"
                 onChange={handleChange}
                 onWheel={(e) => e.target.blur()}
+                onKeyDown={(e) => {
+                  const allowedKeys = [
+                    "Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "."
+                  ];
+                  if (e.key === ",") {
+                    e.preventDefault();
+                  } else if (e.key === "." && e.currentTarget.value.includes(".")) {
+                    // Bloquea escribir un segundo punto
+                    e.preventDefault();
+                  } else if (!/^[0-9]$/.test(e.key) && !allowedKeys.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
                 className={`blood-input ${errors[field] ? "error-input" : ""} ${isReadOnly ? "readonly-input" : ""}`}
                 readOnly={isReadOnly}
                 disabled={isReadOnly}

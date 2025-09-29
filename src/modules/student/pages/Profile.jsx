@@ -77,8 +77,8 @@ const Profile = () => {
           }, 30); // Incrementa cada 30ms
         }
       } catch (err) {
-        console.error('❌ Error al obtener perfil:', err);
-        setError('No se pudo cargar el perfil. Intenta nuevamente.');
+        
+        setError('No se pudo cargar tu información en este momento. Intenta nuevamente más tarde.');
       } finally {
         setLoading(false);
       }
@@ -179,10 +179,58 @@ const Profile = () => {
     }
   };
 
-  // Si está cargando o hay error, se muestran mensajes apropiados
+  // Banner de error superior y función de reintento
+  const handleRetry = () => {
+    setLoading(true);
+    setError(null);
+    // Repetir la lógica de fetchProfile
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(`${apiBase}/api/students/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        setProfileData(res.data);
+        if (res.data.probability !== undefined) {
+          setLocalProbability(0);
+          let increment = 1;
+          const targetProbability = res.data.probability;
+          const interval = setInterval(() => {
+            setLocalProbability((prev) => {
+              if (prev < targetProbability) {
+                return prev + increment;
+              } else {
+                clearInterval(interval);
+                return targetProbability;
+              }
+            });
+          }, 30);
+        }
+      } catch (err) {
+        setError('No se pudo cargar tu información en este momento. Intenta nuevamente más tarde.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  };
+
   if (loading) return <div className="loading">Cargando perfil...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!profileData) return <div className="error">No se pudo cargar el perfil.</div>;
+  if (error || !profileData) {
+    return (
+      <div className="profile-container">
+        <div className="error-banner">
+          <span>{error || 'No se pudo cargar tu información en este momento. Intenta nuevamente más tarde.'}</span>
+          <button className="retry-btn" onClick={handleRetry}>Reintentar</button>
+        </div>
+        <div className="profile-header">
+          <button className="back-button" onClick={() => navigate("/student/home")}>←</button>
+          <h2>PERFIL</h2>
+        </div>
+      </div>
+    );
+  }
 
   // Datos del perfil y lógica de la interfaz
   const { profile, health_condition, has_recommendation } = profileData;
