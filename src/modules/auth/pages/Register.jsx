@@ -289,6 +289,11 @@ function Register() {
                       setStep(1);
                       setEmail(""); // Limpiar el correo
                       setPassword(""); // Limpiar la contraseña
+                      setFirstName(""); // Limpiar nombres
+                      setLastName(""); // Limpiar apellido paterno
+                      setMiddleName(""); // Limpiar apellido materno
+                      setDocumentNumber(""); // Limpiar DNI
+                      setErrors({ email: "", password: "", dni: "", general: "", firstName: "", lastName: "", middleName: "" });
                     }
                   }}
                   disabled={loading}
