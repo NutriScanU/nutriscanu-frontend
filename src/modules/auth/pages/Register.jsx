@@ -95,7 +95,7 @@ function Register() {
     // ✅ VALIDACIÓN CORREGIDA: Solo cuando hay 5 o más caracteres iguales
     if (value.endsWith("'") || value.endsWith("-")) {
       setErrors(prev => ({ ...prev, [fieldName]: "No puede terminar con apóstrofe ni guion." }));
-    } else if (/(.)\1{4,}/.test(value.trim())) {
+    } else if (/(.)\1{4,}/i.test(value.trim())) {
       // (.)\1{4,} = 1 caracter original + 4 repeticiones = 5 total ✅
       setErrors(prev => ({ ...prev, [fieldName]: "No se permiten caracteres repetidos excesivamente." }));
     } else {

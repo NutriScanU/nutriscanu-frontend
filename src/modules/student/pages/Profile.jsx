@@ -376,7 +376,19 @@ const cleanText = (text) => {
           <button className="retry-btn" onClick={handleRetry}>Reintentar</button>
         </div>
         <div className="profile-header">
-          <button className="back-button" onClick={() => navigate("/student/home")}>←</button>
+          <button
+  className="back-button"
+  onClick={() => {
+    if (!showEditModal && !showConfirmModal) navigate("/student/home");
+  }}
+  disabled={showEditModal || showConfirmModal}
+  style={{
+    opacity: showEditModal || showConfirmModal ? 0.4 : 1,
+    pointerEvents: showEditModal || showConfirmModal ? 'none' : 'auto'
+  }}
+>
+  ←
+</button>
           <h2>PERFIL</h2>
         </div>
       </div>
@@ -400,7 +412,19 @@ const cleanText = (text) => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <button className="back-button" onClick={() => navigate("/student/home")}>←</button>
+        <button
+  className="back-button"
+  onClick={() => {
+    if (!showEditModal && !showConfirmModal) navigate("/student/home");
+  }}
+  disabled={showEditModal || showConfirmModal}
+  style={{
+    opacity: showEditModal || showConfirmModal ? 0.4 : 1,
+    pointerEvents: showEditModal || showConfirmModal ? 'none' : 'auto'
+  }}
+>
+  ←
+</button>
         <h2>PERFIL</h2>
       </div>
 
