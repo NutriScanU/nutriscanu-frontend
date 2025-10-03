@@ -10,7 +10,54 @@ function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [success, setSuccess] = useState(false);
-  const onlyLetters = (value) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value);
+  
+  // ✅ FUNCIÓN MEJORADA para validar entrada (con Ññ)
+  const isValidNameInput = (value) => {
+    return /^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ\s'-]*$/.test(value);
+  };
+
+  // ✅ NUEVA FUNCIÓN para limpiar texto
+  const cleanText = (text) => {
+    return text
+      .replace(/\s+/g, ' ')  // Reemplaza múltiples espacios por uno solo
+      .trim();               // Elimina espacios al inicio y final
+  };
+
+  // ✅ NUEVA FUNCIÓN para capitalizar (maneja apostrofes y guiones)
+  const capitalizeWords = (str) => {
+    if (!str) return '';
+    
+    return str
+      .split(' ')
+      .map(word => {
+        // Si la palabra contiene apostrofe, manejar cada parte por separado
+        if (word.includes("'")) {
+          return word
+            .split("'")
+            .map(part => {
+              if (part.length === 0) return '';
+              return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+            })
+            .join("'");
+        }
+        
+        // Si la palabra contiene guión, manejar cada parte por separado
+        if (word.includes('-')) {
+          return word
+            .split('-')
+            .map(part => {
+              if (part.length === 0) return '';
+              return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
+            })
+            .join('-');
+        }
+        
+        // Palabra normal (esto manejará correctamente la ñ)
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(' ');
+  };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -19,11 +66,50 @@ function Register() {
   const [documentNumber, setDocumentNumber] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const [errors, setErrors] = useState({ email: "", password: "", dni: "", general: "" });
+  const [errors, setErrors] = useState({ 
+    email: "", password: "", dni: "", general: "",
+    firstName: "", lastName: "", middleName: ""
+  });
   const [loading, setLoading] = useState(false);
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validateDNI = (dni) => /^\d{8}$/.test(dni);
+
+  // ✅ NUEVA FUNCIÓN para manejar cambios en nombres (validación robusta)
+  const handleNameInputChange = (setter, fieldName) => (e) => {
+    let value = e.target.value;
+    
+    // 1-7. Todas las validaciones anteriores (sin cambios)
+    const invalidChars = /[0-9!@#$%^&*()_+=[\]{};:"\\|,.<>/?`~]/;
+    if (invalidChars.test(value)) return;
+    if (/\s{2,}/.test(value)) return;
+    if (/[-]{2,}/.test(value)) return;
+    if (/[']{2,}/.test(value)) return;
+    if (value.startsWith(' ') && value.length === 1) return;
+    if (value.startsWith('-')) return;
+    if (value.length > 50) return;
+    if (!isValidNameInput(value)) return;
+    
+    setter(value);
+    
+    // ✅ VALIDACIÓN CORREGIDA: Solo cuando hay 5 o más caracteres iguales
+    if (value.endsWith("'") || value.endsWith("-")) {
+      setErrors(prev => ({ ...prev, [fieldName]: "No puede terminar con apóstrofe ni guion." }));
+    } else if (/(.)\1{4,}/.test(value.trim())) {
+      // (.)\1{4,} = 1 caracter original + 4 repeticiones = 5 total ✅
+      setErrors(prev => ({ ...prev, [fieldName]: "No se permiten caracteres repetidos excesivamente." }));
+    } else {
+      // Limpiar errores si está válido
+      setErrors(prev => {
+        const updated = { ...prev };
+        delete updated[fieldName];
+        if (updated.general && updated.general.includes('Todos los campos son obligatorios')) {
+          delete updated.general;
+        }
+        return updated;
+      });
+    }
+  };
 
   const handleNextStep = async () => {
     const newErrors = { email: "", password: "", general: "" };
@@ -85,54 +171,97 @@ function Register() {
     
     setStep(2);
     setLoading(false);
-    setErrors({ email: "", password: "", general: "" });
-    setStep(2);
   };
 
   const handleSubmit = async () => {
-
     const newErrors = { dni: "", general: "" };
     let isValid = true;
 
-    // Validación de campos obligatorios (nombres, apellidos, etc.)
-    if (!firstName.trim() || !lastName.trim() || !middleName.trim()) {
+    // ✅ PRIMERO verificar si TODOS están vacíos (INCLUYENDO DNI)
+    const allFieldsEmpty = !firstName.trim() && !lastName.trim() && !middleName.trim() && !documentNumber.trim();
+    
+    if (allFieldsEmpty) {
+      // Solo mostrar mensaje general cuando TODO está vacío
       newErrors.general = "Todos los campos son obligatorios.";
-      isValid = false;
+      setErrors(newErrors);
+      return;
     }
 
-    // Validación de longitud mínima para nombres y apellidos
-    if (firstName.trim().length < 2) {
+    // ✅ Validaciones de nombres (sin cambios)
+    if (!firstName.trim()) {
+      newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    } else if (firstName.trim().length < 2) {
       newErrors.firstName = "Este campo debe tener al menos 2 caracteres";
       isValid = false;
     }
-    if (lastName.trim().length < 2) {
+
+    if (!lastName.trim()) {
+      newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    } else if (lastName.trim().length < 2) {
       newErrors.lastName = "Este campo debe tener al menos 2 caracteres";
       isValid = false;
     }
-    if (middleName.trim().length < 2) {
+
+    if (!middleName.trim()) {
+      newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    } else if (middleName.trim().length < 2) {
       newErrors.middleName = "Este campo debe tener al menos 2 caracteres";
       isValid = false;
     }
 
-    // Validación del formato del DNI
-    if (!validateDNI(documentNumber)) {
+    // ✅ Validaciones adicionales de nombres (sin cambios)
+    if (firstName.trim().endsWith('-') || firstName.trim().endsWith("'")) {
+      newErrors.firstName = "No puede terminar con apóstrofe ni guion.";
+      isValid = false;
+    }
+    if (lastName.trim().endsWith('-') || lastName.trim().endsWith("'")) {
+      newErrors.lastName = "No puede terminar con apóstrofe ni guion.";
+      isValid = false;
+    }
+    if (middleName.trim().endsWith('-') || middleName.trim().endsWith("'")) {
+      newErrors.middleName = "No puede terminar con apóstrofe ni guion.";
+      isValid = false;
+    }
+
+    if (/(.)\1{4,}/.test(firstName.trim())) {
+      newErrors.firstName = "No se permiten caracteres repetidos excesivamente.";
+      isValid = false;
+    }
+    if (/(.)\1{4,}/.test(lastName.trim())) {
+      newErrors.lastName = "No se permiten caracteres repetidos excesivamente.";
+      isValid = false;
+    }
+    if (/(.)\1{4,}/.test(middleName.trim())) {
+      newErrors.middleName = "No se permiten caracteres repetidos excesivamente.";
+      isValid = false;
+    }
+
+    // ✅ VALIDACIÓN DEL DNI - CORREGIDA
+    if (!documentNumber.trim()) {
+      // Si el DNI está vacío Y otros campos tienen datos
+      newErrors.general = "Todos los campos son obligatorios.";
+      isValid = false;
+    } else if (!validateDNI(documentNumber)) {
+      // Si el DNI no tiene exactamente 8 dígitos (casos como "72")
       newErrors.dni = "El DNI debe tener 8 dígitos numéricos.";
       isValid = false;
     } else {
-      // Verificar si el DNI ya está registrado
+      // Solo verificar duplicado si el formato es correcto
       try {
         const response = await checkDni(documentNumber);
         if (response.exists === true) {
-          newErrors.dni = "El DNI ya ha sido registrado."; // Error si ya existe
+          newErrors.dni = "El DNI ya ha sido registrado.";
           isValid = false;
         }
       } catch (err) {
-        newErrors.general = "Ocurrió un problema temporal al verificar tu DNI. Intenta nuevamente en unos momentos."; // Error en caso de fallo de la consulta
+        newErrors.general = "Ocurrió un problema temporal al verificar tu DNI. Intenta nuevamente en unos momentos.";
         isValid = false;
       }
     }
 
-    // Si los campos no son válidos, mostramos los errores y no seguimos con el registro
     if (!isValid) {
       setErrors((prev) => ({ ...prev, ...newErrors }));
       return;
@@ -141,36 +270,43 @@ function Register() {
     // ✅ Activar loading para el registro final
     setLoading(true);
 
+    // ✅ LIMPIAR Y CAPITALIZAR NOMBRES ANTES DE ENVIAR
+    const cleanFirstName = cleanText(firstName);
+    const cleanLastName = cleanText(lastName);
+    const cleanMiddleName = cleanText(middleName);
+
     // Si todo es válido, se procede al registro del usuario
     const userData = {
       email,
       password,
-      first_name: firstName.trim(),
-      last_name: lastName.trim(),
-      middle_name: middleName.trim(),
+      first_name: capitalizeWords(cleanFirstName),
+      last_name: capitalizeWords(cleanLastName),
+      middle_name: capitalizeWords(cleanMiddleName),
       document_number: documentNumber.trim(),
     };
 
     try {
-      await registerUsuario(userData); // Aquí se registra al usuario
+      await registerUsuario(userData);
       
       // ✅ Simular tiempo de procesamiento adicional (4 segundos)
       await new Promise(resolve => setTimeout(resolve, 4000));
       
-      setSuccess(true); // Si el registro es exitoso, mostramos el mensaje de éxito
+      setSuccess(true);
     } catch (err) {
-      console.error("❌ Error al registrar usuario:", err);
+      // ✅ AGREGAR MÁS DETALLE PARA DEBUGGING
+      console.error("❌ Error completo al registrar usuario:", err);
+      console.error("❌ Respuesta del servidor:", err.response?.data);
+      console.error("❌ Status del error:", err.response?.status);
+      console.error("❌ Datos enviados:", userData);
+      
       setErrors((prev) => ({
         ...prev,
         general: "Ocurrió un problema temporal al completar tu registro. Intenta nuevamente en unos momentos.",
       }));
     } finally {
-      setLoading(false); // Quitar loading al final
+      setLoading(false);
     }
   };
-
-
-
 
   return (
     <div className="auth-wrapper">
@@ -214,7 +350,6 @@ function Register() {
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      // Si el campo se vacía, resetear showPassword
                       if (e.target.value.length === 0) {
                         setShowPassword(false);
                       }
@@ -310,13 +445,8 @@ function Register() {
                   type="text"
                   placeholder="Nombres"
                   value={firstName}
-                  onChange={(e) => {
-                    if (onlyLetters(e.target.value)) {
-                      setFirstName(e.target.value);
-                      if (errors.firstName) setErrors(prev => ({ ...prev, firstName: "" }));
-                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
-                    }
-                  }}
+                  onChange={handleNameInputChange(setFirstName, 'firstName')}
+                  className={errors.firstName ? "input-error" : ""}
                   disabled={loading}
                 />
                 {errors.firstName && <div className="error-message">{errors.firstName}</div>}
@@ -326,13 +456,8 @@ function Register() {
                   type="text"
                   placeholder="Apellido paterno"
                   value={lastName}
-                  onChange={(e) => {
-                    if (onlyLetters(e.target.value)) {
-                      setLastName(e.target.value);
-                      if (errors.lastName) setErrors(prev => ({ ...prev, lastName: "" }));
-                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
-                    }
-                  }}
+                  onChange={handleNameInputChange(setLastName, 'lastName')}
+                  className={errors.lastName ? "input-error" : ""}
                   disabled={loading}
                 />
                 {errors.lastName && <div className="error-message">{errors.lastName}</div>}
@@ -342,13 +467,8 @@ function Register() {
                   type="text"
                   placeholder="Apellido materno"
                   value={middleName}
-                  onChange={(e) => {
-                    if (onlyLetters(e.target.value)) {
-                      setMiddleName(e.target.value);
-                      if (errors.middleName) setErrors(prev => ({ ...prev, middleName: "" }));
-                      if (errors.general) setErrors(prev => ({ ...prev, general: "" }));
-                    }
-                  }}
+                  onChange={handleNameInputChange(setMiddleName, 'middleName')}
+                  className={errors.middleName ? "input-error" : ""}
                   disabled={loading}
                 />
                 {errors.middleName && <div className="error-message">{errors.middleName}</div>}
